@@ -1,7 +1,13 @@
 import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
 import resolve from 'rollup-plugin-node-resolve';
+import scss from 'rollup-plugin-scss'
+import path from 'path';
 
+const PATHS = {
+  src: path.resolve(__dirname, 'src'),
+  dist: path.resolve(__dirname, 'dist')
+};
 
 const babelConfig = {  
   'presets': [
@@ -15,7 +21,7 @@ const babelConfig = {
 };
 
 export default {  
-  entry: 'src/maps.js',
+  entry: path.resolve(PATHS.src, 'index.js'),
   format: 'umd',
   moduleName: 'Maps',
   sourceMap: true,
@@ -25,6 +31,11 @@ export default {
       config: babelConfig,
       exclude: 'node_modules/**'
     })),
+    scss([ // css has to be imported in entry file e.g. inside old_maps.js
+      // Output if set to true, the default behaviour is to write all styles to the bundle destination where .js is replaced by .css
+      // Using specific file in this case
+      output: '[name].bundle.css'
+    ]),
     resolve({
       module: true,
       jsnext: true,  // Default: false
@@ -35,5 +46,5 @@ export default {
       browser: true
     })
   ],
-  dest: 'dist/bundle.js'
+  dest: 'dist/Maps.bundle.js'
 };
