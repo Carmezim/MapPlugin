@@ -28,11 +28,12 @@ let placeMarkers = [];
 // Places holder
 let places;
 
+// Markers holder
 let markers = [];
 
 const initialize = (data) => {
   // fetch dataset
-  fetchData(data, markers);
+  fetchData(map, data, markers);
   
   // Create Search Box
   searchBox(map, places, sBox, placeMarkers, icon, setIcon);

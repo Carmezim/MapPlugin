@@ -1,7 +1,7 @@
 import {icon, clusterOptions} from './options';
 
-const getData = (data, markers) => {
-
+const getData = (map, data, markers) => {
+  let localMap = map;
   data = typeof data !== "string" ? data.toString() : data;
 
   if(isJSON(data)) {
@@ -19,14 +19,14 @@ const getData = (data, markers) => {
 
             const marker = new google.maps.Marker({
               position: location,
-              map: map,
+              map: localMap,
               icon: icon
             });
             markers.push(marker);
           }
         });
       // create MarkerClusterer
-      const markerCluster = new MarkerClusterer(map, markers, clusterOptions);
+      const markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
     })
     .catch((err) => {
       if (err) throw err
