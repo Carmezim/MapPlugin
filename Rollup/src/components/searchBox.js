@@ -1,13 +1,15 @@
 const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 
+  let sbMap = map;
   // Bias searchbox results towards current map's viewport
-  map.addListener('bounds_changed', function() {
-    sBox.setBounds(map.getBounds());
+  sbMap.addListener('bounds_changed', function() {
+    sBox.setBounds(sbMap.getBounds());
   });
 
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   sBox.addListener('places_changed', function() {
+    places = searchBox.getPlaces();
     if (places.length == 0) {
       return;
     }
@@ -19,8 +21,7 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
     placeMarkers = [];
 
     // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
-
+    let bounds = new google.maps.LatLngBounds();
     places.forEach(function(place) {
       if (!place.geometry) {
         console.log("Returned place contains no geometry");
@@ -35,13 +36,14 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
         scaledSize: icon.scaledSize
       };
 
-      setIcon(newIcon);
+      let otherIcon = setIcon(newIcon);
 
       placeMarkers.push(new google.maps.Marker({
-        map: map,
-        icon: icon,
+        map: sbMap,
+        icon: otherIcon,
         title: place.name,
-        position: place.geometry.location
+        position: place.geometry.location,
+        setMap: sbMap
       }));
 
       if (place.geometry.viewport) {
@@ -51,7 +53,7 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
         bounds.extend(place.geometry.location);
       }
     });
-    map.fitBounds(bounds);
+    sbMap.fitBounds(bounds);
   });
 };
 export default searchBox;

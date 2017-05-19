@@ -1,6 +1,8 @@
-const getData = (data) => {
+import {icon, clusterOptions} from './options';
 
-  data = typeof data !== 'string' ? '../datasets/' + data.toString() : '../datasets/' + data;
+const getData = (data, markers) => {
+
+  data = typeof data !== "string" ? data.toString() : data;
 
   if(isJSON(data)) {
     fetch(data)

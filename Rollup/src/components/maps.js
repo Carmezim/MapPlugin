@@ -12,13 +12,12 @@ import {
   addCenterToOptions
 } from './options';
 
-
-// Map
-let map = createMap();
-
 // Map center
 const london = defineCenter(51.521723, -0.134581);
 addCenterToOptions(london);
+
+// Map
+let map = createMap();
 
 // Search Box
 const sBox = createSearchBox(map);
@@ -27,15 +26,19 @@ const sBox = createSearchBox(map);
 let placeMarkers = [];
 
 // Places holder
-let places = sBox.getPlaces();
+let places;
 
+let markers = [];
 
 const initialize = (data) => {
   // fetch dataset
-  fetchData(data);
+  fetchData(data, markers);
   
   // Create Search Box
   searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 };
+
+google.maps.event.addDomListener(window, "load", initialize);
+
 
 export default initialize;

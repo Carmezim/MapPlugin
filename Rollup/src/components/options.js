@@ -54,10 +54,11 @@ const clusterOptions = {
 // Set new icon
 const setIcon = (newIcon) => {
   icon = newIcon;
-}
+  return icon
+};
 
 const addCenterToOptions = (center) => {
-  mapOtions.center = center;
+  mapOptions.center = center;
 };
 
 export {
