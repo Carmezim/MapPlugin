@@ -39,7 +39,4 @@ const initialize = (data) => {
   searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 };
 
-google.maps.event.addDomListener(window, "load", initialize);
-
-
 export default initialize;

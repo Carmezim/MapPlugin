@@ -2,10 +2,10 @@ import {icon, clusterOptions} from './options';
 
 const getData = (map, data, markers) => {
   let localMap = map;
-  data = typeof data !== "string" ? data.toString() : data;
+  let localData = typeof data !== "string" ? "/datasets/" + data.toString() : "/datasets/" + data;
 
-  if(isJSON(data)) {
-    fetch(data)
+  if(isJSON(localData)) {
+    fetch(localData)
       .then((response) => response.json())
       .then(function (dataset) {
         // not to confuse 'map' as in array.proptype.map below with an instance of a google map
