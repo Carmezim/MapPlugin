@@ -1,16 +1,24 @@
 {
   "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "babel-core": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babelrc-rollup": "^3.0.0",
+    "livereload": "^0.6.2",
+    "modular-css-rollup": "^5.2.2",
+    "npm-run-all": "^4.0.2",
     "path": "^0.12.7",
+    "postcss": "^6.0.1",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-css-only": "^0.2.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-scss": "^0.2.0",
+    "rollup-plugin-uglify": "^1.0.2",
     "rollup-watch": "^3.2.2"
   },
   "name": "Maps",
@@ -20,7 +28,9 @@
   "author": "Carmezim <carmezim.filho@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "rollup -c -w",
+    "dev": "rollup -c -w",
+    "reload": "livereload 'dist/'",
+    "start": "npm-run-all --parallel dev reload",
     "build": "rollup -c"
   }
 }
