@@ -1,6 +1,4 @@
-import clusterer from '../googleApi/markerclusterer';
-
-export default setGoogleMaps = (apiKey) => {
+const setGoogleMaps = (apiKey) => {
 
   if(typeof apiKey !== 'string' || !apiKey instanceof String) {
     apiKey = apiKey.toString();
@@ -13,7 +11,8 @@ export default setGoogleMaps = (apiKey) => {
             mapTag.type = 'text/javascript';
             mapTag.src  = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&libraries=places';
 
-      return mapScript;
+      return mapTag;
     }
   })
 };
+export default setGoogleMaps;

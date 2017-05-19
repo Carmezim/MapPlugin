@@ -1,8 +1,6 @@
-import '../googleApi/markerclusterer';
+const getData = (data) => {
 
-export default getData = (data) => {
-
-  data = typeof data !== 'string' ? 'datasets/' + data.toString() : 'datasets/' + data;
+  data = typeof data !== 'string' ? '../datasets/' + data.toString() : '../datasets/' + data;
 
   if(isJSON(data)) {
     fetch(data)
@@ -44,3 +42,4 @@ const isJSON = (dataset) => {
     return false;
   }
 };
+export default getData;

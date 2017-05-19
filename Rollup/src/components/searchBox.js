@@ -1,4 +1,4 @@
-export default searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
+const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 
   // Bias searchbox results towards current map's viewport
   map.addListener('bounds_changed', function() {
@@ -54,3 +54,4 @@ export default searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
     map.fitBounds(bounds);
   });
 };
+export default searchBox;

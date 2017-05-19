@@ -1,8 +1,14 @@
+// Rollup plugins
 import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
+import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
-import scss from 'rollup-plugin-scss'
 import path from 'path';
+
+// CSS plugins
+//import uglify from 'rollup-plugin-uglify';
+// import scss from 'rollup-plugin-scss'
+import css from 'rollup-plugin-css-only'
 
 const PATHS = {
   src: path.resolve(__dirname, 'src'),
@@ -21,7 +27,8 @@ const babelConfig = {
 };
 
 export default {  
-  entry: path.resolve(PATHS.src, 'index.js'),
+  entry: './src/index.js',
+  dest: './dist/maps.bundle.js',
   format: 'umd',
   moduleName: 'Maps',
   sourceMap: true,
@@ -29,22 +36,21 @@ export default {
     babel(babelrc({
       addExternalHelpersPlugin: false,
       config: babelConfig,
-      exclude: 'node_modules/**'
+      exclude: './node_modules/**'
     })),
-    scss([ // css has to be imported in entry file e.g. inside old_maps.js
-      // Output if set to true, the default behaviour is to write all styles to the bundle destination where .js is replaced by .css
-      // Using specific file in this case
-      output: '[name].bundle.css'
-    ]),
+    css({ output: 'maps.bundle.css' }),
+    // scss({ // css has to be imported in entry file e.g. inside old_maps.js
+    //   // Output if set to true, the default behaviour is to write all styles to the bundle destination where .js is replaced by .css
+    //   // Using specific file in this case
+    //   output: 'maps.bundle.css'
+    // }),
     resolve({
-      module: true,
-      jsnext: true,  // Default: false
-      main: true,  // Default: true
       // not all files you want to resolve are .js files
       extensions: [ '.js', '.json' ],  // Default: ['.js']
-      preferBuiltins: true,  // Default: true
-      browser: true
-    })
-  ],
-  dest: 'dist/Maps.bundle.js'
+      jsnext: true,
+      main: true,
+      browser: true,
+    }),
+    commonjs()
+  ]
 };

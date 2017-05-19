@@ -1,7 +1,7 @@
-import Symbol from './svgMarker';
+import Symbol from 'Rollup/src/svgMarker';
 
 // Icon
-let icon = {
+export let icon = {
   url: Symbol('marker', 25, 25, '#f16667'),
   size: new google.maps.Size(71, 71),
   origin: new google.maps.Point(0, 0),
@@ -10,9 +10,9 @@ let icon = {
 };
 
 // Map options
-let mapOptions = {
+export const mapOptions = {
   zoom: 4,
-  center: null,
+  center: london,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 };
 
@@ -45,25 +45,8 @@ const clusterStyles = [
 ];
 
 // Cluster options
-const clusterOptions = {
+export const clusterOptions = {
   maxZoom: 15,
   gridSize: 75,
   styles: clusterStyles
 };
-
-// Set new icon
-const setIcon = (newIcon) => {
-  icon = newIcon;
-}
-
-const addCenterToOptions = (center) => {
-  mapOtions.center = center;
-};
-
-export {
-  icon,
-  mapOptions,
-  clusterOptions,
-  setIcon,
-  addCenterToOptions
-}
