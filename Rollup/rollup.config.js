@@ -3,6 +3,8 @@ import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 import path from 'path';
 
 // CSS plugins
@@ -51,6 +53,13 @@ export default {
       main: true,
       browser: true,
     }),
-    commonjs()
+    commonjs(),
+		serve({
+			open: true,
+			contentBase: 'dist',
+			host: 'localhost',
+			port: 3000
+		}),
+    livereload()
   ]
 };
