@@ -5,7 +5,12 @@ body {
 }
 #map {
   height: 400px;
-  width: 100%;
+  width: 66%;
+  float: right;
+}
+
+.clusterize {
+  width: 33%;
 }
 
 #description {
@@ -54,14 +59,16 @@ body {
 }
 
 #pac-input {
+  display: inline-block;
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
+  margin-left: 0;
+  padding: 0;
+  position: absolute;
   text-overflow: ellipsis;
-  width: 400px;
+  width: 33%;
 }
 
 #pac-input:focus {
@@ -78,3 +85,4 @@ body {
 #target {
   width: 345px;
 }
+

@@ -31,8 +31,8 @@ const getData = (map, data, markers) => {
               position: location,
               map: localMap,
               icon: icon,
-              title: markerPosition.user_id.toString(),
-              label: markerPosition.full_name.toString()
+              userID: markerPosition.user_id,
+              userName: markerPosition.full_name
             });
             markers.push(marker);
           }

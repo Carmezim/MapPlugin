@@ -5,6 +5,74 @@ document.write('<script src="http://' + (location.host || 'localhost').split(':'
 	(factory());
 }(this, (function () { 'use strict';
 
+var createSearchBox = function createSearchBox(map) {
+  var localMap = map;
+  // Create search box and link it to UI
+  var input = document.getElementById('pac-input');
+  localMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  var searchBox = new google.maps.places.SearchBox(input);
+
+  return searchBox;
+};
+
+var searchBox = function searchBox(map, places, sBox, placeMarkers, icon, setIcon) {
+
+  // Bias searchbox results towards current map's viewport
+  map.addListener('bounds_changed', function () {
+    sBox.setBounds(map.getBounds());
+  });
+
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  sBox.addListener('places_changed', function () {
+    places = sBox.getPlaces();
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    placeMarkers.forEach(function (marker) {
+      marker.setMap(null);
+    });
+    placeMarkers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function (place) {
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+
+      var newIcon = {
+        url: place.icon,
+        size: icon.size,
+        origin: icon.origin,
+        anchor: icon.anchor,
+        scaledSize: icon.scaledSize
+      };
+
+      var placeIcon = setIcon(newIcon);
+
+      placeMarkers.push(new google.maps.Marker({
+        map: map,
+        icon: placeIcon,
+        title: place.name,
+        position: place.geometry.location,
+        setMap: map
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+};
+
 // Cluster markers SVG
 var _Symbol = function _Symbol(id, width, height, fill) {
   var marker_svg = {
@@ -16,7 +84,6 @@ var _Symbol = function _Symbol(id, width, height, fill) {
   return 'data:image/svg+xml;base64,' + window.btoa('<svg xmlns="http://www.w3.org/2000/svg" height="' + height + '" viewBox="0 0 430.62 648.23" width="' + width + '" ><g><path fill="' + fill + '" d="' + marker_svg[id].p + '" /></g></svg>');
 };
 
-// Icon
 var icon = {
   url: _Symbol('marker', 25, 25, '#f16667'),
   size: new google.maps.Size(71, 71),
@@ -73,81 +140,16 @@ var addCenterToOptions = function addCenterToOptions(center) {
   mapOptions.center = center;
 };
 
-var createMap = function createMap() {
-  return new google.maps.Map(document.getElementById("map"), mapOptions);
-};
-
-var defineCenter = function defineCenter(lat, lng) {
-  return new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
-};
-
-var searchBox = function searchBox(map, places, sBox, placeMarkers, icon, setIcon) {
-
-  var sbMap = map;
-  // Bias searchbox results towards current map's viewport
-  sbMap.addListener('bounds_changed', function () {
-    sBox.setBounds(sbMap.getBounds());
-  });
-
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  sBox.addListener('places_changed', function () {
-    places = searchBox.getPlaces();
-    if (places.length == 0) {
-      return;
+var buildList = function buildList(clusterize, listArray, markers, localMap) {
+  listArray = [];
+  clusterize.clear();
+  markers.map(function (i) {
+    if (localMap.getBounds().contains(i.getPosition())) {
+      listArray.push('<tr><td>' + i.userName + '</td><td>' + '<td/><td>' + i.userID + '</td></tr>');
     }
-
-    // Clear out the old markers.
-    placeMarkers.forEach(function (marker) {
-      marker.setMap(null);
-    });
-    placeMarkers = [];
-
-    // For each place, get the icon, name and location.
-    var bounds = new google.maps.LatLngBounds();
-    places.forEach(function (place) {
-      if (!place.geometry) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-
-      var newIcon = {
-        url: place.icon,
-        size: icon.size,
-        origin: icon.origin,
-        anchor: icon.anchor,
-        scaledSize: icon.scaledSize
-      };
-
-      var placeIcon = setIcon(newIcon);
-
-      placeMarkers.push(new google.maps.Marker({
-        map: sbMap,
-        icon: placeIcon,
-        title: place.name,
-        position: place.geometry.location,
-        setMap: sbMap
-      }));
-
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    sbMap.fitBounds(bounds);
   });
-};
-
-var createSearchBox = function createSearchBox(map) {
-  var localMap = map;
-  // Create search box and link it to UI
-  var input = document.getElementById('pac-input');
-  localMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  var searchBox = new google.maps.places.SearchBox(input);
-
-  return searchBox;
+  clusterize.update(listArray);
+  clusterize.refresh();
 };
 
 function createCommonjsModule(fn, module) {
@@ -468,73 +470,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 });
 
-var getData = function getData(map, data, markers) {
-
-  var localMap = map;
-  var localData = typeof data !== "string" ? "/datasets/" + data.toString() : "/datasets/" + data;
-  //  let clusterize = new Clusterize({
-  //    rows: 'test',
-  //    scrollId: 'scrollArea',
-  //    contentId: 'contentArea'
-  //  });
-
-
-  if (isJSON(localData)) {
-    fetch(localData).then(function (response) {
-      return response.json();
-    }).then(function (dataset) {
-
-      // add locations
-      dataset.map(function (markerPosition) {
-        if (!markerPosition.latitude || !markerPosition.longitude) {
-          console.log('meh');
-        } else {
-          var location = new google.maps.LatLng({ lat: markerPosition.latitude, lng: markerPosition.longitude });
-
-          var marker = new google.maps.Marker({
-            position: location,
-            map: localMap,
-            icon: icon,
-            title: markerPosition.user_id.toString(),
-            label: markerPosition.full_name.toString()
-          });
-          markers.push(marker);
-        }
-      });
-      // create MarkerClusterer
-      var markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
-
-      localMap.addListener('bounds_changed', buildList());
-
-      function buildList() {
-        if (clusterize$$1) {
-          clusterize$$1.clear();
-        }
-        var listArray = [];
-        var markup = [];
-
-        markers.map(function (i) {
-          if (localMap.getBounds().contains(i.getPosition())) {
-            markup.push('<tr><td>' + i.label + '</td><td>' + '<td/><td>' + i.title + '</td></tr>');
-            listArray.push(markup.join(''));
-          }
-        });
-        var clusterize$$1 = new clusterize({
-          rows: listArray,
-          scrollId: 'scrollArea',
-          contentId: 'contentArea'
-        });
-        //let userRow = ;
-        //clusterize.append(userRow);
-        clusterize$$1.update(listArray);
-      }
-    }).catch(function (err) {
-      if (err) throw err;
-    });
-  }
-};
-
-var isJSON = function isJSON(dataset) {
+var checkData = function checkData(dataset) {
   try {
     JSON.stringify(dataset);
     return true;
@@ -544,7 +480,58 @@ var isJSON = function isJSON(dataset) {
   }
 };
 
-// Map center
+var getData = function getData(map, data, markers) {
+  var localMap = map;
+  var listArray = [];
+  var localData = typeof data !== "string" ? "/datasets/" + data.toString() : "/datasets/" + data;
+  // create list
+  var clusterize$$1 = new clusterize({
+    rows: null,
+    scrollId: 'scrollArea',
+    contentId: 'contentArea'
+  });
+
+  if (checkData(localData)) {
+    fetch(localData).then(function (response) {
+      return response.json();
+    }).then(function (dataset) {
+      // add locations
+      // check for geocoordinates in dataset
+      dataset.map(function (markerPosition) {
+        if (!markerPosition.latitude || !markerPosition.longitude) {
+          console.log('meh');
+        } else {
+          var location = new google.maps.LatLng({ lat: markerPosition.latitude, lng: markerPosition.longitude });
+          var marker = new google.maps.Marker({
+            position: location,
+            map: localMap,
+            icon: icon,
+            userID: markerPosition.user_id,
+            userName: markerPosition.full_name
+          });
+          markers.push(marker);
+        }
+      });
+      // create MarkerClusterer
+      var markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
+      // Updates list when viewport changes
+      google.maps.event.addListener(localMap, 'bounds_changed', function () {
+        buildList(clusterize$$1, listArray, markers, localMap);
+      });
+    }).catch(function (err) {
+      if (err) throw err;
+    });
+  }
+};
+
+var createMap = function createMap() {
+  return new google.maps.Map(document.getElementById("map"), mapOptions);
+};
+
+var defineCenter = function defineCenter(lat, lng) {
+  return new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+};
+
 var london = defineCenter(51.521723, -0.134581);
 addCenterToOptions(london);
 

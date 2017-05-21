@@ -3,7 +3,7 @@ const buildList = (clusterize, listArray, markers, localMap) => {
   clusterize.clear();
   markers.map((i) => {
     if (localMap.getBounds().contains(i.getPosition())) {
-      listArray.push('<tr><td>' + i.label + '</td><td>' + '<td/><td>' + i.title + '</td></tr>');	
+      listArray.push('<tr><td>' + i.userName + '</td><td>' + '<td/><td>' + i.userID + '</td></tr>');	
     }
   })
   clusterize.update(listArray);
