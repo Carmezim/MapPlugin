@@ -32,5 +32,8 @@
     "dev": "rollup -c -w",
     "start": "npm-run-all --parallel dev",
     "build": "rollup -c"
+  },
+  "dependencies": {
+    "clusterize.js": "^0.17.6"
   }
 }

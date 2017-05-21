@@ -52,6 +52,7 @@ export default {
       jsnext: true,
       main: true,
       browser: true,
+      module: true,
     }),
     commonjs(),
 		serve({

@@ -1,12 +1,10 @@
 // Import styles (injected into head)
 
 // Import modules
-import setGoogleMaps from './components/setGoogleMaps';
-import initialize from './components/maps';
+import setGoogleMaps from './components/map/setGoogleMaps';
+import initialize from './components/map/map';
 
-window.document.body.onload = addElement;
-
-function addElement () {
+const addElement = () => {
   // create map div
   // let mapDiv        = document.createElement('div');
   //     mapDiv.id     = 'map';
@@ -20,9 +18,6 @@ function addElement () {
   let element           = document.createElement('script');
       element.innerHTML = initialize("coordinates.json");
 
-  // add the newly created element and its content into the DOM
-  let currentTag = document.getElementById("title");
+};
 
-
-}
 google.maps.event.addDomListener(window, "load", addElement);
