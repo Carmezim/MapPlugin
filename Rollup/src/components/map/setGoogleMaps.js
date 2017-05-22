@@ -1,18 +1,18 @@
 const setGoogleMaps = (apiKey) => {
+	if (typeof apiKey !== 'string' || !(apiKey instanceof String)) {
+		apiKey = apiKey.toString();
+	}
 
-  if(typeof apiKey !== 'string' || !apiKey instanceof String) {
-    apiKey = apiKey.toString();
-  }
+	addEventListener('DOMContentLoaded', () => {
+		if (document.querySelectorAll('#map').length > 0) {
+			let mapTag = document.createElement('script');
+			mapTag.src = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&libraries=places' + '&callback=initialize';
+			mapTag.async = true;
 
-  addEventListener('DOMContentLoaded', () => {
-    if (document.querySelectorAll('#map').length > 0) {
-
-      const mapTag      = document.createElement('script');
-            mapTag.type = 'text/javascript';
-            mapTag.src  = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&libraries=places';
-
-      return mapTag;
-    }
-  })
+			let s0 = document.getElementsByTagName('script')[0];
+			s0.parentNode.insertBefore(mapTag, s0);
+		}
+	});
 };
+
 export default setGoogleMaps;

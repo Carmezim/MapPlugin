@@ -402,6 +402,16 @@ var _Symbol = function _Symbol(id, width, height, fill) {
 	return 'data:image/svg+xml;base64,' + window.btoa('<svg xmlns="http://www.w3.org/2000/svg" height="' + height + '" viewBox="0 0 430.62 648.23" width="' + width + '" ><g><path fill="' + fill + '" d="' + marker_svg[id].p + '" /></g></svg>');
 };
 
+// Icon
+var icon = {
+	url: _Symbol('marker', 25, 25, '#f16667'),
+	size: new google.maps.Size(71, 71),
+	origin: new google.maps.Point(0, 0),
+	anchor: new google.maps.Point(17, 34),
+	scaledSize: new google.maps.Size(25, 25)
+};
+
+// Map options
 var mapOptions = {
 	zoom: 4,
 	center: null,
@@ -447,15 +457,6 @@ var setIcon = function setIcon(newIcon) {
 
 var addCenterToOptions = function addCenterToOptions(center) {
 	mapOptions.center = center;
-};
-
-// Icon
-var icon = {
-	url: _Symbol('marker', 25, 25, '#f16667'),
-	size: new google.maps.Size(71, 71),
-	origin: new google.maps.Point(0, 0),
-	anchor: new google.maps.Point(17, 34),
-	scaledSize: new google.maps.Size(25, 25)
 };
 
 var buildList = function buildList(clusterize, listArray, markers, localMap) {
@@ -578,6 +579,10 @@ var setMaps = function setMaps(apiKey) {
 	setGoogleMaps(apiKey);
 };
 
+var logging = function logging() {
+	console.log('logging test');
+};
+
 var initialize = function initialize(data) {
 	// fetch dataset
 	getData(map, data, markers);
@@ -596,7 +601,10 @@ var setWidth = function setWidth(width) {
 	list.style = 'width:' + width.toString() + ';';
 };
 
-exports.test = test;
+
+// google.maps.event.addDomListener(window, "load", initialize);
+
+exports.logging = logging;
 exports.setMaps = setMaps;
 exports.initialize = initialize;
 exports.setHeight = setHeight;
