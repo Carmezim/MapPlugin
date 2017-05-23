@@ -8,27 +8,21 @@
 	<title>Shift.MS Map</title>
 </head>
 <body>
-	<div id="map-module"></div>
-		<div id="title">Maps Module</div>
-		<input id="pac-input" type="text" placeholder="Search here">
-		<div id="map"></div>
-		<div class="clusterize">
-		<table id="clusterize-user-list" style="width:25%;">
-			<thead>
-			<tr>
-				<th>User</th>
-				<th>ID</th>
-			</tr>
-			</thead>
-		</table>
-		<div id="scrollArea" class="clusterize-scroll">
-			<table>
-			<tbody id="contentArea" class="clusterize-content">
-				<tr class="clusterize-no-data">
-				<td>Loading data…</td>
-				</tr>
-			</tbody>
-			</table>
+	<div id="map-module">
+		<div id="clusterize-user-panel">
+			<input id="pac-input" type="text" placeholder="Search the map">
+			<div id="map"></div>
+			<div class="clusterize">
+				<div id="scrollArea" class="clusterize-scroll">
+					<table>
+					<tbody id="contentArea" class="clusterize-content">
+						<tr class="clusterize-no-data">
+						<td>Loading data…</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="js/markerclusterer.js"></script>
