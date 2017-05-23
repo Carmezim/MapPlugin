@@ -11,10 +11,14 @@ const getData = (map, data, markers) => {
 	// create list
 	let clusterize = new Clusterize({
 		rows: null,
-		rows_in_block: 5,
+		rows_in_block: 2,
 		scrollId: 'scrollArea',
 		contentId: 'contentArea',
 	});
+
+	function getRandom(min, max) {
+			return Math.random() * (max - min) + min;
+	}
 
 	if (checkData(localData)) {
 		fetch(localData)
@@ -27,9 +31,10 @@ const getData = (map, data, markers) => {
 						console.log('meh');
 					}
 					else {
+						// console.log(getRandomInt(0, 50))
 						let location = new google.maps.LatLng({
-							lat: markerPosition.latitude, 
-							lng: markerPosition.longitude
+							lat: markerPosition.latitude + getRandom(0, 0.5), 
+							lng: markerPosition.longitude + getRandom(0, 0.5)
 						});
 						const marker = new google.maps.Marker({
 							position: location,

@@ -1,118 +1,12 @@
 import Symbol from './svgMarker';
+import mapStyles from './mapStyles';
 
 // Map options
 const mapOptions = {
 	zoom: 4,
 	center: null,
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
-	styles: [
-		{
-			"elementType": "labels",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "administrative",
-			"elementType": "geometry",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "administrative.land_parcel",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "administrative.neighborhood",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "landscape.man_made",
-			"stylers": [
-				{
-					"color": "#EEEFF1"
-				}
-			]
-		},
-		{
-			"featureType": "landscape.natural",
-			"stylers": [
-				{
-					"color": "#EEEFF1"
-				}
-			]
-		},
-		{
-			"featureType": "landscape.natural.landcover",
-			"stylers": [
-				{
-					"color": "#EEEFF1"
-				}
-			]
-		},
-		{
-			"featureType": "landscape.natural.terrain",
-			"stylers": [
-				{
-					"color": "#EEEFF1"
-				}
-			]
-		},
-		{
-			"featureType": "poi",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "road",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "road",
-			"elementType": "labels.icon",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "transit",
-			"stylers": [
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "water",
-			"stylers": [
-				{
-					"color": "#71CAF2"
-				}
-			]
-		}
-	]
+	styles: mapStyles
 };
 
 // Cluster markers style
