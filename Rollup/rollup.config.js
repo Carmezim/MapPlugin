@@ -9,8 +9,8 @@ import path from 'path';
 
 // CSS plugins
 //import uglify from 'rollup-plugin-uglify';
-// import scss from 'rollup-plugin-scss';
-import css from 'rollup-plugin-css-only';
+import scss from 'rollup-plugin-scss';
+
 
 const PATHS = {
 	src: path.resolve(__dirname, 'src'),
@@ -30,17 +30,16 @@ const babelConfig = {
 
 export default {  
 	entry: './src/components/map/map.js',
-	dest: './dist/maps.bundle.js',
+	dest: './dist/js/maps.bundle.js',
 	format: 'umd',
 	moduleName: 'Maps',
 	sourceMap: true,
 	plugins: [
-		css({ output: './dist/maps.bundle.css' }),
-		// scss({ // css has to be imported in entry file e.g. inside old_maps.js
-		//   // Output if set to true, the default behaviour is to write all styles to the bundle destination where .js is replaced by .css
-		//   // Using specific file in this case
-		//   output: 'maps.bundle.css'
-		// }),
+		scss({ // css has to be imported in entry file e.g. inside old_maps.js
+		  // Output if set to true, the default behaviour is to write all styles to the bundle destination where .js is replaced by .css
+		  // Using specific file in this case
+		  output: './dist/maps.bundle.css'
+		}),
 		resolve({
 			// not all files you want to resolve are .js files
 			extensions: [ '.js', '.json' ],  // Default: ['.js']

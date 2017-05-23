@@ -402,10 +402,79 @@ var _Symbol = function _Symbol(id, width, height, fill) {
 	return 'data:image/svg+xml;base64,' + window.btoa('<svg xmlns="http://www.w3.org/2000/svg" height="' + height + '" viewBox="0 0 430.62 648.23" width="' + width + '" ><g><path fill="' + fill + '" d="' + marker_svg[id].p + '" /></g></svg>');
 };
 
+// Map options
 var mapOptions = {
 	zoom: 4,
 	center: null,
-	mapTypeId: google.maps.MapTypeId.ROADMAP
+	mapTypeId: google.maps.MapTypeId.ROADMAP,
+	styles: [{
+		"elementType": "labels",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "administrative",
+		"elementType": "geometry",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "administrative.land_parcel",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "administrative.neighborhood",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "landscape.man_made",
+		"stylers": [{
+			"color": "#EEEFF1"
+		}]
+	}, {
+		"featureType": "landscape.natural",
+		"stylers": [{
+			"color": "#EEEFF1"
+		}]
+	}, {
+		"featureType": "landscape.natural.landcover",
+		"stylers": [{
+			"color": "#EEEFF1"
+		}]
+	}, {
+		"featureType": "landscape.natural.terrain",
+		"stylers": [{
+			"color": "#EEEFF1"
+		}]
+	}, {
+		"featureType": "poi",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "road",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "road",
+		"elementType": "labels.icon",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "transit",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "water",
+		"stylers": [{
+			"color": "#71CAF2"
+		}]
+	}]
 };
 
 // Cluster markers style
@@ -537,24 +606,8 @@ var defineCenter = function defineCenter(lat, lng) {
   return new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
 };
 
-var setGoogleMaps = function setGoogleMaps(apiKey) {
-	if (typeof apiKey !== 'string' || !(apiKey instanceof String)) {
-		apiKey = apiKey.toString();
-	}
-
-	addEventListener('DOMContentLoaded', function () {
-		if (document.querySelectorAll('#map').length > 0) {
-			var mapTag = document.createElement('script');
-			mapTag.src = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&libraries=places' + '&callback=initialize';
-			mapTag.async = true;
-
-			var s0 = document.getElementsByTagName('script')[0];
-			s0.parentNode.insertBefore(mapTag, s0);
-		}
-	});
-};
-
 /*eslint-disable */
+// import setGoogleMaps from './setGoogleMaps';
 // Places markers
 var placeMarkers = [];
 
@@ -574,9 +627,10 @@ var map = createMap();
 // Search Box
 var sBox = createSearchBox(map);
 
-var setMaps = function setMaps(apiKey) {
-	setGoogleMaps(apiKey);
-};
+// const setMaps = (apiKey) => {
+// 	setGoogleMaps(apiKey);
+// };
+
 
 var initialize = function initialize(data) {
 	// fetch dataset
@@ -596,8 +650,6 @@ var setWidth = function setWidth(width) {
 	list.style = 'width:' + width.toString() + ';';
 };
 
-exports.test = test;
-exports.setMaps = setMaps;
 exports.initialize = initialize;
 exports.setHeight = setHeight;
 exports.setWidth = setWidth;

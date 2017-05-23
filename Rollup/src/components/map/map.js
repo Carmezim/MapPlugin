@@ -6,7 +6,7 @@ import searchBox from '../searchBox/searchBox';
 import fetchData from '../fetchData/fetchData';
 import createMap from './createMap';
 import defineCenter from './defineCenter';
-import setGoogleMaps from './setGoogleMaps';
+// import setGoogleMaps from './setGoogleMaps';
 import {
 	icon,
 	setIcon,
@@ -32,9 +32,9 @@ const map = createMap();
 // Search Box
 let sBox = createSearchBox(map);
 
-const setMaps = (apiKey) => {
-	setGoogleMaps(apiKey);
-};
+// const setMaps = (apiKey) => {
+// 	setGoogleMaps(apiKey);
+// };
 
 
 const initialize = (data) => {
@@ -56,8 +56,6 @@ const setWidth = (width) => {
 };
 
 export {
-	test,
-	setMaps,
 	initialize,
 	setHeight,
 	setWidth
