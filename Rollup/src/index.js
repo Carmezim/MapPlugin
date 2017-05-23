@@ -1,23 +1,25 @@
 // Import styles (injected into head)
 
 // Import modules
-import setGoogleMaps from './components/map/setGoogleMaps';
-import initialize from './components/map/map';
+// import setGoogleMaps from './components/map/setGoogleMaps';
+// import initialize from './components/map/map';
 
-const addElement = () => {
-  // create map div
-  // let mapDiv        = document.createElement('div');
-  //     mapDiv.id     = 'map';
+// const setMaps = (apiKey, data) => {
+// 	initialize(data);
+// };
 
-  // create search box input
-  // let searchBox             = document.createElement('input');
-  //     searchBox.id          = 'pac-input';
-  //     searchBox.type        = 'text';
-  //     searchBox.placeholder = 'Search Box';
+// const setHeight = (height) => {
+// 	let list = document.getElementById('clusterize');
+// 	list.style = 'height:' + height + ';';
+// };
 
-  let element           = document.createElement('script');
-      element.innerHTML = initialize("coordinates.json");
+// const setWidth = (width) => {
+// 	let list = document.getElementById('clusterize');
+// 	list.style = 'width:' + width + ';';
+// };
 
-};
+// window.addElement = function () {
 
-google.maps.event.addDomListener(window, "load", addElement);
+// 	});
+// };
+// window.document.addDomListener(window, "DOMContentLoaded", addElement);

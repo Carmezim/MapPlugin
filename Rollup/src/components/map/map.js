@@ -1,26 +1,17 @@
+/*eslint-disable */
+import './map.css';
+
 import createSearchBox from '../searchBox/createSearchBox';
 import searchBox from '../searchBox/searchBox';
 import fetchData from '../fetchData/fetchData';
 import createMap from './createMap';
 import defineCenter from './defineCenter';
-import setGoogleMaps from './setGoogleMaps';
+// import setGoogleMaps from './setGoogleMaps';
 import {
-  icon,
-  mapOptions,
-  clusterOptions,
-  setIcon,
-  addCenterToOptions
+	icon,
+	setIcon,
+	addCenterToOptions
 } from './options';
-
-// Map center
-const london = defineCenter(51.521723, -0.134581);
-addCenterToOptions(london);
-
-// Map
-let map = createMap();
-
-// Search Box
-const sBox = createSearchBox(map);
 
 // Places markers
 let placeMarkers = [];
@@ -31,16 +22,41 @@ let places;
 // Markers holder
 let markers = [];
 
+// Map center
+const london = defineCenter(51.521723, -0.134581);
+addCenterToOptions(london);
+
+// Map
+const map = createMap();
+
+// Search Box
+let sBox = createSearchBox(map);
+
+// const setMaps = (apiKey) => {
+// 	setGoogleMaps(apiKey);
+// };
+
+
 const initialize = (data) => {
-  // fetch dataset
-  fetchData(map, data, markers);
+	// fetch dataset
+	fetchData(map, data, markers);
 
-  // Create Search Box
-  searchBox(map, places, sBox, placeMarkers, icon, setIcon);
-
+	// Create Search Box
+	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 };
 
-export default initialize;
+const setHeight = (height) => {
+	let list = document.getElementById('list');
+	list.style='height:' + height.toString() + ';';
+};
 
+const setWidth = (width) => {
+	let list = document.getElementById('list');
+	list.style='width:' + width.toString() + ';';
+};
 
-const listTag = document.createElement('div');
+export {
+	initialize,
+	setHeight,
+	setWidth
+};
