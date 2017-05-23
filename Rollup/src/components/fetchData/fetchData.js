@@ -37,7 +37,7 @@ const getData = (map, data, markers) => {
 							icon: icon,
 							userID: markerPosition.user_id,
 							userName: markerPosition.full_name,
-							url: '',
+							url:'https://github.com/identicons/luke-siedle.png'
 						});
 						markers.push(marker);
 					}

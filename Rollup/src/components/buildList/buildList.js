@@ -1,9 +1,9 @@
 const buildList = (clusterize, listArray, markers, localMap) => {
 	listArray = [];
 	clusterize.clear();
-	markers.map((i) => {
-		if (localMap.getBounds().contains(i.getPosition())) {
-			listArray.push('<tr><td>' + i.userName + '</td><td>' + '<td/><td>' + i.userID + '</td></tr>');	
+	markers.map((user) => {
+		if (localMap.getBounds().contains(user.getPosition())) {
+			listArray.push('<tr><td>' + user.userName + '</br>' + '<img id="clusterize-avatar" src="' + user.url + '" height="200" width="200" >' + '</td></tr>');	
 		}
 	})
 	clusterize.update(listArray);
