@@ -19,6 +19,7 @@ body {
 .clusterize {
   top: 25px;
   position: relative;
+  margin-top: 0.25%;
   height: 100%;
   width: 20%; }
 
@@ -115,12 +116,15 @@ body {
 #pac-input {
   background-color: #fff;
   margin: 0 auto;
+  margin-top: 0.25%;
+  margin-left: -5.5%;
   font-family: Roboto;
   font-size: 14px;
   font-weight: 300;
   position: fixed !important;
   text-overflow: ellipsis;
-  width: 20%; }
+  width: 18%;
+  border-bottom: solid 2px black; }
 
 #pac-input:focus {
   border-color: #4d90fe; }
