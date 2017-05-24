@@ -7,7 +7,7 @@ $screen-lg:                  1200px;
 
 $font-family:                Roboto;
 $outline-gray:               #F0F0F1;
-
+$white:                       #fff;                 
 
 
 body {
@@ -43,19 +43,19 @@ body {
 
 #clusterize-user-panel {
 
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-xs) {
 
   }
 
-  @media (max-width: $screen-sm) {
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-md) {
+  @media screen and (max-width: $screen-md) {
 
   }
 
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-lg) {
 
     position: absolute;
     float:right;
@@ -70,19 +70,19 @@ body {
 
 .clusterize {
 
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-xs) {
 
   }
 
-  @media (max-width: $screen-sm) {
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-md) {
+  @media screen and (max-width: $screen-md) {
 
   }
 
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-lg) {
 
   }
 }
@@ -90,19 +90,19 @@ body {
 
 #scrollArea {
   
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-xs) {
 
   }
 
-  @media (max-width: $screen-sm) {
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-md) {
+  @media screen and (max-width: $screen-md) {
 
   }
 
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-lg) {
     overflow-y: scroll;
     height: 490px; 
   }
@@ -110,19 +110,19 @@ body {
 
 #clusterize-user-cell {
     
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-xs) {
 
   }
 
-  @media (max-width: $screen-sm) {
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-md) {
+  @media screen and (max-width: $screen-md) {
 
   }
 
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-lg) {
     width: 100%;
     height: 100%;
     position: relative;
@@ -135,19 +135,19 @@ body {
 
 #clusterize-user-cell:after {
     
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-xs) {
 
   }
 
-  @media (max-width: $screen-sm) {
-
-  }
-  
-  @media (max-width: $screen-md) {
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-md) {
+
+  }
+  
+  @media screen and (max-width: $screen-lg) {
     content: '';
     position: absolute;
     width: 95%;
@@ -161,7 +161,7 @@ body {
 
 #clusterize-user-cell {
         
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-xs) {
    h3 {  
       float: left;
       width: 10%;
@@ -188,15 +188,15 @@ body {
     }
   }
 
-  @media (max-width: $screen-sm) {
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-md) {
+  @media screen and (max-width: $screen-md) {
 
   }
 
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-lg) {
 
     h3 {  
       margin-top: 2.5%;
@@ -284,17 +284,30 @@ body {
 }
 
 #pac-input {
-  background-color: #fff;
-  margin: 0 auto;
-  margin-top: 0.25%;
-  margin-left: -5.5%;
-  font-family: $font-family;
-  font-size: 14px;
-  font-weight: 300;
-  position: fixed !important;
-  text-overflow: ellipsis;
-  width: 18%;
-  border-bottom: solid 2px black;
+  @media screen and (max-width: $screen-xs) {
+
+  }
+
+  @media screen and (max-width: $screen-sm) {
+
+  }
+  
+  @media screen and (max-width: $screen-md) {
+
+  }
+  
+  @media screen and (max-width: $screen-lg) {
+    background-color: $white;
+    margin-top: 0.25%;
+    left: 1110px;
+    position: fixed !important;
+    font-family: $font-family;
+    font-size: 14px;
+    font-weight: 300;
+    text-overflow: ellipsis;
+    width: 18%;
+    border-bottom: solid 2px black;
+  }
 }
 
 #pac-input:focus {
