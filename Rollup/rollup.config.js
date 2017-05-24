@@ -38,7 +38,8 @@ export default {
 		scss({ // css has to be imported in entry file e.g. inside old_maps.js
 		  // Output if set to true, the default behaviour is to write all styles to the bundle destination where .js is replaced by .css
 		  // Using specific file in this case
-		  output: './dist/maps.bundle.css'
+		  output: './dist/maps.bundle.css',
+			outputStyle: 'compressed',
 		}),
 		resolve({
 			// not all files you want to resolve are .js files
