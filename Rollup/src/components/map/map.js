@@ -45,13 +45,15 @@ const initialize = (data) => {
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 };
 
+
+
 const setHeight = (height) => {
-	let list = document.getElementById('list');
+	let list = document.getElementById('map');
 	list.style='height:' + height.toString() + ';';
 };
 
 const setWidth = (width) => {
-	let list = document.getElementById('list');
+	let list = document.getElementById('map');
 	list.style='width:' + width.toString() + ';';
 };
 
