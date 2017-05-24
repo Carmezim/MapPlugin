@@ -1,107 +1,245 @@
 @import '../../../normalize';
 
+$screen-xs:                  480px;
+$screen-sm:                  768px;
+$screen-md:                  992px;
+$screen-lg:                  1200px;
+
+$font-family:                Roboto;
+$outline-gray:               #F0F0F1;
+
+
+
 body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-#map-module {
-  background: transparent;
-  width: 100%;
-  height: 490px;
-  position: absolute;
-}
-
 #map {
   background-color: transparent;
-  position: relative;
-  height: 515px;
-  width: 80%;
-  float: right;
+
+  @media screen and (max-width: $screen-xs) {
+    width: 10%;
+    height: 100px;
+  }
+
+  @media screen and (max-width: $screen-sm) {
+    height: 100px;
+  }
+  
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-lg) {
+    position: relative;
+    float: right;
+    height: 520px;
+    width: 80%;
+  }
+}
+
+
+#clusterize-user-panel {
+
+  @media (max-width: $screen-xs) {
+
+  }
+
+  @media (max-width: $screen-sm) {
+
+  }
+  
+  @media (max-width: $screen-md) {
+
+  }
+
+  @media (max-width: $screen-lg) {
+
+    position: absolute;
+    float:right;
+    margin: 0 auto;
+    width: 20%;
+    height: 490px;
+    margin-top: 2.5%;
+    height: 100%;
+  }
+
 }
 
 .clusterize {
-  top: 25px;
-  position: relative;
-  margin-top: 0.25%;
-  height: 100%;
-  width: 20%;
+
+  @media (max-width: $screen-xs) {
+
+  }
+
+  @media (max-width: $screen-sm) {
+
+  }
+  
+  @media (max-width: $screen-md) {
+
+  }
+
+  @media (max-width: $screen-lg) {
+
+  }
 }
 
-#clusterize-user-panel {
-  align-content: center;
-}
 
 #scrollArea {
-  overflow-y: scroll;
-  height: 490px; 
-}
+  
+  @media (max-width: $screen-xs) {
 
-#scrollArea {
-  table {
-    width: 100%; 
+  }
+
+  @media (max-width: $screen-sm) {
+
+  }
+  
+  @media (max-width: $screen-md) {
+
+  }
+
+  @media (max-width: $screen-lg) {
+    overflow-y: scroll;
+    height: 490px; 
   }
 }
 
 #clusterize-user-cell {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  padding {
-    top: 5%; 
-    left: 5%;
+    
+  @media (max-width: $screen-xs) {
+
+  }
+
+  @media (max-width: $screen-sm) {
+
+  }
+  
+  @media (max-width: $screen-md) {
+
+  }
+
+  @media (max-width: $screen-lg) {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding {
+      top: 5%; 
+      left: 5%;
+    }
   }
 }
 
 #clusterize-user-cell:after {
-  content: '';
-  position: absolute;
-  width: 92%;
-  top: 2.5%;
-  left: 5%;
-  right: 5%;
-  bottom: 2.5%;
-  outline: 2px solid #F0F0F1;
-}
+    
+  @media (max-width: $screen-xs) {
 
-#clusterize-user-cell {
-  h3 {
-    margin-top: 1%;
-    margin-left: 2.5%;
-    float: left;
-    width: 10%;
-    color: black;
-    font-family: Roboto;
-    font-size: 16px;
-    font-style: bold;
+  }
+
+  @media (max-width: $screen-sm) {
+
+  }
+  
+  @media (max-width: $screen-md) {
+
+  }
+  
+  @media (max-width: $screen-lg) {
+    content: '';
+    position: absolute;
+    width: 92%;
+    top: 2.5%;
+    left: 5%;
+    right: 5%;
+    bottom: 2.5%;
+    outline: 2px solid $outline-gray;
   }
 }
 
 #clusterize-user-cell {
-  img {
-    padding-left: 2.5%;
-    padding-bottom: 2.5%; 
-    float: left;
-  }
-}
+        
+  @media (max-width: $screen-xs) {
+   h3 {  
+      float: left;
+      width: 10%;
+      color: black;
+      font-family: $font-family;
+      font-size: 10px;
+      font-style: bold;
+    }
 
-#clusterize-user-cell 
- button {
-  position: absolute;
-  width: 18%;
-  height: 18%;
-  left: 50%;
-  bottom: 40%;
-  background: transparent;
-  border: solid 2px;
-  border-bottom: 3px solid;
-  font-weight: 700;
- }
+    img {
+      padding-left: 2.5%;
+      padding-bottom: 2.5%; 
+      float: left;
+    }
+
+    button {
+      float: right;
+      width: 10%;
+      height: 10%;
+      background: transparent;
+      border: solid 2px;
+      border-bottom: 3px solid;
+      font-weight: 700;
+    }
+  }
+
+  @media (max-width: $screen-sm) {
+
+  }
+  
+  @media (max-width: $screen-md) {
+
+  }
+
+  @media (max-width: $screen-lg) {
+
+    h3 {  
+      margin-top: 2.5%;
+      margin-left: 2.5%;
+      float: left;
+      width: 40%;
+      overflow-wrap: break-word;
+      color: black;
+      font-family: $font-family;
+      font-size: 14px;
+      font-style: bold;
+    }
+
+    img {
+      margin-left: 6%;
+      margin-bottom: 3%;
+      margin-top: 3%; 
+      float: left;
+      width: 50%;
+      height: 100%;
+      max-width: 100px;
+      max-height: 100px;
+    }
+
+    button {
+      position: absolute;
+      width: 23%;
+      height: 18%;
+      top: 45%;
+      right: 25%;
+      background: transparent;
+      border: solid 2px;
+      border-bottom: 3px solid;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+  }
+
 }
 
 #description {
-  font-family: Roboto;
+  font-family: $font-family;
   font-size: 15px;
   font-weight: 300;
 }
@@ -126,7 +264,7 @@ body {
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   background-color: #fff;
-  font-family: Roboto;
+  font-family: $font-family;
 }
 
 #pac-container {
@@ -140,7 +278,7 @@ body {
 }
 
 .pac-controls label {
-  font-family: Roboto;
+  font-family: $font-family;
   font-size: 13px;
   font-weight: 300;
 }
@@ -150,7 +288,7 @@ body {
   margin: 0 auto;
   margin-top: 0.25%;
   margin-left: -5.5%;
-  font-family: Roboto;
+  font-family: $font-family;
   font-size: 14px;
   font-weight: 300;
   position: fixed !important;
@@ -167,4 +305,3 @@ body {
 #target {
   width: 345px;
 }
-
