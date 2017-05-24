@@ -108,6 +108,25 @@ body {
   }
 }
 
+#clusterize-user-table {
+  @media screen and (max-width: $screen-xs) {
+    width: 98%;
+  }
+
+  @media screen and (max-width: $screen-sm) {
+    width: 98%;
+  }
+  
+  @media screen and (max-width: $screen-md) {
+    width: 98%;
+  }
+
+  @media screen and (max-width: $screen-lg) {
+    width: 98%;
+     
+  }
+}
+
 #clusterize-user-cell {
     
   @media screen and (max-width: $screen-xs) {
@@ -123,7 +142,7 @@ body {
   }
 
   @media screen and (max-width: $screen-lg) {
-    width: 100%;
+    width: 100%; 
     height: 100%;
     position: relative;
     padding {
@@ -150,7 +169,7 @@ body {
   @media screen and (max-width: $screen-lg) {
     content: '';
     position: absolute;
-    width: 95%;
+    width: 95% !important;
     top: 2.5%;
     left: 5%;
     right: 5%;
