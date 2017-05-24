@@ -402,79 +402,84 @@ var _Symbol = function _Symbol(id, width, height, fill) {
 	return 'data:image/svg+xml;base64,' + window.btoa('<svg xmlns="http://www.w3.org/2000/svg" height="' + height + '" viewBox="0 0 430.62 648.23" width="' + width + '" ><g><path fill="' + fill + '" d="' + marker_svg[id].p + '" /></g></svg>');
 };
 
-// Map options
+// Map colors
+var land = "#EEEFF1";
+var water = "#71CAF2";
+
+var mapStyles = [{
+	"elementType": "labels",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "administrative",
+	"elementType": "geometry",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "administrative.land_parcel",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "administrative.neighborhood",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "landscape.man_made",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural.landcover",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural.terrain",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "poi",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "road",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "road",
+	"elementType": "labels.icon",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "transit",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "water",
+	"stylers": [{
+		"color": water
+	}]
+}];
+
 var mapOptions = {
 	zoom: 4,
 	center: null,
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
-	styles: [{
-		"elementType": "labels",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "administrative",
-		"elementType": "geometry",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "administrative.land_parcel",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "administrative.neighborhood",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "landscape.man_made",
-		"stylers": [{
-			"color": "#EEEFF1"
-		}]
-	}, {
-		"featureType": "landscape.natural",
-		"stylers": [{
-			"color": "#EEEFF1"
-		}]
-	}, {
-		"featureType": "landscape.natural.landcover",
-		"stylers": [{
-			"color": "#EEEFF1"
-		}]
-	}, {
-		"featureType": "landscape.natural.terrain",
-		"stylers": [{
-			"color": "#EEEFF1"
-		}]
-	}, {
-		"featureType": "poi",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "road",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "road",
-		"elementType": "labels.icon",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "transit",
-		"stylers": [{
-			"visibility": "off"
-		}]
-	}, {
-		"featureType": "water",
-		"stylers": [{
-			"color": "#71CAF2"
-		}]
-	}]
+	styles: mapStyles
 };
 
 // Cluster markers style
@@ -530,9 +535,9 @@ var icon = {
 var buildList = function buildList(clusterize, listArray, markers, localMap) {
 	listArray = [];
 	clusterize.clear();
-	markers.map(function (i) {
-		if (localMap.getBounds().contains(i.getPosition())) {
-			listArray.push('<tr><td>' + i.userName + '</td><td>' + '<td/><td>' + i.userID + '</td></tr>');
+	markers.map(function (user) {
+		if (localMap.getBounds().contains(user.getPosition())) {
+			listArray.push('<tr><td id="clusterize-user-cell">' + '<img id="clusterize-avatar" src="' + user.url + '" height="150" width="150" >' + '<h3 id="clusterize-user-name">' + user.userName + '</h3>' + '<button id="clusterize-user-button" name="follow">Follow</button>' + '</td></tr>');
 		}
 	});
 	clusterize.update(listArray);
@@ -556,10 +561,14 @@ var getData = function getData(map, data, markers) {
 	// create list
 	var clusterize$$1 = new clusterize({
 		rows: null,
-		rows_in_block: 5,
+		rows_in_block: 2,
 		scrollId: 'scrollArea',
 		contentId: 'contentArea'
 	});
+
+	function getRandom(min, max) {
+		return Math.random() * (max - min) + min;
+	}
 
 	if (checkData(localData)) {
 		fetch(localData).then(function (response) {
@@ -571,9 +580,10 @@ var getData = function getData(map, data, markers) {
 				if (!markerPosition.latitude || !markerPosition.longitude) {
 					console.log('meh');
 				} else {
+					// console.log(getRandomInt(0, 50))
 					var location = new google.maps.LatLng({
-						lat: markerPosition.latitude,
-						lng: markerPosition.longitude
+						lat: markerPosition.latitude + getRandom(0, 0.5),
+						lng: markerPosition.longitude + getRandom(0, 0.5)
 					});
 					var marker = new google.maps.Marker({
 						position: location,
@@ -581,7 +591,7 @@ var getData = function getData(map, data, markers) {
 						icon: icon,
 						userID: markerPosition.user_id,
 						userName: markerPosition.full_name,
-						url: ''
+						url: 'https://github.com/identicons/luke-siedle.png'
 					});
 					markers.push(marker);
 				}
@@ -607,8 +617,6 @@ var defineCenter = function defineCenter(lat, lng) {
 };
 
 /*eslint-disable */
-// import setGoogleMaps from './setGoogleMaps';
-// Places markers
 var placeMarkers = [];
 
 // Places holder
