@@ -6,31 +6,19 @@ $screen-md:                  992px;
 $screen-lg:                  1200px;
 
 $font-family:                Roboto;
-$outline-gray:               #F0F0F1;
+$outline-gray:             #F0F0F1;
+$white:                    #fff;                 
 
 
-
-body {
+html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
 #map {
-  background-color: transparent;
-
-  @media screen and (max-width: $screen-xs) {
-    width: 10%;
-    height: 100px;
-  }
-
-  @media screen and (max-width: $screen-sm) {
-    height: 100px;
-  }
   
-  @media screen and (max-width: $screen-md) {
-
-  }
+  background-color: transparent;
 
   @media screen and (max-width: $screen-lg) {
     position: relative;
@@ -38,171 +26,184 @@ body {
     height: 520px;
     width: 80%;
   }
+
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-sm) {
+    height: 100px;
+  }
+
+  @media screen and (max-width: $screen-xs) {
+    width: 100%;
+    height: 350px; 
+    position: absolute;
+    float: right;
+  }
+
 }
 
 
 #clusterize-user-panel {
-
-  @media (max-width: $screen-xs) {
-
-  }
-
-  @media (max-width: $screen-sm) {
-
-  }
   
-  @media (max-width: $screen-md) {
-
-  }
-
-  @media (max-width: $screen-lg) {
-
+  @media screen and (max-width: $screen-lg) {
     position: absolute;
     float:right;
     margin: 0 auto;
     width: 20%;
     height: 490px;
-    margin-top: 2.5%;
-    height: 100%;
+    margin-top: 4%;
+  }
+
+  @media screen and (max-width: $screen-sm) {
+
+  }
+
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-xs) {
+    float: right;
+    position: relative;
+    width: 100%;
+    height: 50%;
+    margin-top: 100%;
   }
 
 }
 
 .clusterize {
-
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-lg) {
 
   }
 
-  @media (max-width: $screen-sm) {
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-md) {
-
+  @media screen and (max-width: $screen-xs) {
+    height: 100%;
   }
 
-  @media (max-width: $screen-lg) {
-
-  }
 }
 
 
 #scrollArea {
   
-  @media (max-width: $screen-xs) {
+  @media screen and (max-width: $screen-lg) {
+    overflow-y: scroll;
+    height: 475px; 
+  }
+
+  @media screen and (max-width: $screen-md) {
 
   }
 
-  @media (max-width: $screen-sm) {
+  @media screen and (max-width: $screen-sm) {
 
   }
   
-  @media (max-width: $screen-md) {
-
-  }
-
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-xs) {
     overflow-y: scroll;
-    height: 490px; 
+    margin-top: 7%;
+    height: 100%;
   }
+
+}
+
+#clusterize-user-table {
+
+  @media screen and (max-width: $screen-lg) {
+    width: 98%;
+  }
+
+  @media screen and (max-width: $screen-md) {
+    width: 98%;
+  }
+
+  @media screen and (max-width: $screen-sm) {
+    width: 98%;
+  }
+  
+  @media screen and (max-width: $screen-xs) {
+    margin-top: 5%;
+    width: 98%;
+    height: 50%;
+    
+  }
+
 }
 
 #clusterize-user-cell {
-    
-  @media (max-width: $screen-xs) {
 
-  }
-
-  @media (max-width: $screen-sm) {
-
-  }
-  
-  @media (max-width: $screen-md) {
-
-  }
-
-  @media (max-width: $screen-lg) {
-    width: 100%;
-    height: 100%;
+  @media screen and (max-width: $screen-lg) {
+    width: 100%; 
+    height: 50%;
     position: relative;
     padding {
       top: 5%; 
       left: 5%;
     }
   }
+  
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-sm) {
+
+  }
+
+  @media screen and (max-width: $screen-xs) {
+    height: 110px;
+
+  }
+
 }
 
 #clusterize-user-cell:after {
-    
-  @media (max-width: $screen-xs) {
-
-  }
-
-  @media (max-width: $screen-sm) {
-
-  }
   
-  @media (max-width: $screen-md) {
-
-  }
-  
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-lg) {
     content: '';
     position: absolute;
-    width: 95%;
+    width: 95% !important;
     top: 2.5%;
     left: 5%;
     right: 5%;
     bottom: 2.5%;
-    outline: 2px solid $outline-gray;
+    margin-bottom: 2%;
+    outline: 4px solid $outline-gray;
   }
+
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-sm) {
+
+  }
+
+  @media screen and (max-width: $screen-xs) {
+    left: 3%;
+  }
+
 }
 
 #clusterize-user-cell {
         
-  @media (max-width: $screen-xs) {
-   h3 {  
-      float: left;
-      width: 10%;
-      color: black;
-      font-family: $font-family;
-      font-size: 10px;
-      font-style: bold;
-    }
-
-    img {
-      padding-left: 2.5%;
-      padding-bottom: 2.5%; 
-      float: left;
-    }
-
-    button {
-      float: right;
-      width: 10%;
-      height: 10%;
-      background: transparent;
-      border: solid 2px;
-      border-bottom: 3px solid;
-      font-weight: 700;
-    }
-  }
-
-  @media (max-width: $screen-sm) {
-
-  }
-  
-  @media (max-width: $screen-md) {
-
-  }
-
-  @media (max-width: $screen-lg) {
+  @media screen and (max-width: $screen-lg) {
 
     h3 {  
       margin-top: 2.5%;
       margin-left: 2.5%;
       float: left;
-      width: 40%;
+      width: 42%;
       overflow-wrap: break-word;
       color: black;
       font-family: $font-family;
@@ -222,16 +223,60 @@ body {
     }
 
     button {
-      position: absolute;
-      width: 23%;
+      align-self: right;
+      align-content: center;
+      margin-top: 7%;
+      margin-left: 2%;
+      padding: 0;
+      width: 24%;
       height: 18%;
       top: 45%;
-      right: 25%;
       background: transparent;
       border: solid 2px;
       border-bottom: 3px solid;
+      overflow: hidden;
       font-weight: 700;
       font-size: 12px;
+    }
+
+  }
+
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-sm) {
+
+  }
+
+  @media screen and (max-width: $screen-xs) {
+
+   h3 {  
+      float: left;
+      width: 25%;
+      color: black;
+      font-family: $font-family;
+      font-size: 16px;
+      font-style: bold;
+    }
+
+    img {
+      max-width: 30%;
+      max-height: 80%;
+      margin: 3%;
+      margin-top: 1%;
+      padding: 2%;
+      
+      float: left;
+    }
+
+    button {
+      width: 18%;
+      height: 27%;
+      bottom: 10%;
+      font-size: 15px;
+      
+
     }
 
   }
@@ -284,17 +329,42 @@ body {
 }
 
 #pac-input {
-  background-color: #fff;
-  margin: 0 auto;
-  margin-top: 0.25%;
-  margin-left: -5.5%;
-  font-family: $font-family;
-  font-size: 14px;
-  font-weight: 300;
-  position: fixed !important;
-  text-overflow: ellipsis;
-  width: 18%;
-  border-bottom: solid 2px black;
+
+  @media screen and (max-width: $screen-lg) {
+    background-color: $white;
+    margin-top: 1%;
+    left: 1% !important;
+    position: fixed !important;
+    font-family: $font-family;
+    font-size: 13px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    width: 18.25%;
+    border: 0;
+    outline: 0;
+    border-bottom: solid 2px black;
+  }
+
+  @media screen and (max-width: $screen-md) {
+
+  }
+
+  @media screen and (max-width: $screen-xs) {
+
+  }
+
+  @media screen and (max-width: $screen-sm) {
+    padding: 0;
+    margin: 0;
+    margin-top: 95%;
+    margin-left: 2.3%;
+    height: 5%;
+    width: 92.7%;
+    font-size: 16px;   
+
+    
+  }
+
 }
 
 #pac-input:focus {
