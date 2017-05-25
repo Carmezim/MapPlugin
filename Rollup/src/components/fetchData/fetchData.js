@@ -24,14 +24,14 @@ const getData = (map, data, markers) => {
 		fetch(localData)
 			.then((response) => response.json())
 			.then((dataset) => {
-				// add locations
-				// check for geocoordinates in dataset
+				// Add locations
+				// Check for geocoordinates in dataset
 				dataset.map((markerPosition) => {
 					if (!markerPosition.latitude || !markerPosition.longitude) {
 						console.log('meh');
 					}
 					else {
-						// console.log(getRandomInt(0, 50))
+					
 						let location = new google.maps.LatLng({
 							lat: markerPosition.latitude + getRandom(0, 0.5), 
 							lng: markerPosition.longitude + getRandom(0, 0.5)
@@ -40,6 +40,7 @@ const getData = (map, data, markers) => {
 							position: location,
 							map: localMap,
 							icon: icon,
+							optimized: false,
 							userID: markerPosition.user_id,
 							userName: markerPosition.full_name,
 							url:'https://github.com/identicons/luke-siedle.png'
@@ -47,12 +48,15 @@ const getData = (map, data, markers) => {
 						markers.push(marker);
 					}
 				});
-			// create MarkerClusterer
+			// Create MarkerClusterer
 			const markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
 			// Updates list when viewport changes
 			google.maps.event.addListener(localMap, 'bounds_changed', function() {
 				buildList(clusterize, listArray, markers, localMap);
-			});  
+			});
+			 google.maps.event.addListener(map, "idle", function() {
+				 google.maps.event.trigger(map, 'resize');
+			});
 		})
 		.catch((err) => {
 			if (err) throw err;
@@ -61,5 +65,3 @@ const getData = (map, data, markers) => {
 };
 
 export default getData;
-
-

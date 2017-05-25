@@ -45,8 +45,6 @@ const initialize = (data) => {
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 };
 
-
-
 const setHeight = (height) => {
 	let list = document.getElementById('map');
 	list.style='height:' + height.toString() + ';';
