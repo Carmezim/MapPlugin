@@ -10,49 +10,49 @@ $white:                    #fff;
 $black:                    #000000;
 
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 /* Map */
 #map-wrapper{
-  @import '../../../normalize';
+	@import '../../../normalize';
 
 
-  width: 100%;
-  height: 510px;
-  max-height: 510px;
+	width: 100%;
+	height: 100%;
+	max-height: 523px;
 }
 
 #map {
 
-  background-color: transparent;
+	background-color: transparent;
 
-  @media screen and (max-width: $screen-lg) {
-    position: relative;
-    float: right;
-    height: 100%;
-    width: 80%;
-  }
+	@media screen and (max-width: $screen-lg) {
+		position: relative;
+		float: right;
+		height: 100%;
+		width: 80%;
+	}
 
-  @media screen and (max-width: $screen-md) {
-    height: 100%;
-    width: 75%;
-  }
+	@media screen and (max-width: $screen-md) {
+		width: 75%;
+		height: 100%;
+	}
 
-  @media screen and (max-width: $screen-sm) {
-    width: 75%;
-    height: 100%;
-  }
+	@media screen and (max-width: $screen-sm) {
+		width: 70%;
+		height: 100%;
+	}
 
-  @media screen and (max-width: $screen-xs) {
-    width: 100%;
-    height: 60%; 
-    position: absolute;
-    float: right;
-    
-  }
+	@media screen and (max-width: $screen-xs) {
+		width: 100%;
+		height: 60%; 
+		position: absolute;
+		float: right;
+		
+	}
 
 }
 
@@ -61,386 +61,419 @@ html, body {
  /* USer List */
 
 #clusterize-user-panel {
-  @import '../../../normalize';
+	@import '../../../normalize';
 
-  
-  @media screen and (max-width: $screen-lg) {
-    position: absolute;
-    float:right;
-    width: 20%;
-    height: 490px;
-    margin-top: 3.5%;
-    margin-left: auto;
-    margin-right: auto;
-  }
+	
+	@media screen and (max-width: $screen-lg) {
+		position: absolute;
+		float:right;
+		width: 20%;
+		height: 490px;
+		margin-top: 3.5%;
+		margin-left: auto;
+		margin-right: auto;
+	}
 
-  @media screen and (max-width: $screen-sm) {
+	@media screen and (max-width: $screen-md) {
+		width: 25%;
 
-  }
+	}
 
-  @media screen and (max-width: $screen-md) {
-    width: 25%;
+	@media screen and (max-width: $screen-sm) {
+		width: 30%;
+	}
 
-  }
-
-  @media screen and (max-width: $screen-xs) {
-    float: right;
-    position: relative;
-    width: 100%;
-    height: 35%;
-    margin-top: 100%;
-  }
+	@media screen and (max-width: $screen-xs) {
+		float: right;
+		position: relative;
+		width: 100%;
+		height: 35%;
+		margin-top: 100%;
+	}
 
 }
 
 .clusterize {
-  @media screen and (max-width: $screen-lg) {
+	@media screen and (max-width: $screen-lg) {
 
-  }
+	}
 
-  @media screen and (max-width: $screen-md) {
+	@media screen and (max-width: $screen-md) {
 
-  }
+	}
 
-  @media screen and (max-width: $screen-sm) {
+	@media screen and (max-width: $screen-sm) {
 
-  }
-  
-  @media screen and (max-width: $screen-xs) {
-    height: 100%;
-  }
+	}
+	
+	@media screen and (max-width: $screen-xs) {
+		height: 100%;
+	}
 
 }
 
+#scrollArea::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(143, 148, 153);
+	border-radius: 10px;
+	background-color: $white;
+}
+
+#scrollArea::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: $white;
+}
+
+#scrollArea::-webkit-scrollbar-thumb
+{
+	border-radius: 12px;
+	-webkit-box-shadow: inset 0 0 6px rgba(143, 148, 153);
+	background-color: gray;
+}
 
 #scrollArea {
-  
-  @media screen and (max-width: $screen-lg) {
-    overflow-y: scroll;
-    height: 475px; 
-  }
+	max-height: 482px; 
+	overflow-y: scroll;
+	
+	@media screen and (max-width: $screen-lg) {  
+		height: 100%; 
+	}
 
-  @media screen and (max-width: $screen-md) {
-    margin-top: 9%;
-  }
+	@media screen and (max-width: $screen-md) {
+		margin-top: 9%;
+		height: 471px;
+	}
 
-  @media screen and (max-width: $screen-sm) {
-    margin-top: 9%;
-  }
-  
-  @media screen and (max-width: $screen-xs) {
-    overflow-y: scroll;
-    margin-top: 5%;
-    height: 100%;
-  }
+	@media screen and (max-width: $screen-sm) {
+		height: 477px;
+		margin-top: 9%;
+	}
+	
+	@media screen and (max-width: $screen-xs) {
+		overflow-y: scroll;
+		margin-top: 5%;
+		height: 100%;
+	}
 
 }
 
 #clusterize-user-table {
 
-  @media screen and (max-width: $screen-lg) {
-    width: 98%;
-  }
+	@media screen and (max-width: $screen-lg) {
+		width: 98%;
+	}
 
-  @media screen and (max-width: $screen-md) {
-    width: 98%;
-  }
+	@media screen and (max-width: $screen-md) {
+		width: 98%;
+	}
 
-  @media screen and (max-width: $screen-sm) {
-    width: 98%;
-  }
-  
-  @media screen and (max-width: $screen-xs) {
-    margin-top: 7%;
-    width: 98%;
-    height: 100%;
-    
-  }
+	@media screen and (max-width: $screen-sm) {
+		width: 98%;
+	}
+	
+	@media screen and (max-width: $screen-xs) {
+		margin-top: 7%;
+		width: 98%;
+		height: 100%;
+		
+	}
 
 }
 
 #clusterize-user-cell {
 
-  @media screen and (max-width: $screen-lg) {
-    width: 100%; 
-    height: 80%;
-    position: relative;
-    padding {
-      top: 5%; 
-      left: 5%;
-    }
-  }
-  
-  @media screen and (max-width: $screen-md) {
-    
-  }
+	@media screen and (max-width: $screen-lg) {
+		width: 100%; 
+		height: 80%;
+		position: relative;
+		padding {
+			top: 5%; 
+			left: 5%;
+		}
+	}
+	
+	@media screen and (max-width: $screen-md) {
+		
+	}
 
-  @media screen and (max-width: $screen-sm) {
-    width: 100%;
-  }
+	@media screen and (max-width: $screen-sm) {
+		width: 100%;
+	}
 
-  @media screen and (max-width: $screen-xs) {
-    height: 110px;
+	@media screen and (max-width: $screen-xs) {
+		height: 110px;
 
-  }
+	}
 
 }
 
 #clusterize-user-cell:after {
-  
-  @media screen and (max-width: $screen-lg) {
-    content: '';
-    position: absolute;
-    width: 95% !important;
-    max-width: 200px;
-    top: 2.5%;
-    bottom: 2.5%;
-    left: 4%;
-    right: 4%;
-    bottom: 2.5%;
-    margin-bottom: 2%;
-    outline: 4px solid $outline-gray;
-  }
+	
+	@media screen and (max-width: $screen-lg) {
+		content: '';
+		position: absolute;
+		width: 95% !important;
+		max-width: 200px;
+		top: 2.5%;
+		bottom: 2.5%;
+		left: 4%;
+		right: 4%;
+		bottom: 2.5%;
+		margin-bottom: 2%;
+		outline: 4px solid $outline-gray;
+	}
 
-  @media screen and (max-width: $screen-md) {
-    width: 95% !important;
-    max-width: 220px;
-    margin-right: 0;
-  }
+	@media screen and (max-width: $screen-md) {
+		width: 95% !important;
+		max-width: 220px;
+		margin-right: 0;
+	}
 
-  @media screen and (max-width: $screen-sm) {
-    width: 90% !important;
-    margin-top: 2%;
-    margin-left: 2%;
-  }
+	@media screen and (max-width: $screen-sm) {
+		width: 90% !important;
+		margin-top: 2%;
+		margin-left: 2%;
+	}
 
-  @media screen and (max-width: $screen-xs) {
-    left: 3%;
-    margin-left: 0.5%;
-  }
+	@media screen and (max-width: $screen-xs) {
+		left: 3%;
+		margin-left: 0.5%;
+	}
 
 }
 
 #clusterize-user-cell {
-        
-  @media screen and (max-width: $screen-lg) {
+				
+	@media screen and (max-width: $screen-lg) {
 
-    h3 {
-      display: inline-block;
-      margin-top: 8%;
-      margin-left: 4%;
-      width: 30%;
-      word-break: break-all;
-      color: $black;
-      font-family: $font-family;
-      font-size: 1.1vw;
-      font-weight: 700;
-      hyphens: auto;
-    }
+		h3 {
+			display: inline-block;
+			margin-top: 8%;
+			margin-left: 4%;
+			width: 30%;
+			word-break: break-all;
+			color: $black;
+			font-family: $font-family;
+			font-size: 1.1vw;
+			font-weight: 700;
+			hyphens: auto;
+		}
 
-    img {
-      margin-left: 6%;
-      margin-bottom: 6%;
-      margin-top: 4%; 
-      float: left;
-      width: 100%;
-      height: 100%;
-      max-width: 100px;
-      max-height: 100px;
-    }
+		img {
+			margin-left: 6%;
+			margin-bottom: 6%;
+			margin-top: 4%; 
+			float: left;
+			width: 100%;
+			height: 100%;
+			max-width: 100px;
+			max-height: 100px;
+		}
 
-    button {
-      margin-top: 7%;
-      margin-left: 3.5%;
-      padding: 0;
-      width: 26%;
-      height: 18.5%;
-      background: transparent;
-      border: solid 2px;
-      border-bottom: 3px solid;
-      overflow: hidden;
-      font-weight: 700;
-      font-size: 12px;
-    }
+		button {
+			margin-top: 7%;
+			margin-left: 3.5%;
+			padding: 0;
+			width: 26%;
+			height: 18.5%;
+			background: transparent;
+			border: solid 2px;
+			border-bottom: 3px solid;
+			overflow: hidden;
+			font-weight: 700;
+			font-size: 12px;
+		}
 
-  }
+	}
 
-  @media screen and (max-width: $screen-md) {
-    h3 {
-      position: absolute;
-      top: 10%;
-      font-size: 1.3vw;
-      hyphens: auto;
-      width: 28%;
-      margin-top: 0;
-      overflow:hidden; 
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    img {
-      margin-top: 4%;
-      margin-left: 7%;
-      max-width: 80px;
-      max-height: 80px;
-    }
-    button {
-      width: 25%;
-      height: 25%;
-      margin-top: 20%;
-      font-size: 11px;
-      
-      
-    }
-  }
+	@media screen and (max-width: $screen-md) {
+		h3 {
+			position: absolute;
+			top: 10%;
+			font-size: 1.3vw;
+			hyphens: auto;
+			width: 28%;
+			margin-top: 0;
+			overflow:hidden; 
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		img {
+			margin-top: 4%;
+			margin-left: 7%;
+			max-width: 80px;
+			max-height: 80px;
+		}
+		button {
+			width: 25%;
+			height: 25%;
+			margin-top: 20%;
+			font-size: 11px;
+			
+			
+		}
+	}
 
-  @media screen and (max-width: $screen-sm) {
-    img {
-      margin-top: 6%;
-      margin-left: 9%;
-    }
-  }
+	@media screen and (max-width: $screen-sm) {
+		h3 {
+			margin-top: 2%;
+			font-size: 1.7vw;
 
-  @media screen and (max-width: $screen-xs) {
-   h3 {  
-      float: left;
-      width: 25%;
-      color: $black;
-      word-break: break-all;
-      font-family: $font-family;
-      font-size: 16px;
-      font-style: bold;
-      hyphens: auto;
-    }
+		}
+		img {
+			margin-top: 6%;
+			margin-left: 9%;
+			max-width: 70px;
+			max-height: 70px;
+		}
+		button {
+			margin-top: 23%;
+		}
+	}
 
-    img {
-      max-width: 30%;
-      max-height: 80%;
-      margin: 3%;
-      margin-top: 1%;
-      padding: 2%;
-      
-      float: left;
-    }
+	@media screen and (max-width: $screen-xs) {
+	 h3 {  
+			float: left;
+			width: 25%;
+			color: $black;
+			word-break: break-all;
+			font-family: $font-family;
+			font-size: 16px;
+			font-style: bold;
+			hyphens: auto;
+		}
 
-    button {
-      position: absolute;
-      width: 18%;
-      height: 27%;
-      top: 20%;
-      right: 40%;
-      font-size: 15px;
-      font-weight: 700;
-    }
-  }
+		img {
+			max-width: 30%;
+			max-height: 80%;
+			margin: 3%;
+			margin-top: 1%;
+			padding: 2%;
+			
+			float: left;
+		}
+
+		button {
+			position: absolute;
+			width: 18%;
+			height: 27%;
+			top: 20%;
+			right: 40%;
+			font-size: 15px;
+			font-weight: 700;
+		}
+	}
 }
 
 /* Search Box */
 
 #description {
-  font-family: $font-family;
-  font-size: 15px;
-  font-weight: 300;
+	font-family: $font-family;
+	font-size: 15px;
+	font-weight: 300;
 }
 
 #infowindow-content .title {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 #infowindow-content {
-  display: none;
+	display: none;
 }
 
 #map #infowindow-content {
-  display: inline;
+	display: inline;
 }
 
 .pac-card {
-  margin: 10px 10px 0 0;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  background-color: #fff;
-  font-family: $font-family;
+	margin: 10px 10px 0 0;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	background-color: #fff;
+	font-family: $font-family;
 }
 
 #pac-container {
-  padding-bottom: 12px;
-  margin-right: 12px;
+	padding-bottom: 12px;
+	margin-right: 12px;
 }
 
 .pac-controls {
-  display: inline-block;
-  padding: 5px 11px;
+	display: inline-block;
+	padding: 5px 11px;
 }
 
 .pac-controls label {
-  font-family: $font-family;
-  font-size: 13px;
-  font-weight: 300;
+	font-family: $font-family;
+	font-size: 13px;
+	font-weight: 300;
 }
 
 #pac-input {
-  @import '../../../normalize';
+	@import '../../../normalize';
 
-  background: url("https://image.flaticon.com/icons/svg/149/149852.svg") right no-repeat;
-  
-  @media screen and (max-width: $screen-lg) {
-    background-color: $white;
-    position: fixed !important;
-    width: 18.5%;
-    margin-top: 1%;
-    padding-left: 0.5%;
-    left: 0.5% !important;
-    border: 0;
-    outline: 0;
-    border-bottom: solid 2px black;
-    font-family: $font-family;
-    font-size: 13px;
-    font-weight: 500;
-    text-overflow: ellipsis;
-  }
+	background: url("https://image.flaticon.com/icons/svg/149/149852.svg") right no-repeat;
+	
+	@media screen and (max-width: $screen-lg) {
+		background-color: $white;
+		position: fixed !important;
+		width: 18.5%;
+		margin-top: 1%;
+		padding-left: 0.5%;
+		left: 0.5% !important;
+		border: 0;
+		outline: 0;
+		border-bottom: solid 2px black;
+		font-family: $font-family;
+		font-size: 13px;
+		font-weight: 500;
+		text-overflow: ellipsis;
+	}
 
-  @media screen and (max-width: $screen-md) {
-    width: 23%;    
-    padding-bottom: 0.5%;
-    padding-left: 0.4%;
-    margin-left: 0%;
-    margin-top: 2%;    
-    height: 2.5%;
-    font-size: 15px;  
-    font-weight: 500;
-  }
+	@media screen and (max-width: $screen-md) {
+		width: 23%;    
+		background-size: 7%;
+		padding-bottom: 0.5%;
+		padding-left: 0.4%;
+		margin-left: 0%;
+		margin-top: 2%;    
+		height: 2.5%;
+		font-size: 15px;  
+		font-weight: 500;
+	}
 
-  @media screen and (max-width: $screen-sm) {
-    background-size: 8%;
-    padding-left: 0.5%;
-    margin-top: 2%;
-    margin-left: 0.5%;
-    margin-bottom: 0;
-    height: 3%;
-    width: 22%;
-    font-size: 14px;  
-  }
+	@media screen and (max-width: $screen-sm) {
+		background-size: 8%;
+		padding-left: 0.5%;
+		margin-top: 2%;
+		margin-left: 1%;
+		margin-bottom: 0;
+		height: 3%;
+		width: 26.25%;
+		font-size: 14px;  
+	}
 
-  @media screen and (max-width: $screen-xs) {
-    padding: 0;
-    margin: 0;
-    margin-top: 95%;
-    margin-left: 2.3%;
-    height: 5%;
-    width: 92.7%;
-    font-size: 16px;   
-  }
+	@media screen and (max-width: $screen-xs) {
+		padding: 0;
+		margin: 0;
+		margin-top: 95%;
+		margin-left: 2.3%;
+		height: 5%;
+		width: 92.7%;
+		font-size: 16px;   
+	}
 
 }
 
 #pac-input:focus {
-  border-color: #4d90fe;
+	border-color: #4d90fe;
 }
 
 
 #target {
-  width: 345px;
+	width: 345px;
 }
