@@ -475,6 +475,7 @@ var mapStyles = [{
 	}]
 }];
 
+// Map options
 var mapOptions = {
 	zoom: 4,
 	center: null,
@@ -537,9 +538,20 @@ var buildList = function buildList(clusterize, listArray, markers, localMap) {
 	clusterize.clear();
 	markers.map(function (user) {
 		if (localMap.getBounds().contains(user.getPosition())) {
-			listArray.push('<tr><td id="clusterize-user-cell">' + '<img id="clusterize-avatar" src="' + user.url + '" height="150" width="150" >' + '<h3 id="clusterize-user-name">' + user.userName + '</h3>' + '<button id="clusterize-user-button" name="follow">Follow</button>' + '</td></tr>');
+			listArray.push('<tr id="clusterize-user-row-' + user.userID + '"><a href=""><td id="clusterize-user-cell" href=>' + '<img id="clusterize-avatar" src="' + user.url + '" height="150" width="150" >' + '<h3 id="clusterize-user-name">' + user.userName + '</h3>' + '<button id="clusterize-user-button" name="follow">Follow</button>' + '</td></tr>');
 		}
+
+		// Dsiplay user info on sidebar 
+		var showUserInfo = function showUserInfo() {
+			clusterize.clear();
+			clusterize.update(['<tr><td>' + '<img id="clusterize-avatar" src="' + user.url + '" height="150" width="150">' + '</br> user ID: ' + user.userID + '</br> User: ' + user.userName + '</br> City: ' + user.city + '</br> Country: ' + user.country + '</td></tr>']);
+			clusterize.refresh();
+		};
+
+		// On marker clikc user info is displayed
+		google.maps.event.addDomListener(user, 'click', showUserInfo);
 	});
+
 	clusterize.update(listArray);
 	clusterize.refresh();
 };
@@ -574,13 +586,13 @@ var getData = function getData(map, data, markers) {
 		fetch(localData).then(function (response) {
 			return response.json();
 		}).then(function (dataset) {
-			// add locations
-			// check for geocoordinates in dataset
+			// Add locations
+			// Check for geocoordinates in dataset
 			dataset.map(function (markerPosition) {
 				if (!markerPosition.latitude || !markerPosition.longitude) {
 					console.log('meh');
 				} else {
-					// console.log(getRandomInt(0, 50))
+
 					var location = new google.maps.LatLng({
 						lat: markerPosition.latitude + getRandom(0, 0.5),
 						lng: markerPosition.longitude + getRandom(0, 0.5)
@@ -589,18 +601,24 @@ var getData = function getData(map, data, markers) {
 						position: location,
 						map: localMap,
 						icon: icon,
+						optimized: false,
 						userID: markerPosition.user_id,
 						userName: markerPosition.full_name,
+						country: markerPosition.country,
+						city: markerPosition.city,
 						url: 'https://github.com/identicons/luke-siedle.png'
 					});
 					markers.push(marker);
 				}
 			});
-			// create MarkerClusterer
+			// Create MarkerClusterer
 			var markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
 			// Updates list when viewport changes
 			google.maps.event.addListener(localMap, 'bounds_changed', function () {
 				buildList(clusterize$$1, listArray, markers, localMap);
+			});
+			google.maps.event.addListener(map, "idle", function () {
+				google.maps.event.trigger(map, 'resize');
 			});
 		}).catch(function (err) {
 			if (err) throw err;
@@ -617,6 +635,8 @@ var defineCenter = function defineCenter(lat, lng) {
 };
 
 /*eslint-disable */
+// import setGoogleMaps from './setGoogleMaps';
+// Places markers
 var placeMarkers = [];
 
 // Places holder
@@ -649,12 +669,12 @@ var initialize = function initialize(data) {
 };
 
 var setHeight = function setHeight(height) {
-	var list = document.getElementById('list');
+	var list = document.getElementById('map');
 	list.style = 'height:' + height.toString() + ';';
 };
 
 var setWidth = function setWidth(width) {
-	var list = document.getElementById('list');
+	var list = document.getElementById('map');
 	list.style = 'width:' + width.toString() + ';';
 };
 
