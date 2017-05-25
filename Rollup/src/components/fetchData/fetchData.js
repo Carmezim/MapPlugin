@@ -43,6 +43,8 @@ const getData = (map, data, markers) => {
 							optimized: false,
 							userID: markerPosition.user_id,
 							userName: markerPosition.full_name,
+							country: markerPosition.country,
+							city: markerPosition.city,
 							url:'https://github.com/identicons/luke-siedle.png'
 						});
 						markers.push(marker);

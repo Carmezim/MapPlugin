@@ -16,9 +16,11 @@ const buildList = (clusterize, listArray, markers, localMap) => {
 		const showUserInfo = () => {
 			clusterize.clear();
 			clusterize.update([
-				'<tr><td>' + '<img id="clusterize-avatar" src="' + user.url + '" height="150" width="150">'
-				 + '</br> user ID: ' + user.userID + '</br>' 	
-				 + 'User: ' + user.userName + '</td></tr>'
+				'<tr><td>' + '<img id="clusterize-avatar" src="' + user.url + '" height="150" width="150">' +
+				'</br> user ID: ' + user.userID +
+				'</br> User: ' + user.userName + 
+				'</br> City: ' + user.city + 
+				'</br> Country: ' + user.country + '</td></tr>'
 			]);
 			clusterize.refresh();
 		};
