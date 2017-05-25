@@ -15,10 +15,8 @@
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-css-only": "^0.2.0",
     "rollup-plugin-livereload": "^0.4.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-scss": "^0.2.0",
     "rollup-plugin-serve": "^0.3.0",
     "rollup-plugin-uglify": "^1.0.2",
     "rollup-watch": "^3.2.2"
@@ -35,6 +33,11 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "clusterize.js": "^0.17.6"
+    "clusterize.js": "^0.17.6",
+    "cssnano": "^3.10.0",
+    "postcss-cssnext": "^2.11.0",
+    "postcss-nested": "^2.0.2",
+    "postcss-simple-vars": "^4.0.0",
+    "rollup-plugin-postcss": "^0.5.1"
   }
 }

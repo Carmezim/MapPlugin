@@ -8,9 +8,10 @@ import livereload from 'rollup-plugin-livereload';
 import path from 'path';
 
 // CSS plugins
-//import uglify from 'rollup-plugin-uglify';
-import scss from 'rollup-plugin-scss';
-
+import postcss from 'rollup-plugin-postcss';
+import simplevars from 'postcss-simple-vars';
+import nested from 'postcss-nested';
+import cssnext from 'postcss-cssnext';
 
 const PATHS = {
 	src: path.resolve(__dirname, 'src'),
@@ -35,10 +36,23 @@ export default {
 	moduleName: 'Maps',
 	sourceMap: true,
 	plugins: [
-		scss({ // css has to be imported in entry file e.g. inside old_maps.js
-		  // Output if set to true, the default behaviour is to write all styles to the bundle destination where .js is replaced by .css
-		  // Using specific file in this case
-		  output: './dist/styles/maps.bundle.css',
+		postcss({
+			sourceMap: true,
+			extensions: ['.css', '.scss', '.sass'],
+			extract: './dist/styles/maps.bundle.css',
+			plugins: [
+				// allows for sass like variables
+				simplevars(),
+				// allows rules to be nested
+				nested(),
+				// enables most current CSS syntax transpailing it to work in older browsers that 
+				// do not support the new features
+				cssnext({ 
+					// cssnano and cssnext use autoprefixer which triggers a warning (harmless) so we
+					// are disbaling its warning for duplicates
+					warnForDuplicates: false, 
+				}),
+			],
 		}),
 		resolve({
 			// not all files you want to resolve are .js files
