@@ -1,0 +1,12 @@
+@import './normalize';
+@import './variables.scss';
+@import './map.scss';
+@import './userList.scss';
+@import './searchBox';
+
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
