@@ -12,6 +12,13 @@
 #map {
 	background-color: transparent;
 
+	@media screen and (min-width: $screen-lg) {
+		position: relative;
+		width: 85%;
+		float: right;
+		height: 100%;
+	}
+
 	@media screen and (max-width: $screen-lg) {
 		position: relative;
 		float: right;
