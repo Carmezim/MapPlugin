@@ -1,6 +1,7 @@
 /* Search Box */
 
-@import '../../../normalize';
+@import './normalize';
+@import './variables.scss';
 
 
 #description {
@@ -49,7 +50,7 @@
 }
 
 #pac-input {
-	@import '../../../normalize';
+	@import './normalize';
 
 	background: url("https://image.flaticon.com/icons/svg/149/149852.svg") right no-repeat;
 	

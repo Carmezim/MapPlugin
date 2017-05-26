@@ -1,6 +1,7 @@
 /* Map */
 
-@import '../../../normalize';
+@import './normalize';
+@import './variables.scss';
 
 #map-wrapper {
 	width: 100%;
