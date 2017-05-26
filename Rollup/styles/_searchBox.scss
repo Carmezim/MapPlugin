@@ -1,0 +1,115 @@
+/* Search Box */
+
+@import './normalize';
+@import './variables.scss';
+
+
+#description {
+	font-family: $font-family;
+	font-size: 15px;
+	font-weight: 300;
+}
+
+#infowindow-content .title {
+	font-weight: bold;
+}
+
+#infowindow-content {
+	display: none;
+}
+
+#map #infowindow-content {
+	display: inline;
+}
+
+.pac-card {
+	margin: 10px 10px 0 0;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	background-color: #fff;
+	font-family: $font-family;
+}
+
+#pac-container {
+	padding-bottom: 12px;
+	margin-right: 12px;
+}
+
+.pac-controls {
+	display: inline-block;
+	padding: 5px 11px;
+}
+
+.pac-controls label {
+	font-family: $font-family;
+	font-size: 13px;
+	font-weight: 300;
+}
+
+#pac-input {
+	@import './normalize';
+
+	background: url("https://image.flaticon.com/icons/svg/149/149852.svg") right no-repeat;
+	
+	@media screen and (max-width: $screen-lg) {
+		background-color: $white;
+		position: fixed !important;
+		width: 18.5%;
+		margin-top: 1%;
+		padding-left: 0.5%;
+		left: 0.5% !important;
+		border: 0;
+		outline: 0;
+		border-bottom: solid 2px black;
+		font-family: $font-family;
+		font-size: 13px;
+		font-weight: 500;
+		text-overflow: ellipsis;
+	}
+
+	@media screen and (max-width: $screen-md) {
+		width: 23%;    
+		background-size: 7%;
+		padding-bottom: 0.5%;
+		padding-left: 0.4%;
+		margin-left: 0%;
+		margin-top: 2%;    
+		height: 2.5%;
+		font-size: 15px;  
+		font-weight: 500;
+	}
+
+	@media screen and (max-width: $screen-sm) {
+		background-size: 8%;
+		padding-left: 0.5%;
+		margin-top: 2%;
+		margin-left: 1%;
+		margin-bottom: 0;
+		height: 3%;
+		width: 26.25%;
+		font-size: 14px;  
+	}
+
+	@media screen and (max-width: $screen-xs) {
+		padding: 0;
+		margin: 0;
+		margin-top: 95%;
+		margin-left: 2.3%;
+		height: 5%;
+		width: 92.7%;
+		font-size: 16px;   
+	}
+
+}
+
+#pac-input:focus {
+	border-color: #4d90fe;
+}
+
+
+#target {
+	width: 345px;
+}

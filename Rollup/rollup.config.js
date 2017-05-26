@@ -12,6 +12,9 @@ import postcss from 'rollup-plugin-postcss';
 import simplevars from 'postcss-simple-vars';
 import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
+import cssnano from 'cssnano';
+import sass from 'node-sass';
+
 
 const PATHS = {
 	src: path.resolve(__dirname, 'src'),
@@ -29,6 +32,11 @@ const babelConfig = {
 	]
 };
 
+const preprocessor = (content, id) => new Promise((resolve, reject) => {
+    const result = sass.renderSync({ file: id });
+    resolve({ code: result.css.toString() });
+});
+
 export default {  
 	entry: './src/components/map/map.js',
 	dest: './dist/js/maps.bundle.js',
@@ -37,9 +45,10 @@ export default {
 	sourceMap: true,
 	plugins: [
 		postcss({
+			preprocessor,
 			sourceMap: true,
 			extensions: ['.css', '.scss', '.sass'],
-			extract: './dist/styles/maps.bundle.css',
+			extract: './dist/styles/main.bundle.css',
 			plugins: [
 				// allows for sass like variables
 				simplevars(),
@@ -51,6 +60,12 @@ export default {
 					// cssnano and cssnext use autoprefixer which triggers a warning (harmless) so we
 					// are disbaling its warning for duplicates
 					warnForDuplicates: false, 
+				}),
+				cssnano({
+					browser: ['last 2 versions'],
+					discardComments: {
+							removeAll: true
+					}
 				}),
 			],
 		}),

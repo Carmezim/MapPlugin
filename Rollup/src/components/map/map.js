@@ -1,5 +1,5 @@
 /*eslint-disable */
-import './map.scss';
+import '../../../styles/main.scss';
 
 import createSearchBox from '../searchBox/createSearchBox';
 import searchBox from '../searchBox/searchBox';
