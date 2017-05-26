@@ -62,7 +62,7 @@ export default {
 					warnForDuplicates: false, 
 				}),
 				cssnano({
-					browser: {'last 2 versions'},
+					browser: ['last 2 versions'],
 					discardComments: {
 							removeAll: true
 					}
