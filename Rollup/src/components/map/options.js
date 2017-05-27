@@ -3,7 +3,7 @@ import mapStyles from './mapStyles';
 
 // Map options
 const mapOptions = {
-	zoom: 4,
+	zoom: 2,
 	center: null,
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
 	styles: mapStyles

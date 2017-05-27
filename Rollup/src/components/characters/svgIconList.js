@@ -1,0 +1,32 @@
+const svgList = [
+	'marker',
+	'icon_5',
+	'icon_6',
+	'icon_7',
+	'icon_9',
+	'icon_10',
+	'icon_11',
+	"icon_12",
+	'icon_13',
+	'icon_14',
+	'icon_15',
+	'icon_17',
+	'icon_19',
+	'icon_20',
+	'icon_21', 
+	'icon_22',
+	'icon_23',
+	'icon_24',
+	'icon_25',
+	'icon_26',
+	'icon_27',
+	'icon_28',
+	'icon_29',
+	'icon_30',
+	'icon_31',
+	'icon_32', 
+	'icon_33',
+	'icon_34'
+];
+
+export default svgList;

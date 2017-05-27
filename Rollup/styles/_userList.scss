@@ -1,14 +1,10 @@
  /* USer List */
 
 @import './normalize';
-@import './variables';
+@import './variables.scss';
 
 
 #clusterize-user-panel {
-	
-	@media screen and (min-width: $screen-xlg) {
-
-	}
 
 	@media screen and (min-width: $screen-lg) {
 		position: absolute;
@@ -32,6 +28,7 @@
 
 	@media screen and (max-width: $screen-md) {
 		width: 25%;
+
 	}
 
 	@media screen and (max-width: $screen-sm) {
@@ -53,7 +50,6 @@
 	@media screen and (min-width: $screen-lg) {
 		
 	}
-
 	@media screen and (max-width: $screen-lg) {
 
 	}
@@ -70,6 +66,26 @@
 		height: 100%;
 	}
 
+}
+
+#scrollArea::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgb(143, 148, 153);
+	border-radius: 10px;
+	background-color: $white;
+}
+
+#scrollArea::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: $white;
+}
+
+#scrollArea::-webkit-scrollbar-thumb
+{
+	border-radius: 12px;
+	-webkit-box-shadow: inset 0 0 6px rgb(143, 148, 153);
+	background-color: gray;
 }
 
 #scrollArea {
@@ -103,29 +119,11 @@
 
 }
 
-
-#scrollArea::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgb(143, 148, 153);
-	border-radius: 10px;
-	background-color: $white;
-}
-
-#scrollArea::-webkit-scrollbar {
-	width: 5px;
-	background-color: $white;
-}
-
-#scrollArea::-webkit-scrollbar-thumb {
-	border-radius: 12px;
-	-webkit-box-shadow: inset 0 0 6px rgb(143, 148, 153);
-	background-color: gray;
-}
-
-
 #clusterize-user-table {
 
 	@media screen and (min-width: $screen-lg) {
 		width: 98%;
+
 	}
 
 	@media screen and (max-width: $screen-lg) {
@@ -143,7 +141,8 @@
 	@media screen and (max-width: $screen-xs) {
 		margin-top: 1%;
 		width: 98%;
-		height: 100%;		
+		height: 100%;
+		
 	}
 
 }
@@ -180,6 +179,7 @@
 
 	@media screen and (max-width: $screen-xs) {
 		height: 110px;
+
 	}
 
 }
@@ -318,6 +318,7 @@
 			font-weight: 700;
 			font-size: 12px;
 		}
+
 	}
 
 	@media screen and (max-width: $screen-md) {
@@ -385,6 +386,7 @@
 			margin-top: 4%;
 			margin-left: 5%;
 			padding: 2%;
+			
 			float: left;
 		}
 

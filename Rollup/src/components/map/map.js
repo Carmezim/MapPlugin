@@ -6,6 +6,7 @@ import searchBox from '../searchBox/searchBox';
 import fetchData from '../fetchData/fetchData';
 import createMap from './createMap';
 import defineCenter from './defineCenter';
+import placeCharacters from '../characters/placeCharacters';
 // import setGoogleMaps from './setGoogleMaps';
 import {
 	icon,
@@ -36,13 +37,19 @@ let sBox = createSearchBox(map);
 // 	setGoogleMaps(apiKey);
 // };
 
-
 const initialize = (data) => {
 	// fetch dataset
 	fetchData(map, data, markers);
 
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
+
+	placeCharacters(map);
+};
+
+const setCenter = (lat, lng) => {
+	
+	addCenterToOptions(defineCenter(parseFloat(lat), parseFloat(lng)));
 };
 
 const setHeight = (height) => {
