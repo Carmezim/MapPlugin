@@ -2,6 +2,8 @@ import Clusterize from 'clusterize.js';
 import { icon, clusterOptions } from '../map/options';
 import buildList from '../buildList/buildList';
 import checkData from './checkData';
+import '../../polyfill';
+import 'whatwg-fetch';
 
 
 const getData = (map, data, markers) => {

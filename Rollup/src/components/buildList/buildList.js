@@ -1,3 +1,7 @@
+import '../../polyfill';
+import 'whatwg-fetch';
+
+
 const buildList = (clusterize, listArray, markers, localMap) => {
 	listArray = [];
 	clusterize.clear();

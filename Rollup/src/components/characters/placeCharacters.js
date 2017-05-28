@@ -8,9 +8,9 @@ const placeCharacters = (map) => {
 	fetch("./datasets/capitals.json")
 		.then((response) => response.json())
 		.then((capitals) => {
-			for (let i = 2; i < capitals.length; i++, j++) {
+			for (let i = 0; i < capitals.length; i++, j++) {
 				if (j === svgList.length) {
-					j = 2;
+					j = 0;	
 				}
 				// Character object 
 				let character = {
