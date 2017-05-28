@@ -1,8 +1,10 @@
 // Rollup plugins
+import globals from "rollup-plugin-node-globals"
 import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import multiEntry from 'rollup-plugin-multi-entry';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import path from 'path';
@@ -38,12 +40,32 @@ const preprocessor = (content, id) => new Promise((resolve, reject) => {
 });
 
 export default {  
+	onwarn: function(warning) {
+    // Skip certain warnings
+
+    // should intercept ... but doesn't in some rollup versions
+    if ( warning.code === 'THIS_IS_UNDEFINED' ) { return; }
+
+    // console.warn everything else
+    console.warn( warning.message );
+	},
 	entry: './src/components/map/map.js',
 	dest: './dist/js/maps.bundle.js',
 	format: 'umd',
 	moduleName: 'Maps',
 	sourceMap: true,
 	plugins: [
+		resolve({
+			// not all files you want to resolve are .js files
+			extensions: [ '.js', '.json' ],  // Default: ['.js']
+			jsnext: true,
+			main: true,
+			browser: true,
+			module: true,
+		}),
+		commonjs(),
+		globals(),
+		multiEntry(),
 		postcss({
 			preprocessor,
 			sourceMap: true,
@@ -69,20 +91,12 @@ export default {
 				}),
 			],
 		}),
-		resolve({
-			// not all files you want to resolve are .js files
-			extensions: [ '.js', '.json' ],  // Default: ['.js']
-			jsnext: true,
-			main: true,
-			browser: true,
-			module: true,
-		}),
 		babel(babelrc({
 			addExternalHelpersPlugin: false,
 			config: babelConfig,
 			exclude: './node_modules/**',
+			include: './node_modules/whatwg-fetch'
 		})),
-		commonjs(),
 		serve({
 			open: true,
 			contentBase: 'dist',
