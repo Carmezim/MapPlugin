@@ -14,7 +14,6 @@ const fetchData = (map, data, markers, url) => {
 	let localData;
 
 
-
 	if (typeof data === 'array') {
 		localData = JSON.parse(data);
 	}
