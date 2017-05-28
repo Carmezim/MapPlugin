@@ -37,32 +37,83 @@ let sBox = createSearchBox(map);
 // 	setGoogleMaps(apiKey);
 // };
 
-const initialize = (data) => {
+const initialize = (data, avatarURL) => {
+	
 	// fetch dataset
-	fetchData(map, data, markers);
+	fetchData(map, data, markers, avatarURL);
 
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
-
+	
+	// Add characters SVGs
 	placeCharacters(map);
 };
 
-const setCenter = (lat, lng) => {
-	addCenterToOptions(defineCenter(parseFloat(lat), parseFloat(lng)));
+const changeMapLocation = (lat, lng) => {
+	let location = defineCenter(lat, lng);
+		
+		map.panTo(location);
+		console.log('Map moved to: ', location);
 };
 
-const setHeight = (height) => {
-	let list = document.getElementById('map');
-	list.style='height:' + height.toString() + ';';
+const onMapReady = (callback) => {
+	if (typeof callback === 'function') {
+		google.maps.event.addListener(map, 'load', callback);
+	}
+	else {
+		console.error('provide a callback function');
+	}
 };
 
-const setWidth = (width) => {
-	let list = document.getElementById('map');
-	list.style='width:' + width.toString() + ';';
+const onMapChangeLocation = (callback) => {
+	if (typeof callback === 'function') {
+		google.maps.event.addListener(map, 'idle', callback);
+	}
+	else {
+		console.error('provide a callback function');
+	}
+}
+
+const defineURL = (url, imgFormat) => {
+	return [url.toString(), imgFormat.toString()];
+}
+
+// const setHeight = (height) => {
+// 	let mapElement = document.getElementById('map');
+// 	mapElement.style='height:' + height.toString() + ' !important;';
+
+// 		google.maps.event.addListenerOnce(map, 'idle', function() {
+// 			google.maps.event.trigger(map, 'resize'); 
+// 			console.log('map height resized to: ', height)
+// 		});
+// };
+
+// const setWidth = (width) => {
+// 	let mapElement = document.getElementById('map');
+// 	mapElement.style='height:' + width.toString() + ' !important;';
+
+// 		google.maps.event.addListenerOnce(map, 'idle', function() {
+// 			google.maps.event.trigger(map, 'resize'); 
+// 			console.log('map height resized to: ', width)
+// 		});
+// };
+
+const setWidthHeight = (width, height) => {
+	let mapElement = document.getElementById('map');
+	mapElement.style = 'width:' + width.toString() + ' !important;' +
+									  'height:' + height.toString() + ' !important;';
+			
+		google.maps.event.addListenerOnce(map, 'idle', function() {
+			console.log('map width resized to: ', width, height)
+			google.maps.event.trigger(map, 'resize'); 
+		});
 };
 
 export {
 	initialize,
-	setHeight,
-	setWidth
+	setWidthHeight,
+	onMapReady,
+	onMapChangeLocation,
+	defineURL,
+	changeMapLocation
 };

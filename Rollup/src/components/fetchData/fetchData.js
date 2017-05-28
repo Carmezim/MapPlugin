@@ -2,14 +2,29 @@ import Clusterize from 'clusterize.js';
 import { icon, clusterOptions } from '../map/options';
 import buildList from '../buildList/buildList';
 import checkData from './checkData';
-import '../../polyfill';
+import getRandom from './getRandom';
+import '../../polyfills/promise-polyfill';
 import 'whatwg-fetch';
 
 
-const getData = (map, data, markers) => {
+const fetchData = (map, data, markers, url) => {
 	let localMap = map;
 	let listArray = [];
-	let localData = typeof data !== 'string' ? '/datasets/' + data.toString() : '/datasets/' + data;
+	let avatarURL = url;
+	let localData;
+
+
+
+	if (typeof data === 'array') {
+		localData = JSON.parse(data);
+	}
+	else if (typeof data !== 'string') {
+		localData = '/datasets/' + data.toString();
+	}
+	else {
+		localData = '/datasets/' + data;
+	}
+
 	// create list
 	let clusterize = new Clusterize({
 		rows: null,
@@ -18,9 +33,6 @@ const getData = (map, data, markers) => {
 		contentId: 'contentArea',
 	});
 
-	function getRandom(min, max) {
-			return Math.random() * (max - min) + min;
-	}
 
 	if (checkData(localData)) {
 		fetch(localData)
@@ -33,7 +45,6 @@ const getData = (map, data, markers) => {
 						console.log('meh');
 					}
 					else {
-					
 						let location = new google.maps.LatLng({
 							lat: markerPosition.latitude + getRandom(0, 0.5), 
 							lng: markerPosition.longitude + getRandom(0, 0.5)
@@ -47,7 +58,7 @@ const getData = (map, data, markers) => {
 							userName: markerPosition.full_name,
 							country: markerPosition.country,
 							city: markerPosition.city,
-							url:'https://github.com/identicons/luke-siedle.png'
+							url: avatarURL[0] + 'luke-siedle' + avatarURL[1]
 						});
 						markers.push(marker);
 					}
@@ -68,4 +79,4 @@ const getData = (map, data, markers) => {
 	}
 };
 
-export default getData;
+export default fetchData;
