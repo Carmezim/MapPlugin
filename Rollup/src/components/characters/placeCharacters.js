@@ -1,5 +1,8 @@
 import Symbol from '../map/svgMarkers';
 import svgList from './svgIconList';
+import '../../polyfill';
+import 'whatwg-fetch';
+
 
 const placeCharacters = (map) => {
 	const icons = [];
