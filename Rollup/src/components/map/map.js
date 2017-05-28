@@ -48,7 +48,6 @@ const initialize = (data) => {
 };
 
 const setCenter = (lat, lng) => {
-	
 	addCenterToOptions(defineCenter(parseFloat(lat), parseFloat(lng)));
 };
 

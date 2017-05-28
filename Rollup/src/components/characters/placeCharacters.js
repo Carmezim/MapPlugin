@@ -1,4 +1,4 @@
-import Symbol from '../map/svgMarker';
+import Symbol from '../map/svgMarkers';
 import svgList from './svgIconList';
 
 const placeCharacters = (map) => {
@@ -8,20 +8,19 @@ const placeCharacters = (map) => {
 	fetch("./datasets/capitals.json")
 		.then((response) => response.json())
 		.then((capitals) => {
-			for (let i = 0; i < capitals.length; i++, j++) {
+			for (let i = 2; i < capitals.length; i++, j++) {
 				if (j === svgList.length) {
-					j = 0;
+					j = 2;
 				}
-				console.log(Symbol(svgList[j], 300, 300, '#000000'))
 				// Character object 
 				let character = {
 					position: new google.maps.LatLng(capitals[i].longitude, capitals[i].latitude),
 					icon: {
-						url: Symbol(svgList[j], 300, 300, '#000000'),
-						size: new google.maps.Size(500, 500),
+						url: Symbol(svgList[j], 100, 100, '#000000'),
+						size: new google.maps.Size(100, 100),
 						origin: new google.maps.Point(0, 0),
 						anchor: new google.maps.Point(17, 34),
-						scaledSize: new google.maps.Size(25, 25),
+						scaledSize: new google.maps.Size(100, 100),
 					},
 				}
 				// Add a marker for each character

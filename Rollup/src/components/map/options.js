@@ -1,4 +1,4 @@
-import Symbol from './svgMarker';
+import Symbol from './svgMarkers';
 import mapStyles from './mapStyles';
 
 // Map options
