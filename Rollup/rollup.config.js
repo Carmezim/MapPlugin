@@ -3,6 +3,7 @@ import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import multiEntry from 'rollup-plugin-multi-entry';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import path from 'path';
@@ -38,12 +39,21 @@ const preprocessor = (content, id) => new Promise((resolve, reject) => {
 });
 
 export default {  
-	entry: './src/components/map/map.js',
+	entry: ['whatwg-fetch', './src/components/map/map.js'],
 	dest: './dist/js/maps.bundle.js',
 	format: 'umd',
 	moduleName: 'Maps',
 	sourceMap: true,
 	plugins: [
+		resolve({
+			// not all files you want to resolve are .js files
+			extensions: [ '.js', '.json' ],  // Default: ['.js']
+			jsnext: true,
+			main: true,
+			browser: true,
+			module: true,
+		}),
+		multiEntry(),
 		postcss({
 			preprocessor,
 			sourceMap: true,
@@ -68,14 +78,6 @@ export default {
 					}
 				}),
 			],
-		}),
-		resolve({
-			// not all files you want to resolve are .js files
-			extensions: [ '.js', '.json' ],  // Default: ['.js']
-			jsnext: true,
-			main: true,
-			browser: true,
-			module: true,
 		}),
 		babel(babelrc({
 			addExternalHelpersPlugin: false,
