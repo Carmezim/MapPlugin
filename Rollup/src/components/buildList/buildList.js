@@ -1,6 +1,7 @@
 const buildList = (clusterize, listArray, markers, localMap) => {
 	listArray = [];
 	clusterize.clear();
+
 	markers.map((user) => {
 		if (localMap.getBounds().contains(user.getPosition())) {
 			listArray.push(

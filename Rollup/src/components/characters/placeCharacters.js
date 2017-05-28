@@ -1,6 +1,6 @@
 import Symbol from '../map/svgMarkers';
 import svgList from './svgIconList';
-import '../../polyfill';
+import '../../polyfills/promise-polyfill';
 import 'whatwg-fetch';
 
 
