@@ -19,7 +19,10 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-livereload": "^0.4.0",
     "rollup-plugin-multi-entry": "^2.0.1",
+<<<<<<< HEAD
     "rollup-plugin-node-globals": "^1.1.0",
+=======
+>>>>>>> caeadf2... supporting multiple entries
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-serve": "^0.3.0",
     "rollup-plugin-uglify": "^1.0.2",
@@ -42,7 +45,10 @@
     "postcss-cssnext": "^2.11.0",
     "postcss-nested": "^2.0.2",
     "postcss-simple-vars": "^4.0.0",
+<<<<<<< HEAD
     "promise-polyfill": "^6.0.2",
+=======
+>>>>>>> caeadf2... supporting multiple entries
     "rollup-plugin-postcss": "^0.5.1",
     "whatwg-fetch": "^2.0.3"
   }

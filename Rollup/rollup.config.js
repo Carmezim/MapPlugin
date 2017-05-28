@@ -4,6 +4,12 @@ import commonjs from 'rollup-plugin-commonjs';
 import globals from "rollup-plugin-node-globals"
 import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
+<<<<<<< HEAD
+=======
+import commonjs from 'rollup-plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
+import multiEntry from 'rollup-plugin-multi-entry';
+>>>>>>> caeadf2... supporting multiple entries
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import path from 'path';
@@ -39,6 +45,7 @@ const preprocessor = (content, id) => new Promise((resolve, reject) => {
 });
 
 export default {  
+<<<<<<< HEAD
 	onwarn: function(warning) {
     // Skip certain warnings
 
@@ -49,6 +56,9 @@ export default {
     console.warn( warning.message );
 	},
 	entry: './src/components/map/map.js',
+=======
+	entry: ['whatwg-fetch', './src/components/map/map.js'],
+>>>>>>> caeadf2... supporting multiple entries
 	dest: './dist/js/maps.bundle.js',
 	format: 'umd',
 	moduleName: 'Maps',
@@ -62,8 +72,12 @@ export default {
 			browser: true,
 			module: true,
 		}),
+<<<<<<< HEAD
 		commonjs(),
 		globals(),
+=======
+		multiEntry(),
+>>>>>>> caeadf2... supporting multiple entries
 		postcss({
 			preprocessor,
 			sourceMap: true,
