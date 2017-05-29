@@ -21,9 +21,10 @@
 	
 	<script>
 		var map = document.getElementById('google-map-example');
-		
+		var assetsPath = '../img/';
+
 		$.get("./datasets/coordinates.json").then(function(data) {
-			Maps.initialize(map, data, Maps.defineURL('https://github.com/identicons/', '.png'));
+			Maps.initialize(map, data, Maps.defineURL('https://github.com/identicons/', '.png'), assetsPath);
 			Maps.onMapReady(function() {console.log('map is loaded')});
 			Maps.onMapChangeLocation(function() {console.log('map changed location')});
 			Maps.setWidthHeight($(window).width(), $(window).height() );	

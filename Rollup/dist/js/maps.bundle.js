@@ -2617,17 +2617,17 @@ var pngsList = {
   self.fetch.polyfill = true;
 })(typeof self !== 'undefined' ? self : undefined);
 
-var placeCharacters = function placeCharacters(map) {
+var placeCharacters = function placeCharacters(map, assetsURL) {
 	var capitalsMarkers = [];
 	var icons = [];
+	var localMap = map;
 	var pngs = Object.keys(pngsList);
 	var j = 0;
-	var localMap = map;
 
 	fetch("./datasets/capitals.json").then(function (response) {
 		return response.json();
 	}).then(function (capitals) {
-		for (var i = 0; i < capitals.length; i++, j++) {
+		capitals.map(function (capital) {
 			if (j === pngsList.length) {
 				j = 0;
 			}
@@ -2637,9 +2637,9 @@ var placeCharacters = function placeCharacters(map) {
 
 			// Character object 
 			var character = {
-				position: new google.maps.LatLng(capitals[i].longitude, capitals[i].latitude),
+				position: new google.maps.LatLng(capital.longitude, capital.latitude),
 				icon: {
-					url: '../img/' + img + '.png',
+					url: '' + assetsURL + img + '.png', //`../img/${img}.png`,
 					size: new google.maps.Size(imgSize[0], imgSize[1]),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(17, 34),
@@ -2653,16 +2653,17 @@ var placeCharacters = function placeCharacters(map) {
 				icon: character.icon,
 				visible: false
 			}));
-
 			icons.push(character);
-		}
+			j++;
+		});
 	}).catch(function (err) {
 		console.log(err);
 	});
-	//	Change markers on zoom */
+
+	//	Change markers on zoom
 	google.maps.event.addListener(localMap, 'zoom_changed', function () {
 		var zoom = localMap.getZoom();
-		// iterate over markers and call setVisible
+
 		capitalsMarkers.map(function (marker) {
 			marker.setVisible(zoom > 5);
 		});
@@ -2670,7 +2671,6 @@ var placeCharacters = function placeCharacters(map) {
 };
 
 /*eslint-disable */
-// import setGoogleMaps from './setGoogleMaps';
 // Places markers
 var placeMarkers = [];
 
@@ -2690,13 +2690,13 @@ var map = void 0;
 // Search Box
 var sBox = void 0;
 
-// const setMaps = (apiKey) => {
-// 	setGoogleMaps(apiKey);
-// };
-
 var $ = window.jQuery;
 
-var initialize = function initialize(domElement, data, avatarURL) {
+var initialize = function initialize(domElement, data, avatarURL, assetsURL) {
+	domElement = domElement;
+	data = data;
+	avatarURL = avatarURL;
+	assetsURL = assetsURL;
 
 	map = createMap(domElement);
 
@@ -2712,7 +2712,7 @@ var initialize = function initialize(domElement, data, avatarURL) {
 
 	// Add characters
 	setTimeout(function () {
-		placeCharacters(map);
+		placeCharacters(map, assetsURL);
 	}, 100);
 };
 
@@ -2749,26 +2749,6 @@ var bindEvents = function bindEvents(domElement) {
 		$panel.toggleClass('closed');
 	});
 };
-
-// const setHeight = (height) => {
-// 	let mapElement = document.getElementById('map');
-// 	mapElement.style='height:' + height.toString() + ' !important;';
-
-// 		google.maps.event.addListenerOnce(map, 'idle', function() {
-// 			google.maps.event.trigger(map, 'resize'); 
-// 			console.log('map height resized to: ', height)
-// 		});
-// };
-
-// const setWidth = (width) => {
-// 	let mapElement = document.getElementById('map');
-// 	mapElement.style='height:' + width.toString() + ' !important;';
-
-// 		google.maps.event.addListenerOnce(map, 'idle', function() {
-// 			google.maps.event.trigger(map, 'resize'); 
-// 			console.log('map height resized to: ', width)
-// 		});
-// };
 
 var setWidthHeight = function setWidthHeight(width, height) {
 	$('.shiftmap-wrapper').width(width).height(height);

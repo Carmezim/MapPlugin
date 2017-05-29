@@ -34,7 +34,12 @@ let sBox;
 
 const $ = window.jQuery;
 
-const initialize = (domElement, data, avatarURL) => {
+const initialize = (domElement, data, avatarURL, assetsURL) => {
+	domElement = '' ? undefined : domElement;
+	data       = '' ? undefined : data;
+	avatarURL  = '' ? undefined : avatarURL;
+	assetsURL  = '' ? undefined : assetsURL;
+
 
 	map = createMap(domElement);
 
@@ -50,7 +55,7 @@ const initialize = (domElement, data, avatarURL) => {
 	
 	// Add characters
 	setTimeout(() => {
-		placeCharacters(map);
+		placeCharacters(map, assetsURL);
 	}, 100 );
 };
 

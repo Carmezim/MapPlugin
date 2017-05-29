@@ -4,18 +4,18 @@ import '../../polyfills/promise-polyfill';
 import 'whatwg-fetch';
 
 
-const placeCharacters = (map) => {
+const placeCharacters = (map, assetsURL) => {
 	const capitalsMarkers = [];
 	const icons = [];
+	const localMap = map;
 	const pngs = Object.keys(pngsList);
 	let j = 0;
-	let localMap = map;
-
+	
 
 	fetch("./datasets/capitals.json")
 		.then((response) => response.json())
 		.then((capitals) => {
-			for (let i = 0; i < capitals.length; i++, j++) {
+			capitals.map((capital) => {
 				if (j === pngsList.length) { j = 0;	}
 
 				const img = pngs[j]||pngs[0];
@@ -23,9 +23,9 @@ const placeCharacters = (map) => {
 				
 				// Character object 
 				let character = {
-					position: new google.maps.LatLng(capitals[i].longitude, capitals[i].latitude),
+					position: new google.maps.LatLng(capital.longitude, capital.latitude),
 					icon: {
-						url: `../img/${img}.png`,
+						url: `${assetsURL}${img}.png`, //`../img/${img}.png`,
 						size: new google.maps.Size(imgSize[0], imgSize[1]),
 						origin: new google.maps.Point(0, 0),
 						anchor: new google.maps.Point(17, 34),
@@ -40,8 +40,9 @@ const placeCharacters = (map) => {
 						visible: false
 					})
 				);			
-				icons.push(character);		
-			}
+				icons.push(character);
+				j++;
+			})
 		}).catch((err) => {
 			console.log(err);
 	});
