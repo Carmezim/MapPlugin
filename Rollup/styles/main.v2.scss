@@ -1,0 +1,200 @@
+@import './normalize';
+@import './variables';
+
+// Move to sass when ready
+.shiftmap-wrapper * {
+	box-sizing: border-box;
+}
+
+
+.shiftmap-wrapper {
+	position: relative;
+	font-family: 'brandon_regular', sans-serif;
+	overflow: hidden;
+}
+
+.shiftmap-wrapper h3 {
+	font-size: 15px;
+	font-family: 'brandon_regular', sans-serif;
+}
+
+.shiftmap-map-wrapper {
+	min-height: 1px;
+	width: 100%;
+}
+
+.shiftmap-map {
+	min-height: 0;
+}
+
+.shiftmap-map-clusterise-wrapper {
+	padding: 0;
+	overflow-y:scroll;
+	position: absolute;
+	left:0; top:0;
+	height: 100%;
+	width: 100%;
+}
+
+.shiftmap-map-clusterise-user-panel {
+	position: absolute;
+	left:0; top:0;
+	height: 100%;
+	width: 350px;
+	z-index:1;
+	background-color: #fff;
+
+	&.closed {
+		left:-350px;
+	}
+
+	@media(max-width:$screen-sm){
+		top:auto;
+		bottom:0;
+		left:0;
+		width: 100%;
+		height: 200px;
+		border-top:1px solid #333;
+		&.closed {			
+			bottom:-200px;
+			left:0;
+		}
+	}
+}
+
+.shiftmap-clusterize-avatar,
+.shiftmap-clusterize-content {
+	float:left;
+	min-height: 1px;
+}
+
+.shiftmap-clusterize-avatar img {
+	width: 100%;
+}
+
+.shiftmap-clusterize-content {
+	width: 50%;
+}
+
+.shiftmap-clusterize-avatar {
+	width: 50%;
+}
+
+.shiftmap-clusterize-user-button {
+	display: inline-block;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    -webkit-appearance: none;
+    font-size: 16px;
+    border-width: 1px 1px 4px;
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+    border-image: initial;
+    padding: 8px 10px 4px;
+    border-bottom: 4px solid rgb(0, 0, 0);
+    outline: 0px;
+    border-radius: 0px;
+    margin-left: 5px;
+}
+
+.shiftmap-clusterize-user-name {
+	padding-left: 5px;
+}
+
+.shiftmap-clusterize {
+	padding: 5px;
+}
+
+.shiftmap-input-wrapper {
+	padding: 10px;
+}
+
+.shiftmap-input {
+	width: 100%;
+	border:0;
+	border-bottom:3px solid #444;
+	padding: 10px 0;
+	outline: none;
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z"/></svg>');
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+
+.shiftmap-clusterize-user-row {
+	border:3px solid $outline-gray;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.shiftmap-clusterize-user-cell {
+	padding: 5px;
+}
+
+.shiftmap-clusterize-user-cell:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.shiftmap-clusterize-user-name {
+	word-wrap:break-word;
+}
+
+.shiftmap-map-toggle-panel {
+	width: 30px;
+	position: absolute;
+	right:-30px;
+	top:0;
+	height: 100%;
+	background:#333;
+	cursor: pointer;
+	&::before {
+		content:'';
+		position: absolute;
+		top:50%;
+		left:5px;
+		background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff"><path d="M10.477 0h-8.977l12.024 12-12.024 12h8.977l12.023-12z"/></svg>');
+		width: 20px;
+		height: 20px;
+		z-index: 1;
+		background-size: 100%;
+		-ms-transform: rotate(180deg); /* IE 9 */
+	    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+	    transform: rotate(180deg);
+	    @media(max-width:$screen-sm){
+	    	left:50%;
+			margin-left: -10px;
+			margin-top: -10px;
+			-ms-transform: rotate(90deg); /* IE 9 */
+		    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+		    transform: rotate(90deg);
+	    }
+	}	
+
+	@media(max-width:$screen-sm){
+		width: 100%;
+		height: 30px;
+		right: auto;
+		left:auto;
+		top:-30px;
+	}
+
+}
+
+.shiftmap-map-clusterise-user-panel.closed .shiftmap-map-toggle-panel::before {
+	-ms-transform: rotate(0); /* IE 9 */
+    -webkit-transform: rotate(0); /* Chrome, Safari, Opera */
+    transform: rotate(0);
+}
+
+@media(max-width:$screen-sm){
+
+	.shiftmap-map-clusterise-user-panel.closed .shiftmap-map-toggle-panel::before {
+		-ms-transform: rotate(-90deg); /* IE 9 */
+	    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+	    transform: rotate(-90deg);
+	}
+}

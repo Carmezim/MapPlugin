@@ -1316,3 +1316,5 @@ Object.keys = Object.keys || function(o) {
     }  
     return result;  
 };
+
+export default MarkerClusterer;

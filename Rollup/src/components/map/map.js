@@ -1,5 +1,5 @@
 /*eslint-disable */
-import '../../../styles/main.scss';
+import '../../../styles/main.v2.scss';
 
 import createSearchBox from '../searchBox/createSearchBox';
 import searchBox from '../searchBox/searchBox';
@@ -28,25 +28,35 @@ const london = defineCenter(51.521723, -0.134581);
 addCenterToOptions(london);
 
 // Map
-const map = createMap();
+let map;
 
 // Search Box
-let sBox = createSearchBox(map);
+let sBox;
 
 // const setMaps = (apiKey) => {
 // 	setGoogleMaps(apiKey);
 // };
 
-const initialize = (data, avatarURL) => {
+const $ = window.jQuery;
+
+const initialize = (domElement, data, avatarURL) => {
+
+	map = createMap(domElement);
+
+	sBox = createSearchBox(map, domElement);
 	
 	// fetch dataset
-	fetchData(map, data, markers, avatarURL);
+	fetchData(map, data, markers, avatarURL, domElement);
 
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
+
+	bindEvents( domElement );
 	
 	// Add characters SVGs
-	placeCharacters(map);
+	setTimeout(() => {
+		placeCharacters(map);
+	}, 100 );
 };
 
 const changeMapLocation = (lat, lng) => {
@@ -78,6 +88,13 @@ const defineURL = (url, imgFormat) => {
 	return [url.toString(), imgFormat.toString()];
 }
 
+const bindEvents = ( domElement ) => {
+	const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
+	$panel.find('.shiftmap-map-toggle-panel').click(() => {
+		$panel.toggleClass('closed');
+	});
+}
+
 // const setHeight = (height) => {
 // 	let mapElement = document.getElementById('map');
 // 	mapElement.style='height:' + height.toString() + ' !important;';
@@ -99,14 +116,13 @@ const defineURL = (url, imgFormat) => {
 // };
 
 const setWidthHeight = (width, height) => {
-	let mapElement = document.getElementById('map');
-	mapElement.style = 'width:' + width.toString() + ' !important;' +
-									  'height:' + height.toString() + ' !important;';
-			
-		google.maps.event.addListenerOnce(map, 'idle', function() {
-			console.log('map width resized to: ', width, height)
-			google.maps.event.trigger(map, 'resize'); 
-		});
+	$('.shiftmap-wrapper').width(width).height(height);
+	$('.shiftmap-map').width(width).height(height);
+	const map = $('.shiftmap-map').get(0);
+	google.maps.event.trigger(map, 'resize');	
+	google.maps.event.addListenerOnce(map, 'idle', function() {
+		google.maps.event.trigger(map, 'resize'); 
+	});
 };
 
 export {

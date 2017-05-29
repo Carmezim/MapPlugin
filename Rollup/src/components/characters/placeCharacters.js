@@ -1,5 +1,5 @@
 import Symbol from '../map/svgMarkers';
-import svgList from './svgIconList';
+import svgList, {pngList} from './svgIconList';
 import '../../polyfills/promise-polyfill';
 import 'whatwg-fetch';
 
@@ -15,15 +15,20 @@ const placeCharacters = (map) => {
 				if (j === svgList.length) {
 					j = 0;	
 				}
+
+				const pngs = Object.keys(pngList);
+				const img = pngs[j]||pngs[0];
+				const imgSize = pngList[img];
+				
 				// Character object 
 				let character = {
 					position: new google.maps.LatLng(capitals[i].longitude, capitals[i].latitude),
 					icon: {
-						url: Symbol(svgList[j], 100, 100, '#000000'),
-						size: new google.maps.Size(100, 100),
+						url: `../img/${img}.png`, //Symbol(svgList[j], 100, 100, '#000000'),
+						size: new google.maps.Size(imgSize[0], imgSize[1]),
 						origin: new google.maps.Point(0, 0),
 						anchor: new google.maps.Point(17, 34),
-						scaledSize: new google.maps.Size(100, 100),
+						scaledSize: new google.maps.Size(imgSize[0], imgSize[1]),
 					},
 				}
 				// Add a marker for each character

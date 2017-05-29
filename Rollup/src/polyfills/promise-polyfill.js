@@ -230,4 +230,6 @@
     root.Promise = Promise;
   }
 
-})(this);
+})(window);
+
+export default Promise;

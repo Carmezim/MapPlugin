@@ -1,10 +1,11 @@
-const createSearchBox = (map) => {
+const $ = window.jQuery;
+
+const createSearchBox = (map, mapWrapper) => {
 	let localMap = map;
 	// Create search box and link it to UI
-	const input = document.getElementById('pac-input');
-	localMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	const $input = $(mapWrapper).find('input.shiftmap-input');
+	const input = $input.get(0);
 	const searchBox = new google.maps.places.SearchBox(input);
-
 	return searchBox;
 };
 

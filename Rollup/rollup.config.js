@@ -8,6 +8,7 @@ import multiEntry from 'rollup-plugin-multi-entry';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import path from 'path';
+import html from 'rollup-plugin-html';
 
 // CSS plugins
 import postcss from 'rollup-plugin-postcss';
@@ -90,6 +91,13 @@ export default {
 					}
 				}),
 			],
+		}),
+		html({
+			// Required to be specified
+			include: '**/*.html',
+
+			// Undefined by default
+			exclude: './node_modules/**',
 		}),
 		babel(babelrc({
 			addExternalHelpersPlugin: false,
