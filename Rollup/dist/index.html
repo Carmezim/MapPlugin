@@ -21,14 +21,17 @@
 	
 	<script>
 		var map = document.getElementById('google-map-example');
-		Maps.initialize(map, "coordinates.json", Maps.defineURL('https://github.com/identicons/', '.png'));
-		Maps.onMapReady(function() {console.log('map is loaded')});
-		Maps.onMapChangeLocation(function() {console.log('map changed location')});
-		Maps.setWidthHeight($(window).width(), $(window).height() );
-
-		$( window ).on('resize', function(){
-			Maps.setWidthHeight($(window).width(), $(window).height() );
+		
+		$.get("./datasets/coordinates.json").then(function(data) {
+			Maps.initialize(map, data, Maps.defineURL('https://github.com/identicons/', '.png'));
+			Maps.onMapReady(function() {console.log('map is loaded')});
+			Maps.onMapChangeLocation(function() {console.log('map changed location')});
+			Maps.setWidthHeight($(window).width(), $(window).height() );	
+			$( window ).on('resize', function(){
+				Maps.setWidthHeight($(window).width(), $(window).height() );
+			});
 		});
+		
 	</script>
 </body>
 </html>

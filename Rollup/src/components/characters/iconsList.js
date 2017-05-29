@@ -1,4 +1,4 @@
-const pngs = {
+const pngsList = {
 	'person-001' : [40,63],
 	'person-002' : [38,63],
 	'person-003' : [45,43],
@@ -48,4 +48,4 @@ const pngs = {
 	'giraffe'	 : [64,77]
 }
 
-export default iconsList;
+export default pngsList;

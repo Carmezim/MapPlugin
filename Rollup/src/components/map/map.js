@@ -68,7 +68,7 @@ const changeMapLocation = (lat, lng) => {
 
 const onMapReady = (callback) => {
 	if (typeof callback === 'function') {
-		google.maps.event.addListener(map, 'load', callback);
+		google.maps.event.addListenerOnce(map, 'idle', callback);
 	}
 	else {
 		console.error('provide a callback function');

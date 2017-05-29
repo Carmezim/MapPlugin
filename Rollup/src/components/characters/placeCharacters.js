@@ -1,5 +1,5 @@
 import Symbol from '../map/svgMarkers';
-import iconsList from './iconsList';
+import pngsList from './iconsList';
 import '../../polyfills/promise-polyfill';
 import 'whatwg-fetch';
 
@@ -8,20 +8,19 @@ const placeCharacters = (map) => {
 	const icons = [];
 	let j = 0;
 	let localMap = map;
+	const pngs = Object.keys(pngsList);
 
-	
+
 	fetch("./datasets/capitals.json")
 		.then((response) => response.json())
 		.then((capitals) => {
 			for (let i = 0; i < capitals.length; i++, j++) {
-				
-				if (j === iconsList.length) {
+				if (j === pngsList.length) {
 					j = 0;	
 				}
 
-				const pngs = Object.keys(iconsList);
 				const img = pngs[j]||pngs[0];
-				const imgSize = iconsList[img];
+				const imgSize = pngsList[img];
 				
 				// Character object 
 				let character = {

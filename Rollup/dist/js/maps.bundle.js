@@ -2036,6 +2036,129 @@ var _typeof$2 = typeof Symbol === "function" && typeof Symbol.iterator === "symb
   }
 })(window);
 
+var $$2 = jQuery;
+
+var fetchData = function fetchData(map, data, markers, url, domElement) {
+	var localMap = map;
+	var listArray = [];
+	var avatarURL = url;
+
+	var scrollElement = $$2(domElement).find(".shiftmap-map-clusterise-wrapper").get(0);
+	var contentElement = $$2(domElement).find(".shiftmap-clusterize-content-wrapper").get(0);
+
+	// Create list
+	var clusterize$$1 = new clusterize({
+		rows: null,
+		rows_in_block: 2,
+		scrollElem: scrollElement,
+		contentElem: contentElement
+	});
+
+	// Add markers
+	if (checkData(data)) {
+		data.map(function (markerPosition) {
+			if (!markerPosition.latitude || !markerPosition.longitude) {
+				console.log('meh');
+			} else {
+				var location = new google.maps.LatLng({
+					lat: markerPosition.latitude + getRandom(0, 0.5),
+					lng: markerPosition.longitude + getRandom(0, 0.5)
+				});
+				var marker = new google.maps.Marker({
+					position: location,
+					map: localMap,
+					icon: icon,
+					optimized: false,
+					userID: markerPosition.user_id,
+					userName: markerPosition.full_name,
+					country: markerPosition.country,
+					city: markerPosition.city,
+					url: avatarURL[0] + 'luke-siedle' + avatarURL[1]
+				});
+				markers.push(marker);
+			}
+		});
+
+		// Create MarkerClusterer
+		var markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
+
+		// Updates list when viewport changes
+		google.maps.event.addListener(localMap, 'bounds_changed', function () {
+			setTimeout(function () {
+				buildList(clusterize$$1, listArray, markers, localMap);
+			}, 200);
+		});
+		google.maps.event.addListener(map, "idle", function () {
+			setTimeout(function () {
+				google.maps.event.trigger(map, 'resize');
+			}, 200);
+		});
+	}
+};
+
+var template = "<div class=\"shiftmap-wrapper\">\n\t<div class=\"shiftmap-map-clusterise-user-panel\">\n\t\t<div class=\"shiftmap-map-clusterise-wrapper\">\n\t\t\t<div class=\"shiftmap-input-wrapper\">\n\t\t\t\t<input type=\"text\" placeholder=\"Search the map\" class=\"shiftmap-input\">\n\t\t\t</div>\n\t\t\t<div class=\"shiftmap-clusterize\">\n\t\t\t\t<div class=\"shiftmap-clusterize-scroll\">\n\t\t\t\t\t<div class=\"shiftmap-clusterize-user-table\">\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-content-wrapper\"></div>\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-no-data\" style=\"display:none\">\n\t\t\t\t\t\t\t<div>Zoom to display user data…</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"shiftmap-map-toggle-panel\"></div>\n\t</div>\n\n\t<div class=\"shiftmap-map-wrapper\">\n\t\t<div class=\"shiftmap-map\"></div>\n\t</div>\n</div>";
+
+var createMap = function createMap(domElement) {
+	var $ = window.jQuery;
+	var $wrapper = $(domElement).html(template);
+	var $map = $wrapper.find('.shiftmap-map');
+	return new google.maps.Map($map.get(0), mapOptions);
+};
+
+var defineCenter = function defineCenter(lat, lng) {
+  return new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+};
+
+var pngsList = {
+	'person-001': [40, 63],
+	'person-002': [38, 63],
+	'person-003': [45, 43],
+	'person-004': [40, 62],
+	'person-005': [39, 63],
+	'person-006': [41, 63],
+	'person-007': [38, 63],
+	'person-008': [40, 63],
+	'person-009': [37, 62],
+	'person-010': [37, 62],
+	'person-011': [38, 63],
+	'person-012': [37, 61],
+	'person-013': [36, 63],
+	'person-014': [37, 63],
+	'person-015': [39, 62],
+	'person-016': [38, 62],
+	'person-017': [37, 61],
+	'person-018': [37, 63],
+	'person-019': [36, 61],
+	'person-020': [39, 61],
+	'person-021': [37, 61],
+	'person-022': [37, 60],
+	'person-023': [41, 68],
+	'person-024': [40, 61],
+	'person-025': [36, 61],
+	'person-026': [38, 61],
+	'person-027': [38, 60],
+	'person-028': [36, 60],
+	'person-029': [37, 65],
+	'person-030': [35, 61],
+	'person-031': [37, 63],
+	'person-032': [44, 53],
+	'person-033': [39, 63],
+	'person-034': [39, 63],
+	'person-035': [68, 65],
+	'person-036': [37, 60],
+	'person-037': [37, 60],
+	'person-038': [37, 60],
+	'person-039': [36, 61],
+	'person-040': [57, 62],
+	'person-041': [65, 63],
+	'person-042': [40, 63],
+	'person-043': [40, 63],
+	'person-044': [49, 66],
+	'person-045': [37, 65],
+	'dinosaur': [105, 85],
+	'giraffe': [64, 77]
+};
+
 (function (self) {
   'use strict';
 
@@ -2494,110 +2617,22 @@ var _typeof$2 = typeof Symbol === "function" && typeof Symbol.iterator === "symb
   self.fetch.polyfill = true;
 })(typeof self !== 'undefined' ? self : undefined);
 
-var $$2 = jQuery;
-
-var fetchData = function fetchData(map, data, markers, url, domElement) {
-	var localMap = map;
-	var listArray = [];
-	var avatarURL = url;
-	var localData = void 0;
-
-	if (typeof data === 'array') {
-		localData = JSON.parse(data);
-	} else if (typeof data !== 'string') {
-		localData = '/datasets/' + data.toString();
-	} else {
-		localData = '/datasets/' + data;
-	}
-
-	var scrollElement = $$2(domElement).find(".shiftmap-map-clusterise-wrapper").get(0);
-	var contentElement = $$2(domElement).find(".shiftmap-clusterize-content-wrapper").get(0);
-
-	// create list
-	var clusterize$$1 = new clusterize({
-		rows: null,
-		rows_in_block: 2,
-		scrollElem: scrollElement,
-		contentElem: contentElement
-	});
-
-	if (checkData(localData)) {
-		fetch(localData).then(function (response) {
-			return response.json();
-		}).then(function (dataset) {
-			// Add locations
-			// Check for geocoordinates in dataset
-			dataset.map(function (markerPosition) {
-				if (!markerPosition.latitude || !markerPosition.longitude) {
-					console.log('meh');
-				} else {
-					var location = new google.maps.LatLng({
-						lat: markerPosition.latitude + getRandom(0, 0.5),
-						lng: markerPosition.longitude + getRandom(0, 0.5)
-					});
-					var marker = new google.maps.Marker({
-						position: location,
-						map: localMap,
-						icon: icon,
-						optimized: false,
-						userID: markerPosition.user_id,
-						userName: markerPosition.full_name,
-						country: markerPosition.country,
-						city: markerPosition.city,
-						url: avatarURL[0] + 'luke-siedle' + avatarURL[1]
-					});
-					markers.push(marker);
-				}
-			});
-			// Create MarkerClusterer
-			var markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
-			// Updates list when viewport changes
-			google.maps.event.addListener(localMap, 'bounds_changed', function () {
-				setTimeout(function () {
-					buildList(clusterize$$1, listArray, markers, localMap);
-				}, 200);
-			});
-			google.maps.event.addListener(map, "idle", function () {
-				setTimeout(function () {
-					google.maps.event.trigger(map, 'resize');
-				}, 200);
-			});
-		}).catch(function (err) {
-			if (err) throw err;
-		});
-	}
-};
-
-var template = "<div class=\"shiftmap-wrapper\">\n\t<div class=\"shiftmap-map-clusterise-user-panel\">\n\t\t<div class=\"shiftmap-map-clusterise-wrapper\">\n\t\t\t<div class=\"shiftmap-input-wrapper\">\n\t\t\t\t<input type=\"text\" placeholder=\"Search the map\" class=\"shiftmap-input\">\n\t\t\t</div>\n\t\t\t<div class=\"shiftmap-clusterize\">\n\t\t\t\t<div class=\"shiftmap-clusterize-scroll\">\n\t\t\t\t\t<div class=\"shiftmap-clusterize-user-table\">\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-content-wrapper\"></div>\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-no-data\" style=\"display:none\">\n\t\t\t\t\t\t\t<div>Zoom to display user data…</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"shiftmap-map-toggle-panel\"></div>\n\t</div>\n\n\t<div class=\"shiftmap-map-wrapper\">\n\t\t<div class=\"shiftmap-map\"></div>\n\t</div>\n</div>";
-
-var createMap = function createMap(domElement) {
-	var $ = window.jQuery;
-	var $wrapper = $(domElement).html(template);
-	var $map = $wrapper.find('.shiftmap-map');
-	return new google.maps.Map($map.get(0), mapOptions);
-};
-
-var defineCenter = function defineCenter(lat, lng) {
-  return new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
-};
-
 var placeCharacters = function placeCharacters(map) {
 	var icons = [];
 	var j = 0;
 	var localMap = map;
+	var pngs = Object.keys(pngsList);
 
 	fetch("./datasets/capitals.json").then(function (response) {
 		return response.json();
 	}).then(function (capitals) {
 		for (var i = 0; i < capitals.length; i++, j++) {
-
-			if (j === iconsList.length) {
+			if (j === pngsList.length) {
 				j = 0;
 			}
 
-			var pngs = Object.keys(iconsList);
 			var img = pngs[j] || pngs[0];
-			var imgSize = iconsList[img];
+			var imgSize = pngsList[img];
 
 			// Character object 
 			var character = {
@@ -2680,7 +2715,7 @@ var changeMapLocation = function changeMapLocation(lat, lng) {
 
 var onMapReady = function onMapReady(callback) {
 	if (typeof callback === 'function') {
-		google.maps.event.addListener(map, 'load', callback);
+		google.maps.event.addListenerOnce(map, 'idle', callback);
 	} else {
 		console.error('provide a callback function');
 	}
