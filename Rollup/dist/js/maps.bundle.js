@@ -2624,6 +2624,14 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 	var pngs = Object.keys(pngsList);
 	var j = 0;
 
+	/*
+  we would have a parameter passed for the icons list instead of importing locally e.g.
+  placeCharacters = (map, assetsURL, iconsList) => {}
+  const templateRoot = '<?php echo get_template_directory_uri() ?>'
+  const pngs = Object.keys(iconsList);
+  then below on the character object we could handle as commented
+ */
+
 	fetch("./datasets/capitals.json").then(function (response) {
 		return response.json();
 	}).then(function (capitals) {
@@ -2639,6 +2647,7 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 			var character = {
 				position: new google.maps.LatLng(capital.longitude, capital.latitude),
 				icon: {
+					// url: `${templateRoot}${img}.png`,
 					url: '' + assetsURL + img + '.png', //`../img/${img}.png`,
 					size: new google.maps.Size(imgSize[0], imgSize[1]),
 					origin: new google.maps.Point(0, 0),
