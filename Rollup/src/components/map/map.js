@@ -53,7 +53,7 @@ const initialize = (domElement, data, avatarURL) => {
 
 	bindEvents( domElement );
 	
-	// Add characters SVGs
+	// Add characters
 	setTimeout(() => {
 		placeCharacters(map);
 	}, 100 );

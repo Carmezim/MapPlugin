@@ -4,11 +4,11 @@ import babel from 'rollup-plugin-babel';
 import babelrc from 'babelrc-rollup';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import html from 'rollup-plugin-html';
 import multiEntry from 'rollup-plugin-multi-entry';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
 import path from 'path';
-import html from 'rollup-plugin-html';
 
 // CSS plugins
 import postcss from 'rollup-plugin-postcss';
@@ -43,8 +43,6 @@ const preprocessor = (content, id) => new Promise((resolve, reject) => {
 export default {  
 	onwarn: function(warning) {
     // Skip certain warnings
-
-    // should intercept ... but doesn't in some rollup versions
     if ( warning.code === 'THIS_IS_UNDEFINED' ) { return; }
 
     // console.warn everything else
