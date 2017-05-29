@@ -7,7 +7,6 @@ import fetchData from '../fetchData/fetchData';
 import createMap from './createMap';
 import defineCenter from './defineCenter';
 import placeCharacters from '../characters/placeCharacters';
-// import setGoogleMaps from './setGoogleMaps';
 import {
 	icon,
 	setIcon,
@@ -32,10 +31,6 @@ let map;
 
 // Search Box
 let sBox;
-
-// const setMaps = (apiKey) => {
-// 	setGoogleMaps(apiKey);
-// };
 
 const $ = window.jQuery;
 
@@ -94,26 +89,6 @@ const bindEvents = ( domElement ) => {
 		$panel.toggleClass('closed');
 	});
 }
-
-// const setHeight = (height) => {
-// 	let mapElement = document.getElementById('map');
-// 	mapElement.style='height:' + height.toString() + ' !important;';
-
-// 		google.maps.event.addListenerOnce(map, 'idle', function() {
-// 			google.maps.event.trigger(map, 'resize'); 
-// 			console.log('map height resized to: ', height)
-// 		});
-// };
-
-// const setWidth = (width) => {
-// 	let mapElement = document.getElementById('map');
-// 	mapElement.style='height:' + width.toString() + ' !important;';
-
-// 		google.maps.event.addListenerOnce(map, 'idle', function() {
-// 			google.maps.event.trigger(map, 'resize'); 
-// 			console.log('map height resized to: ', width)
-// 		});
-// };
 
 const setWidthHeight = (width, height) => {
 	$('.shiftmap-wrapper').width(width).height(height);

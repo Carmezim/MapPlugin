@@ -39,17 +39,17 @@ const placeCharacters = (map) => {
 						icon: character.icon,
 						visible: false
 					})
-				);
-				
+				);			
 				icons.push(character);		
 			}
 		}).catch((err) => {
 			console.log(err);
 	});
-	//	Change markers on zoom */
+
+	//	Change markers on zoom
 	google.maps.event.addListener(localMap, 'zoom_changed', function() {
 		let zoom = localMap.getZoom();
-		// iterate over markers and call setVisible
+		
 		capitalsMarkers.map((marker) => {
 			marker.setVisible(zoom > 5);
 		});
