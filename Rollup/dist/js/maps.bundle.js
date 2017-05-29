@@ -2618,10 +2618,11 @@ var pngsList = {
 })(typeof self !== 'undefined' ? self : undefined);
 
 var placeCharacters = function placeCharacters(map) {
+	var capitalsMarkers = [];
 	var icons = [];
+	var pngs = Object.keys(pngsList);
 	var j = 0;
 	var localMap = map;
-	var pngs = Object.keys(pngsList);
 
 	fetch("./datasets/capitals.json").then(function (response) {
 		return response.json();
@@ -2646,16 +2647,25 @@ var placeCharacters = function placeCharacters(map) {
 				}
 			};
 			// Add a marker for each character
-			var marker = new google.maps.Marker({
+			capitalsMarkers.push(new google.maps.Marker({
 				position: character.position,
 				map: localMap,
-				icon: character.icon
-			});
+				icon: character.icon,
+				visible: false
+			}));
 
 			icons.push(character);
 		}
 	}).catch(function (err) {
 		console.log(err);
+	});
+	//	Change markers on zoom */
+	google.maps.event.addListener(localMap, 'zoom_changed', function () {
+		var zoom = localMap.getZoom();
+		// iterate over markers and call setVisible
+		capitalsMarkers.map(function (marker) {
+			marker.setVisible(zoom > 5);
+		});
 	});
 };
 

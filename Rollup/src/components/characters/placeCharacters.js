@@ -5,19 +5,18 @@ import 'whatwg-fetch';
 
 
 const placeCharacters = (map) => {
+	const capitalsMarkers = [];
 	const icons = [];
+	const pngs = Object.keys(pngsList);
 	let j = 0;
 	let localMap = map;
-	const pngs = Object.keys(pngsList);
 
 
 	fetch("./datasets/capitals.json")
 		.then((response) => response.json())
 		.then((capitals) => {
 			for (let i = 0; i < capitals.length; i++, j++) {
-				if (j === pngsList.length) {
-					j = 0;	
-				}
+				if (j === pngsList.length) { j = 0;	}
 
 				const img = pngs[j]||pngs[0];
 				const imgSize = pngsList[img];
@@ -34,17 +33,26 @@ const placeCharacters = (map) => {
 					},
 				}
 				// Add a marker for each character
-				const marker = new google.maps.Marker({
-					position: character.position,
-					map: localMap,
-					icon: character.icon,
-				});
-
+				capitalsMarkers.push(	new google.maps.Marker({
+						position: character.position,
+						map: localMap,
+						icon: character.icon,
+						visible: false
+					})
+				);
+				
 				icons.push(character);		
 			}
-
 		}).catch((err) => {
 			console.log(err);
+	});
+	//	Change markers on zoom */
+	google.maps.event.addListener(localMap, 'zoom_changed', function() {
+		let zoom = localMap.getZoom();
+		// iterate over markers and call setVisible
+		capitalsMarkers.map((marker) => {
+			marker.setVisible(zoom > 5);
+		});
 	});
 }
 
