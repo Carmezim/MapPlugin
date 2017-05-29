@@ -2,7 +2,8 @@
 @import './variables';
 
 // Move to sass when ready
-.shiftmap-wrapper * {
+.shiftmap-map-clusterise-user-panel,
+.shiftmap-map-clusterise-user-panel * {
 	box-sizing: border-box;
 }
 
@@ -43,7 +44,7 @@
 	width: 350px;
 	z-index:1;
 	background-color: #fff;
-
+	
 	&.closed {
 		left:-350px;
 	}
@@ -68,7 +69,7 @@
 	min-height: 1px;
 }
 
-.shiftmap-clusterize-avatar img {
+.shiftmap-clusterize-avatar > img {
 	width: 100%;
 }
 
@@ -105,11 +106,11 @@
 }
 
 .shiftmap-clusterize {
-	padding: 5px;
+	padding: 15px;
 }
 
 .shiftmap-input-wrapper {
-	padding: 10px;
+	padding: 5px 15px;
 }
 
 .shiftmap-input {
