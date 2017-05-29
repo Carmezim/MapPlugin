@@ -6,6 +6,7 @@ const mapOptions = {
 	zoom: 3,
 	center: null,
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
+	mapTypeControl: false,
 	styles: mapStyles,
 	minZoom: 3
 };
