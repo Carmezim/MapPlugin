@@ -5,6 +5,7 @@ import babelrc from 'babelrc-rollup';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import html from 'rollup-plugin-html';
+import uglify from 'rollup-plugin-uglify';
 import multiEntry from 'rollup-plugin-multi-entry';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
@@ -104,6 +105,7 @@ export default {
 			exclude: './node_modules/**',
 			include: './node_modules/whatwg-fetch'
 		})),
+		uglify(),
 		serve({
 			open: true,
 			contentBase: 'dist',
