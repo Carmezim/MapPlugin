@@ -36,10 +36,10 @@ let sBox;
 const $ = window.jQuery;
 
 const initialize = (domElement, data, avatarURL, assetsPath) => {
-	domElement = '' ? undefined : domElement;
-	data       = '' ? undefined : data;
-	avatarURL  = '' ? undefined : avatarURL;
-	assetsPath = '' ? undefined : assetsPath;
+	domElement =  domElement || null;
+	data       =  data || null;
+	avatarURL  =  avatarURL || null;
+	assetsPath =  assetsPath || null;
 	
 
 	map = createMap(domElement);
