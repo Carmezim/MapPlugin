@@ -2636,7 +2636,7 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 		return response.json();
 	}).then(function (airports) {
 		airports.map(function (airport) {
-			if (j === pngsList.length) {
+			if (j === pngs.length) {
 				j = 0;
 			}
 
@@ -2674,7 +2674,7 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 		var zoom = localMap.getZoom();
 
 		airportsMarkers.map(function (marker) {
-			marker.setVisible(zoom > 5);
+			marker.setVisible(zoom > 7);
 		});
 	});
 };

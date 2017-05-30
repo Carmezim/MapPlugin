@@ -22,13 +22,15 @@ const placeCharacters = (map, assetsURL) => {
 	
 	fetch("./datasets/airports.json")
 		.then((response) => response.json())
-		.then((airports) => {
+		.then((airports) => {					
 			airports.map((airport) => {
-				if (j === pngsList.length) { j = 0;	}
+				if (j === pngs.length) {j = 0};
+
 
 				const img = pngs[j]||pngs[0];
 				const imgSize = pngsList[img];
-				
+
+
 				// Character object 
 				let character = {
 					position: new google.maps.LatLng(airport.latitude, airport.longitude),
@@ -51,7 +53,7 @@ const placeCharacters = (map, assetsURL) => {
 				);			
 				icons.push(character);
 				j++;
-			})
+			});
 		}).catch((err) => {
 			console.log(err);
 	});
@@ -61,7 +63,7 @@ const placeCharacters = (map, assetsURL) => {
 		let zoom = localMap.getZoom();
 		
 		airportsMarkers.map((marker) => {
-			marker.setVisible(zoom > 5);
+			marker.setVisible(zoom > 7);
 		});
 	});
 }
