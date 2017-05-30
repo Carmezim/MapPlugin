@@ -5,7 +5,7 @@ import 'whatwg-fetch';
 
 
 const placeCharacters = (map, assetsURL) => {
-	const capitalsMarkers = [];
+	const airportsMarkers = [];
 	const icons = [];
 	const localMap = map;
 	const pngs = Object.keys(pngsList);
@@ -20,10 +20,10 @@ const placeCharacters = (map, assetsURL) => {
 	*/
 
 	
-	fetch("./datasets/capitals.json")
+	fetch("./datasets/airports.json")
 		.then((response) => response.json())
-		.then((capitals) => {
-			capitals.map((capital) => {
+		.then((airports) => {
+			airports.map((airport) => {
 				if (j === pngsList.length) { j = 0;	}
 
 				const img = pngs[j]||pngs[0];
@@ -31,7 +31,7 @@ const placeCharacters = (map, assetsURL) => {
 				
 				// Character object 
 				let character = {
-					position: new google.maps.LatLng(capital.longitude, capital.latitude),
+					position: new google.maps.LatLng(airport.latitude, airport.longitude),
 					icon: {
 						// url: `${templateRoot}${img}.png`,
 						url: `${assetsURL}${img}.png`, //`../img/${img}.png`,
@@ -42,7 +42,7 @@ const placeCharacters = (map, assetsURL) => {
 					},
 				}
 				// Add a marker for each character
-				capitalsMarkers.push(	new google.maps.Marker({
+				airportsMarkers.push(	new google.maps.Marker({
 						position: character.position,
 						map: localMap,
 						icon: character.icon,
@@ -60,7 +60,7 @@ const placeCharacters = (map, assetsURL) => {
 	google.maps.event.addListener(localMap, 'zoom_changed', function() {
 		let zoom = localMap.getZoom();
 		
-		capitalsMarkers.map((marker) => {
+		airportsMarkers.map((marker) => {
 			marker.setVisible(zoom > 5);
 		});
 	});

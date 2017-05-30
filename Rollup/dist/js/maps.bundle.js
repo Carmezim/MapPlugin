@@ -2618,7 +2618,7 @@ var pngsList = {
 })(typeof self !== 'undefined' ? self : undefined);
 
 var placeCharacters = function placeCharacters(map, assetsURL) {
-	var capitalsMarkers = [];
+	var airportsMarkers = [];
 	var icons = [];
 	var localMap = map;
 	var pngs = Object.keys(pngsList);
@@ -2632,10 +2632,10 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
   then below on the character object we could handle as commented
  */
 
-	fetch("./datasets/capitals.json").then(function (response) {
+	fetch("./datasets/airports.json").then(function (response) {
 		return response.json();
-	}).then(function (capitals) {
-		capitals.map(function (capital) {
+	}).then(function (airports) {
+		airports.map(function (airport) {
 			if (j === pngsList.length) {
 				j = 0;
 			}
@@ -2645,7 +2645,7 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 
 			// Character object 
 			var character = {
-				position: new google.maps.LatLng(capital.longitude, capital.latitude),
+				position: new google.maps.LatLng(airport.latitude, airport.longitude),
 				icon: {
 					// url: `${templateRoot}${img}.png`,
 					url: '' + assetsURL + img + '.png', //`../img/${img}.png`,
@@ -2656,7 +2656,7 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 				}
 			};
 			// Add a marker for each character
-			capitalsMarkers.push(new google.maps.Marker({
+			airportsMarkers.push(new google.maps.Marker({
 				position: character.position,
 				map: localMap,
 				icon: character.icon,
@@ -2673,7 +2673,7 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 	google.maps.event.addListener(localMap, 'zoom_changed', function () {
 		var zoom = localMap.getZoom();
 
-		capitalsMarkers.map(function (marker) {
+		airportsMarkers.map(function (marker) {
 			marker.setVisible(zoom > 5);
 		});
 	});
