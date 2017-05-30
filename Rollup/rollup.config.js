@@ -87,7 +87,7 @@ export default {
 				cssnano({
 					browser: ['last 2 versions'],
 					discardComments: {
-							removeAll: true
+						removeAll: true
 					}
 				}),
 			],
