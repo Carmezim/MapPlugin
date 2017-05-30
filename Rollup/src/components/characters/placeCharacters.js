@@ -11,6 +11,7 @@ const placeCharacters = (map, assetsPath) => {
 	const pngs = Object.keys(pngsList);
 	let j = 0;
 	
+
 	fetch("./datasets/airports.json")
 		.then((response) => response.json())
 		.then((airports) => {					

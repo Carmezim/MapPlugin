@@ -21,7 +21,7 @@
 	
 	<script>
 		var map = document.getElementById('google-map-example');
-		var assetsPath = '../img/';
+		var assetsPath = '/img/';
 
 		$.get("./datasets/coordinates.json").then(function(data) {
 			Maps.initialize(map, data, Maps.defineURL('https://github.com/identicons/', '.png'), assetsPath);

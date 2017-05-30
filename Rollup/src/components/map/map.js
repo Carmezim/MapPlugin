@@ -7,6 +7,7 @@ import fetchData from '../fetchData/fetchData';
 import createMap from './createMap';
 import defineCenter from './defineCenter';
 import placeCharacters from '../characters/placeCharacters';
+import checkAssetsPath from '../characters/checkAssetsPath';
 import {
 	icon,
 	setIcon,
@@ -39,7 +40,7 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 	data       = '' ? undefined : data;
 	avatarURL  = '' ? undefined : avatarURL;
 	assetsPath = '' ? undefined : assetsPath;
-
+	
 
 	map = createMap(domElement);
 
@@ -55,15 +56,19 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 	
 	// Add characters
 	setTimeout(() => {
-		placeCharacters(map, assetsPath);
+		if (checkAssetsPath(assetsPath)) {
+			placeCharacters(map, assetsPath);
+		}
 	}, 100 );
 };
+
 
 const changeMapLocation = (lat, lng) => {
 	let location = defineCenter(lat, lng);
 		
 	map.panTo(location);
 };
+
 
 const onMapReady = (callback) => {
 	if (typeof callback === 'function') {
@@ -74,6 +79,7 @@ const onMapReady = (callback) => {
 	}
 };
 
+
 const onMapChangeLocation = (callback) => {
 	if (typeof callback === 'function') {
 		google.maps.event.addListener(map, 'idle', callback);
@@ -83,9 +89,11 @@ const onMapChangeLocation = (callback) => {
 	}
 }
 
+
 const defineURL = (url, imgFormat) => {
 	return [url.toString(), imgFormat.toString()];
 }
+
 
 const bindEvents = ( domElement ) => {
 	const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
@@ -93,6 +101,7 @@ const bindEvents = ( domElement ) => {
 		$panel.toggleClass('closed');
 	});
 }
+
 
 const setWidthHeight = (width, height) => {
 	$('.shiftmap-wrapper').width(width).height(height);
@@ -103,6 +112,8 @@ const setWidthHeight = (width, height) => {
 		google.maps.event.trigger(map, 'resize'); 
 	});
 };
+
+
 
 export {
 	initialize,
