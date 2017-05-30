@@ -53,6 +53,7 @@ export default {
 	format: 'umd',
 	moduleName: 'Maps',
 	sourceMap: true,
+	globals: { jquery: '$' },
 	plugins: [
 		resolve({
 			// not all files you want to resolve are .js files
