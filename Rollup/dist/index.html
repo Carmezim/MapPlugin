@@ -20,10 +20,13 @@
 	<script src="js/maps.bundle.js"></script>
 	
 	<script>
+		var base = location.pathname;
 		var map = document.getElementById('google-map-example');
-		var assetsPath = '../img/';
+		var assetsPath = base + 'img/';
 
-		$.get("./datasets/coordinates.json").then(function(data) {
+		// Example of fetching data from an AJAX endpoint
+		// And then loading the map
+		$.get(base + "datasets/coordinates.json").then(function(data) {
 			Maps.initialize(map, data, Maps.defineURL('https://github.com/identicons/', '.png'), assetsPath);
 			Maps.onMapReady(function() {console.log('map is loaded')});
 			Maps.onMapChangeLocation(function() {console.log('map changed location')});

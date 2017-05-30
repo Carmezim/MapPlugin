@@ -25,8 +25,8 @@ const placeCharacters = (map, assetsURL) => {
 		.then((capitals) => {
 			capitals.map((capital) => {
 				if (j === pngsList.length) { j = 0;	}
-
-				const img = pngs[j]||pngs[0];
+				const randKey = Math.floor((Math.random()*1000)/10 * (pngs.length/100));
+				const img = pngs[randKey]||pngs[0];
 				const imgSize = pngsList[img];
 				
 				// Character object 
@@ -51,19 +51,44 @@ const placeCharacters = (map, assetsURL) => {
 				);			
 				icons.push(character);
 				j++;
-			})
+			});
+
+			// Shuffle the capitals
+			shuffle( capitalsMarkers );
+
+			// Initial visibility
+			setVisibleMarkers(localMap.getZoom());
+
 		}).catch((err) => {
 			console.log(err);
 	});
 
 	//	Change markers on zoom
 	google.maps.event.addListener(localMap, 'zoom_changed', function() {
-		let zoom = localMap.getZoom();
-		
-		capitalsMarkers.map((marker) => {
-			marker.setVisible(zoom > 5);
-		});
+		setVisibleMarkers(localMap.getZoom());
 	});
+
+	function setVisibleMarkers( zoom ){
+		const maxZoom = 8;
+		const max = capitalsMarkers.length * (zoom/maxZoom);
+		let y = 0;
+		capitalsMarkers.map((marker, i) => {
+			marker.setVisible(i < max);
+			i < max && (y++);
+		});
+		console.log(`${y} markers display at ${zoom} with max at ${max}`);
+	}
 }
 
 export default placeCharacters;
+
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items The array containing the items.
+ */
+function shuffle(a) {
+    for (let i = a.length; i; i--) {
+        let j = Math.floor(Math.random() * i);
+        [a[i - 1], a[j]] = [a[j], a[i - 1]];
+    }
+}

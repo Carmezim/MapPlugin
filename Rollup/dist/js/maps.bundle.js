@@ -2037,6 +2037,7 @@ var _typeof$2 = typeof Symbol === "function" && typeof Symbol.iterator === "symb
 })(window);
 
 var $$2 = jQuery;
+var mapDragging = false;
 
 var fetchData = function fetchData(map, data, markers, url, domElement) {
 	var localMap = map;
@@ -2088,15 +2089,38 @@ var fetchData = function fetchData(map, data, markers, url, domElement) {
 				buildList(clusterize$$1, listArray, markers, localMap);
 			}, 200);
 		});
+
 		google.maps.event.addListener(map, "idle", function () {
 			setTimeout(function () {
 				google.maps.event.trigger(map, 'resize');
 			}, 200);
 		});
+
+		google.maps.event.addListener(map, "drag", function () {
+			mapDragging = true;
+		});
+
+		google.maps.event.addListener(map, "dragend", function () {
+			setTimeout(function () {
+				return mapDragging = false;
+			}, 50);
+		});
+
+		bindListeners(map, markerCluster);
 	}
 };
 
-var template = "<div class=\"shiftmap-wrapper\">\n\t<div class=\"shiftmap-map-clusterise-user-panel\">\n\t\t<div class=\"shiftmap-map-clusterise-wrapper\">\n\t\t\t<div class=\"shiftmap-input-wrapper\">\n\t\t\t\t<input type=\"text\" placeholder=\"Search the map\" class=\"shiftmap-input\">\n\t\t\t</div>\n\t\t\t<div class=\"shiftmap-clusterize\">\n\t\t\t\t<div class=\"shiftmap-clusterize-scroll\">\n\t\t\t\t\t<div class=\"shiftmap-clusterize-user-table\">\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-content-wrapper\"></div>\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-no-data\" style=\"display:none\">\n\t\t\t\t\t\t\t<div>Zoom to display user data…</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"shiftmap-map-toggle-panel\"></div>\n\t</div>\n\n\t<div class=\"shiftmap-map-wrapper\">\n\t\t<div class=\"shiftmap-map\"></div>\n\t</div>\n</div>";
+var bindListeners = function bindListeners(map, markerCluster) {
+	google.maps.event.addListener(markerCluster, "clusterclick", function (cluster) {
+		// Stops event propagation
+		// Ugly but can't find event.preventDefault
+		if (mapDragging) {
+			throw "Cannot click while dragging";
+		}
+	});
+};
+
+var template = "<div class=\"shiftmap-wrapper\">\r\n\t<div class=\"shiftmap-map-clusterise-user-panel\">\r\n\t\t<div class=\"shiftmap-map-clusterise-wrapper\">\r\n\t\t\t<div class=\"shiftmap-input-wrapper\">\r\n\t\t\t\t<input type=\"text\" placeholder=\"Search the map\" class=\"shiftmap-input\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"shiftmap-clusterize\">\r\n\t\t\t\t<div class=\"shiftmap-clusterize-scroll\">\r\n\t\t\t\t\t<div class=\"shiftmap-clusterize-user-table\">\r\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-content-wrapper\"></div>\r\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-no-data\" style=\"display:none\">\r\n\t\t\t\t\t\t\t<div>Zoom to display user data…</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"shiftmap-map-toggle-panel\"></div>\r\n\t</div>\r\n\r\n\t<div class=\"shiftmap-map-wrapper\">\r\n\t\t<div class=\"shiftmap-map\"></div>\r\n\t</div>\r\n</div>";
 
 var createMap = function createMap(domElement) {
 	var $ = window.jQuery;
@@ -2639,8 +2663,8 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 			if (j === pngsList.length) {
 				j = 0;
 			}
-
-			var img = pngs[j] || pngs[0];
+			var randKey = Math.floor(Math.random() * 1000 / 10 * (pngs.length / 100));
+			var img = pngs[randKey] || pngs[0];
 			var imgSize = pngsList[img];
 
 			// Character object 
@@ -2665,19 +2689,45 @@ var placeCharacters = function placeCharacters(map, assetsURL) {
 			icons.push(character);
 			j++;
 		});
+
+		// Shuffle the capitals
+		shuffle(capitalsMarkers);
+
+		// Initial visibility
+		setVisibleMarkers(localMap.getZoom());
 	}).catch(function (err) {
 		console.log(err);
 	});
 
 	//	Change markers on zoom
 	google.maps.event.addListener(localMap, 'zoom_changed', function () {
-		var zoom = localMap.getZoom();
-
-		capitalsMarkers.map(function (marker) {
-			marker.setVisible(zoom > 5);
-		});
+		setVisibleMarkers(localMap.getZoom());
 	});
+
+	function setVisibleMarkers(zoom) {
+		var maxZoom = 8;
+		var max = capitalsMarkers.length * (zoom / maxZoom);
+		var y = 0;
+		capitalsMarkers.map(function (marker, i) {
+			marker.setVisible(i < max);
+			i < max && y++;
+		});
+		console.log(y + ' markers display at ' + zoom + ' with max at ' + max);
+	}
 };
+
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items The array containing the items.
+ */
+function shuffle(a) {
+	for (var i = a.length; i; i--) {
+		var j = Math.floor(Math.random() * i);
+		var _ref = [a[j], a[i - 1]];
+		a[i - 1] = _ref[0];
+		a[j] = _ref[1];
+	}
+}
 
 /*eslint-disable */
 // Places markers

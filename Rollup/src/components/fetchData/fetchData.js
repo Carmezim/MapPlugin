@@ -8,6 +8,7 @@ import MarkerClusterer from '../map/markerclusterer.js';
 import '../../polyfills/promise-polyfill';
 
 const $ = jQuery;
+let mapDragging = false;
 
 const fetchData = (map, data, markers, url, domElement) => {
 	let localMap = map;
@@ -60,12 +61,33 @@ const fetchData = (map, data, markers, url, domElement) => {
 				buildList(clusterize, listArray, markers, localMap);
 			}, 200 );
 		});
-			google.maps.event.addListener(map, "idle", function() {
+
+		google.maps.event.addListener(map, "idle", function() {
 			setTimeout(() => {
 				google.maps.event.trigger(map, 'resize');
 			}, 200 );
 		});
+
+		google.maps.event.addListener(map, "drag", () => {
+			mapDragging = true;
+		});
+
+		google.maps.event.addListener(map, "dragend", () => {
+			setTimeout(() => mapDragging = false, 50 );
+		});
+
+		bindListeners( map, markerCluster );
 	}
 };
 
 export default fetchData;
+
+const bindListeners = ( map, markerCluster ) => {
+	google.maps.event.addListener(markerCluster, "clusterclick", (cluster) => {
+		// Stops event propagation
+		// Ugly but can't find event.preventDefault
+		if(mapDragging){	
+			throw "Cannot click while dragging"
+		}
+	});
+}
