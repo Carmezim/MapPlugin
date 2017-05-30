@@ -5,7 +5,6 @@ import checkData from './checkData';
 import getRandom from './getRandom';
 import MarkerClusterer from '../map/markerclusterer.js';
 
-import '../../polyfills/promise-polyfill';
 
 const $ = jQuery;
 
@@ -29,7 +28,7 @@ const fetchData = (map, data, markers, url, domElement) => {
 	if (checkData(data)) {
 		data.map((markerPosition) => {
 			if (!markerPosition.latitude || !markerPosition.longitude) {
-				console.log('meh');
+				console.warn('Could not find coordinates on data provided from userID: ', markerPosition.user_id);
 			}
 			else {
 				let location = new google.maps.LatLng({

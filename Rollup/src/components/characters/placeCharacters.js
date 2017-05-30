@@ -1,31 +1,21 @@
+import '../../polyfills/promise';
+import 'whatwg-fetch';
 import Symbol from '../map/svgMarkers';
 import pngsList from './iconsList';
-import '../../polyfills/promise-polyfill';
-import 'whatwg-fetch';
 
 
-const placeCharacters = (map, assetsURL) => {
+const placeCharacters = (map, assetsPath) => {
 	const airportsMarkers = [];
 	const icons = [];
 	const localMap = map;
 	const pngs = Object.keys(pngsList);
 	let j = 0;
 	
-	/*
-	 we would have a parameter passed for the icons list instead of importing locally e.g.
-	 placeCharacters = (map, assetsURL, iconsList) => {}
-	 const templateRoot = '<?php echo get_template_directory_uri() ?>'
-	 const pngs = Object.keys(iconsList);
-	 then below on the character object we could handle as commented
-	*/
-
-	
 	fetch("./datasets/airports.json")
 		.then((response) => response.json())
 		.then((airports) => {					
 			airports.map((airport) => {
 				if (j === pngs.length) {j = 0};
-
 
 				const img = pngs[j]||pngs[0];
 				const imgSize = pngsList[img];
@@ -35,8 +25,7 @@ const placeCharacters = (map, assetsURL) => {
 				let character = {
 					position: new google.maps.LatLng(airport.latitude, airport.longitude),
 					icon: {
-						// url: `${templateRoot}${img}.png`,
-						url: `${assetsURL}${img}.png`, //`../img/${img}.png`,
+						url: `${assetsPath}${img}.png`,
 						size: new google.maps.Size(imgSize[0], imgSize[1]),
 						origin: new google.maps.Point(0, 0),
 						anchor: new google.maps.Point(17, 34),

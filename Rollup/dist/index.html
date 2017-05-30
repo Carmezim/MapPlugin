@@ -28,6 +28,7 @@
 			Maps.onMapReady(function() {console.log('map is loaded')});
 			Maps.onMapChangeLocation(function() {console.log('map changed location')});
 			Maps.setWidthHeight($(window).width(), $(window).height() );	
+			
 			$( window ).on('resize', function(){
 				Maps.setWidthHeight($(window).width(), $(window).height() );
 			});

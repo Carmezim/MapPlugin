@@ -34,11 +34,11 @@ let sBox;
 
 const $ = window.jQuery;
 
-const initialize = (domElement, data, avatarURL, assetsURL) => {
+const initialize = (domElement, data, avatarURL, assetsPath) => {
 	domElement = '' ? undefined : domElement;
 	data       = '' ? undefined : data;
 	avatarURL  = '' ? undefined : avatarURL;
-	assetsURL  = '' ? undefined : assetsURL;
+	assetsPath = '' ? undefined : assetsPath;
 
 
 	map = createMap(domElement);
@@ -55,15 +55,14 @@ const initialize = (domElement, data, avatarURL, assetsURL) => {
 	
 	// Add characters
 	setTimeout(() => {
-		placeCharacters(map, assetsURL);
+		placeCharacters(map, assetsPath);
 	}, 100 );
 };
 
 const changeMapLocation = (lat, lng) => {
 	let location = defineCenter(lat, lng);
 		
-		map.panTo(location);
-		console.log('Map moved to: ', location);
+	map.panTo(location);
 };
 
 const onMapReady = (callback) => {
