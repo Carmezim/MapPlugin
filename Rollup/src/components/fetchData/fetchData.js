@@ -23,6 +23,7 @@ const fetchData = (map, data, markers, url, domElement) => {
 		rows_in_block: 2,
 		scrollElem: scrollElement,
 		contentElem: contentElement,
+		no_data_text: 'No users within range'
 	});
 
 	// Add markers
@@ -57,7 +58,7 @@ const fetchData = (map, data, markers, url, domElement) => {
 		// Updates list when viewport changes
 		google.maps.event.addListener(localMap, 'bounds_changed', function() {
 			setTimeout(() => {
-				buildList(clusterize, listArray, markers, localMap);
+				buildList(clusterize, listArray, markers, localMap, domElement);
 			}, 200 );
 		});
 

@@ -1,5 +1,5 @@
 let zoomingOnSingle = false;
-const buildList = (clusterize, listArray, markers, localMap) => {
+const buildList = (clusterize, listArray, markers, localMap, domElement) => {
 
 	if( zoomingOnSingle ){
 		return;
@@ -18,6 +18,7 @@ const buildList = (clusterize, listArray, markers, localMap) => {
 					</div>
 					<div class="shiftmap-clusterize-content">
 						<h3 class="shiftmap-clusterize-user-name">${user.userName}</h3>
+						<div class="active">Last active 2 weeks ago</div>
 						<button class="shiftmap-clusterize-user-button" data-clickuser="${user.userID}">Follow</button>
 					</div>
 				</div>
@@ -27,6 +28,7 @@ const buildList = (clusterize, listArray, markers, localMap) => {
 
 		// Dsiplay user info on sidebar 
 		const showUserInfo = () => {
+			$(domElement).trigger('openpanel');
 			clusterize.clear();
 			clusterize.update([
 				`

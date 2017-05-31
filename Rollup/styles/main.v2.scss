@@ -7,6 +7,10 @@
 	box-sizing: border-box;
 }
 
+.shiftmap-clusterize-content-wrapper {
+	outline:none;
+}
+
 
 .shiftmap-wrapper {
 	position: relative;
@@ -56,10 +60,10 @@
 		bottom:0;
 		left:0;
 		width: 100%;
-		height: 200px;
+		height: 250px;
 		border-top:1px solid #333;
 		&.closed {			
-			bottom:-200px;
+			bottom:-250px;
 			left:0;
 		}
 	}
@@ -72,19 +76,30 @@
 }
 
 .shiftmap-clusterize-avatar > div {
-	width: 150px;
-	height: 150px;
+	width: 140px;
+	height: 140px;
 	background-size:cover;
 	background-position:center center;
 }
 
 .shiftmap-clusterize-content {
 	width: 50%;
-	padding-left:10px;
+	padding-left:0;
+	div.active {
+		font-size: 12px;
+		margin: 2px 5px;
+		margin-bottom: 5px;
+		@media(min-width:$screen-sm + 1px){
+			margin-left: 5px;
+		}
+	}
 }
 
 .shiftmap-clusterize-avatar {
 	width: 50%;
+	@media(max-width:$screen-sm){
+		width: 150px;
+	}
 }
 
 .shiftmap-clusterize-user-button {
@@ -113,10 +128,17 @@
 
 .shiftmap-clusterize {
 	padding: 15px;
+	@media(max-width:$screen-sm){
+		padding: 5px;
+	}
+	outline:none;
 }
 
 .shiftmap-input-wrapper {
 	padding: 5px 15px;
+	@media(max-width:$screen-sm){
+		padding: 5px;
+	}
 }
 
 .shiftmap-input {
@@ -210,8 +232,19 @@
 
 .shiftmap-clusterize-user-row-single {
 	.shiftmap-clusterize-avatar {
-		float:none;
-		margin:10px auto;
+		@media(min-width:$screen-sm + 1px){
+			width: 100%;
+			float:none;
+			> div {
+				margin: 20px auto;
+			}
+		}
+	}
+
+	.shiftmap-clusterize-content {
+		@media(min-width:$screen-sm + 1px){
+			width: 100%;
+		}
 	}
 
 	.shiftmap-clusterize-content > div {
@@ -222,13 +255,14 @@
 		}
 		&.active {
 			font-size: 12px;
-			margin: 2px 0;
-			margin-left: 10px;
+			margin: 2px 5px;
+			@media(min-width:$screen-sm + 1px){
+				margin-left: 10px;				
+			}
 		}
 
 		> span {
 			display: inline-block;
-			min-width: 50px;
 			font-weight: bold;
 		}
 		.shiftmap-clusterize-user-button {
@@ -236,10 +270,12 @@
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
+		@media(max-width:$screen-sm){
+			margin-left: 0;
+		}
 	}
 
 	.shiftmap-clusterize-content {
-		width: 100%;
-		float:none;
+		margin: 10px auto;
 	}
 }

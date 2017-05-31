@@ -121,6 +121,10 @@ const bindEvents = ( domElement, map ) => {
 		}
 	});
 
+	$(domElement).on('openpanel', () => {
+		$panel.removeClass('closed');
+	});
+
 }
 
 
