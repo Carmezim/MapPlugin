@@ -1,3 +1,5 @@
+import {iconPlace} from '../map/options';
+
 const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 
 	// Bias searchbox results towards current map's viewport
@@ -27,22 +29,21 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 				return;
 			}
 
-			let newIcon = {
-				url: place.icon,
-				size: icon.size,
-				origin: icon.origin,
-				anchor: icon.anchor,
-				scaledSize: icon.scaledSize
-			};
+			// let newIcon = {
+			// 	url: place.icon,
+			// 	size: icon.size,
+			// 	origin: icon.origin,
+			// 	anchor: icon.anchor,
+			// 	scaledSize: icon.scaledSize
+			// };
 
-			let placeIcon = setIcon(newIcon);
+			// let placeIcon = setIcon(newIcon);
 
 			placeMarkers.push(new google.maps.Marker({
 				map: map,
-				icon: placeIcon,
+				icon: iconPlace,
 				title: place.name,
-				position: place.geometry.location,
-				setMap: map
+				position: place.geometry.location
 			}));
 
 			if (place.geometry.viewport) {
@@ -53,6 +54,12 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 			}
 		});
 		map.fitBounds(bounds);
+
+		var listener = google.maps.event.addListener(map, "idle", function() { 
+		  map.setZoom(8); 
+		  google.maps.event.removeListener(listener); 
+		});
+
 	});
 };
 export default searchBox;

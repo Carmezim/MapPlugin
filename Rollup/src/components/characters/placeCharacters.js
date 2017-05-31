@@ -1,40 +1,31 @@
+import '../../polyfills/promise';
+import 'whatwg-fetch';
 import Symbol from '../map/svgMarkers';
 import pngsList from './iconsList';
-import '../../polyfills/promise-polyfill';
-import 'whatwg-fetch';
 
 
-const placeCharacters = (map, assetsURL) => {
-	const capitalsMarkers = [];
+const placeCharacters = (map, assetsPath) => {
+	const airportsMarkers = [];
 	const icons = [];
 	const localMap = map;
 	const pngs = Object.keys(pngsList);
 	let j = 0;
 	
-	/*
-	 we would have a parameter passed for the icons list instead of importing locally e.g.
-	 placeCharacters = (map, assetsURL, iconsList) => {}
-	 const templateRoot = '<?php echo get_template_directory_uri() ?>'
-	 const pngs = Object.keys(iconsList);
-	 then below on the character object we could handle as commented
-	*/
 
-	
-	fetch("./datasets/capitals.json")
+	fetch("./datasets/airports.json")
 		.then((response) => response.json())
-		.then((capitals) => {
-			capitals.map((capital) => {
-				if (j === pngsList.length) { j = 0;	}
+		.then((airports) => {					
+			airports.map((airport) => {
+				if (j === pngs.length) {j = 0};
 				const randKey = Math.floor((Math.random()*1000)/10 * (pngs.length/100));
 				const img = pngs[randKey]||pngs[0];
 				const imgSize = pngsList[img];
-				
+
 				// Character object 
 				let character = {
-					position: new google.maps.LatLng(capital.longitude, capital.latitude),
+					position: new google.maps.LatLng(airport.latitude, airport.longitude),
 					icon: {
-						// url: `${templateRoot}${img}.png`,
-						url: `${assetsURL}${img}.png`, //`../img/${img}.png`,
+						url: `${assetsPath}${img}.png`,
 						size: new google.maps.Size(imgSize[0], imgSize[1]),
 						origin: new google.maps.Point(0, 0),
 						anchor: new google.maps.Point(17, 34),
@@ -42,7 +33,7 @@ const placeCharacters = (map, assetsURL) => {
 					},
 				}
 				// Add a marker for each character
-				capitalsMarkers.push(	new google.maps.Marker({
+				airportsMarkers.push(	new google.maps.Marker({
 						position: character.position,
 						map: localMap,
 						icon: character.icon,
@@ -53,8 +44,8 @@ const placeCharacters = (map, assetsURL) => {
 				j++;
 			});
 
-			// Shuffle the capitals
-			shuffle( capitalsMarkers );
+			// Shuffle the markers
+			shuffle( airportsMarkers );
 
 			// Initial visibility
 			setVisibleMarkers(localMap.getZoom());
@@ -66,13 +57,14 @@ const placeCharacters = (map, assetsURL) => {
 	//	Change markers on zoom
 	google.maps.event.addListener(localMap, 'zoom_changed', function() {
 		setVisibleMarkers(localMap.getZoom());
+		let zoom = localMap.getZoom();
 	});
 
 	function setVisibleMarkers( zoom ){
 		const maxZoom = 8;
-		const max = capitalsMarkers.length * (zoom/maxZoom);
+		const max = airportsMarkers.length * (zoom/maxZoom/20);
 		let y = 0;
-		capitalsMarkers.map((marker, i) => {
+		airportsMarkers.map((marker, i) => {
 			marker.setVisible(i < max);
 			i < max && (y++);
 		});

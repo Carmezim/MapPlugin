@@ -112,3 +112,71 @@ const mapStyles = [
 	];
 
 export default mapStyles;
+
+export var mapDetailStyles = [
+  {
+    "featureType": "road.arterial",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+	{
+		"featureType": "water",
+		"stylers": [
+			{
+				"color": water
+			}
+		]
+	},
+	{
+			"featureType": "landscape.man_made",
+			"stylers": [
+				{
+					"color": land
+				}
+			]
+		},
+		{
+			"featureType": "landscape.natural",
+			"stylers": [
+				{
+					"color": land
+				}
+			]
+		},
+		{
+			"featureType": "landscape.natural.landcover",
+			"stylers": [
+				{
+					"color": land
+				}
+			]
+		},
+		{
+			"featureType": "landscape.natural.terrain",
+			"stylers": [
+				{
+					"color": land
+				}
+			]
+		},
+];

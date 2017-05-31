@@ -5,6 +5,7 @@ import babelrc from 'babelrc-rollup';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import html from 'rollup-plugin-html';
+import uglify from 'rollup-plugin-uglify';
 import multiEntry from 'rollup-plugin-multi-entry';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
@@ -53,6 +54,7 @@ export default {
 	format: 'umd',
 	moduleName: 'Maps',
 	sourceMap: true,
+	globals: { jquery: '$' },
 	plugins: [
 		resolve({
 			// not all files you want to resolve are .js files
@@ -85,7 +87,7 @@ export default {
 				cssnano({
 					browser: ['last 2 versions'],
 					discardComments: {
-							removeAll: true
+						removeAll: true
 					}
 				}),
 			],
@@ -103,7 +105,8 @@ export default {
 			exclude: './node_modules/**',
 			include: './node_modules/whatwg-fetch'
 		})),
-		serve({
+			uglify(),
+				serve({
 			open: true,
 			contentBase: 'dist',
 			host: 'localhost',

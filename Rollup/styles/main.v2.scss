@@ -30,7 +30,7 @@
 
 .shiftmap-map-clusterise-wrapper {
 	padding: 0;
-	overflow-y:scroll;
+	overflow-y:auto;
 	position: absolute;
 	left:0; top:0;
 	height: 100%;
@@ -44,6 +44,8 @@
 	width: 350px;
 	z-index:1;
 	background-color: #fff;
+	-webkit-transition: all 0.5s; /* Safari */
+	transition: all 0.5s;
 	
 	&.closed {
 		left:-350px;
@@ -69,12 +71,16 @@
 	min-height: 1px;
 }
 
-.shiftmap-clusterize-avatar > img {
-	width: 100%;
+.shiftmap-clusterize-avatar > div {
+	width: 150px;
+	height: 150px;
+	background-size:cover;
+	background-position:center center;
 }
 
 .shiftmap-clusterize-content {
 	width: 50%;
+	padding-left:10px;
 }
 
 .shiftmap-clusterize-avatar {
@@ -165,6 +171,8 @@
 		-ms-transform: rotate(180deg); /* IE 9 */
 	    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
 	    transform: rotate(180deg);
+	    -webkit-transition: all 0.5s; /* Safari */
+		transition: all 0.5s;
 	    @media(max-width:$screen-sm){
 	    	left:50%;
 			margin-left: -10px;
@@ -197,5 +205,41 @@
 		-ms-transform: rotate(-90deg); /* IE 9 */
 	    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
 	    transform: rotate(-90deg);
+	}
+}
+
+.shiftmap-clusterize-user-row-single {
+	.shiftmap-clusterize-avatar {
+		float:none;
+		margin:10px auto;
+	}
+
+	.shiftmap-clusterize-content > div {
+		display: none;
+		margin-left: 10px;
+		&.visible { 
+			display: block
+		}
+		&.active {
+			font-size: 12px;
+			margin: 2px 0;
+			margin-left: 10px;
+		}
+
+		> span {
+			display: inline-block;
+			min-width: 50px;
+			font-weight: bold;
+		}
+		.shiftmap-clusterize-user-button {
+			margin-left: 0;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+	}
+
+	.shiftmap-clusterize-content {
+		width: 100%;
+		float:none;
 	}
 }
