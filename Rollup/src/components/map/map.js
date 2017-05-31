@@ -125,6 +125,10 @@ const bindEvents = ( domElement, map ) => {
 		$panel.removeClass('closed');
 	});
 
+	google.maps.event.addListenerOnce(map, 'idle', function(){
+	   geolocationAPI(map);
+	});
+
 }
 
 
@@ -157,6 +161,16 @@ const bindClickEvent = ( domElement, data ) => {
 		});
 		onClickUser(false, find);
 	});
+}
+
+const geolocationAPI = ( map ) => {
+	if (navigator.geolocation) {
+	     navigator.geolocation.getCurrentPosition(function (position) {
+	        const initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	        map.setCenter(initialLocation);
+	        map.setZoom(5);
+	     });
+	 }
 }
 
 
