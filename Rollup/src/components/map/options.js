@@ -69,7 +69,7 @@ let iconPlace = {
 	url: Symbol('marker', 50, 50, '#77bf2f'),
 	size: new google.maps.Size(50, 50),
 	origin: new google.maps.Point(0, 0),
-	anchor: new google.maps.Point(25, 25)
+	anchor: new google.maps.Point(25, 50)
 }
 
 export {
