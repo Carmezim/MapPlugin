@@ -13,7 +13,8 @@ const fetchData = (map, data, markers, url, domElement) => {
 	let localMap = map;
 	let listArray = [];
 	let avatarURL = url;
-
+	
+	const maxZoomLevel = 13; 
 	const scrollElement = $(domElement).find(".shiftmap-map-clusterise-wrapper").get(0);
 	const contentElement = $(domElement).find(".shiftmap-clusterize-content-wrapper").get(0);
 
@@ -74,6 +75,11 @@ const fetchData = (map, data, markers, url, domElement) => {
 
 		google.maps.event.addListener(map, "dragend", () => {
 			setTimeout(() => mapDragging = false, 50 );
+		});
+
+		// Limit the zoom level
+		google.maps.event.addListener(map, 'zoom_changed', function() {
+			if (map.getZoom() > maxZoomLevel) map.setZoom(maxZoomLevel);
 		});
 
 		bindListeners( map, markerCluster );

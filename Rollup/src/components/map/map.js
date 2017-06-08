@@ -72,13 +72,11 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 	}, 100 );
 };
 
-
 const changeMapLocation = (lat, lng) => {
 	let location = defineCenter(lat, lng);
 		
 	map.panTo(location);
 };
-
 
 const onMapReady = (callback) => {
 	if (typeof callback === 'function') {
@@ -89,7 +87,6 @@ const onMapReady = (callback) => {
 	}
 };
 
-
 const onMapChangeLocation = (callback) => {
 	if (typeof callback === 'function') {
 		google.maps.event.addListener(map, 'idle', callback);
@@ -97,13 +94,11 @@ const onMapChangeLocation = (callback) => {
 	else {
 		console.error('provide a callback function');
 	}
-}
-
+};
 
 const defineURL = (url, imgFormat) => {
 	return [url.toString(), imgFormat.toString()];
-}
-
+};
 
 const bindEvents = ( domElement, map ) => {
 	const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
@@ -129,8 +124,7 @@ const bindEvents = ( domElement, map ) => {
 	   geolocationAPI(map);
 	});
 
-}
-
+};
 
 const setWidthHeight = (width, height) => {
 	$('.shiftmap-wrapper').width(width).height(height);
