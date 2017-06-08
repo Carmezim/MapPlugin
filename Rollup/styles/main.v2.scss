@@ -55,6 +55,12 @@
 		left:-350px;
 	}
 
+	&.default {
+		left:-350px;
+		-webkit-transition: none; /* Safari */
+		transition: none;
+	}
+
 	@media(max-width:$screen-sm){
 		top:auto;
 		bottom:0;
@@ -63,6 +69,10 @@
 		height: 250px;
 		border-top:1px solid #333;
 		&.closed {			
+			bottom:-250px;
+			left:0;
+		}
+		&.default {
 			bottom:-250px;
 			left:0;
 		}
@@ -196,15 +206,15 @@
 		z-index: 1;
 		background-size: 100%;
 		-ms-transform: rotate(180deg); /* IE 9 */
-	    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-	    transform: rotate(180deg);
-	    -webkit-transition: all 0.5s; /* Safari */
+		-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+		transform: rotate(180deg);
+		-webkit-transition: all 0.5s; /* Safari */
 		transition: all 0.5s;
 	    @media(max-width:$screen-sm){
 	    	left:50%;
-			margin-left: -10px;
-			margin-top: -10px;
-			-ms-transform: rotate(90deg); /* IE 9 */
+				margin-left: -10px;
+				margin-top: -10px;
+				-ms-transform: rotate(90deg); /* IE 9 */
 		    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
 		    transform: rotate(90deg);
 	    }
@@ -222,17 +232,30 @@
 
 .shiftmap-map-clusterise-user-panel.closed .shiftmap-map-toggle-panel::before {
 	-ms-transform: rotate(0); /* IE 9 */
-    -webkit-transform: rotate(0); /* Chrome, Safari, Opera */
-    transform: rotate(0);
+	-webkit-transform: rotate(0); /* Chrome, Safari, Opera */
+	transform: rotate(0);
+}
+
+.shiftmap-map-clusterise-user-panel.default .shiftmap-map-toggle-panel::before {
+	-ms-transform: rotate(0); /* IE 9 */
+	-webkit-transform: rotate(0); /* Chrome, Safari, Opera */
+	transform: rotate(0);
 }
 
 @media(max-width:$screen-sm){
 
 	.shiftmap-map-clusterise-user-panel.closed .shiftmap-map-toggle-panel::before {
 		-ms-transform: rotate(-90deg); /* IE 9 */
-	    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
-	    transform: rotate(-90deg);
+		-webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+		transform: rotate(-90deg);
 	}
+
+	.shiftmap-map-clusterise-user-panel.default .shiftmap-map-toggle-panel::before {
+		-ms-transform: rotate(-90deg); /* IE 9 */
+		-webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+		transform: rotate(-90deg);
+	}
+
 }
 
 .shiftmap-clusterize-user-row-single {

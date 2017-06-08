@@ -53,17 +53,19 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 	map = createMap(domElement);
 
 	sBox = createSearchBox(map, domElement);
-	
+
 	// fetch dataset
 	fetchData(map, data, markers, avatarURL, domElement);
 
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 
-	bindEvents( domElement, map );
+	panelClosedOnLoad(domElement);
 
-	bindClickEvent( domElement, data );
+	bindEvents( domElement, map );
 	
+	bindClickEvent( domElement, data );
+
 	// Add characters
 	setTimeout(() => {
 		if (checkAssetsPath(assetsPath)) {
@@ -72,11 +74,20 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 	}, 100 );
 };
 
+
+// Panel closed on page load
+const panelClosedOnLoad = (domElement) => {
+	const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
+		$panel.toggleClass('default');
+};
+
+
 const changeMapLocation = (lat, lng) => {
 	let location = defineCenter(lat, lng);
 		
 	map.panTo(location);
 };
+
 
 const onMapReady = (callback) => {
 	if (typeof callback === 'function') {
@@ -87,6 +98,7 @@ const onMapReady = (callback) => {
 	}
 };
 
+
 const onMapChangeLocation = (callback) => {
 	if (typeof callback === 'function') {
 		google.maps.event.addListener(map, 'idle', callback);
@@ -96,14 +108,22 @@ const onMapChangeLocation = (callback) => {
 	}
 };
 
+
 const defineURL = (url, imgFormat) => {
 	return [url.toString(), imgFormat.toString()];
 };
 
+
 const bindEvents = ( domElement, map ) => {
 	const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
+
 	$panel.find('.shiftmap-map-toggle-panel').click(() => {
-		$panel.toggleClass('closed');
+		if ($panel.hasClass('default')) {
+			$panel.removeClass('default')
+		}
+		else {
+			$panel.toggleClass('closed');
+		}
 	});
 
 	//	Change markers on zoom
@@ -126,6 +146,7 @@ const bindEvents = ( domElement, map ) => {
 
 };
 
+
 const setWidthHeight = (width, height) => {
 	$('.shiftmap-wrapper').width(width).height(height);
 	$('.shiftmap-map').width(width).height(height);
@@ -136,6 +157,7 @@ const setWidthHeight = (width, height) => {
 	});
 };
 
+
 const onClickUser = (fn, args) => {
 	if( fn ){
 		listeners.push(fn);
@@ -143,6 +165,7 @@ const onClickUser = (fn, args) => {
 		listeners.map((e) => e(args))
 	}
 }
+
 
 const bindClickEvent = ( domElement, data ) => {
 	$(domElement).on('click', '[data-clickuser]', function(){
@@ -157,15 +180,16 @@ const bindClickEvent = ( domElement, data ) => {
 	});
 }
 
+
 const geolocationAPI = ( map ) => {
 	if (navigator.geolocation) {
-	     navigator.geolocation.getCurrentPosition(function (position) {
-	        const initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	        map.setCenter(initialLocation);
-	        map.setZoom(5);
-	     });
-	 }
-}
+		navigator.geolocation.getCurrentPosition(function (position) {
+			const initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			map.setCenter(initialLocation);
+			map.setZoom(5);
+		});
+	}
+};
 
 
 export {

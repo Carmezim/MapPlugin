@@ -30,8 +30,6 @@ const fetchData = (map, data, markers, url, domElement) => {
 		no_data_text: 'No users within range'
 	});
 
-
-
 	// Add markers
 	if (checkData(data)) {
 		data.map((markerPosition) => {
@@ -63,13 +61,15 @@ const fetchData = (map, data, markers, url, domElement) => {
 					map: localMap,
 					icon: icon,
 					optimized: false,
+					zindex: 0,
 					userID: markerPosition.user_id,
 					userName: markerPosition.full_name,
 					country: markerPosition.country,
 					city: markerPosition.city,
-					url: './img/person-example.png'
+					url: './img/person-example.png',
 				});
 				markers.push(marker);
+				j++;
 			}
 		});
 
@@ -117,3 +117,4 @@ const bindListeners = ( map, markerCluster ) => {
 		}
 	});
 }
+
