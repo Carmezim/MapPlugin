@@ -14,7 +14,7 @@ const mapOptions = {
 // Cluster markers style
 const clusterStyles = [
 	{
-		anchor: [13, 35],
+		anchor: [17, 35],
 		textColor: 'white',
 		textSize: '16',
 		url: Symbol('marker', 75, 75, '#f16667'),
@@ -22,7 +22,7 @@ const clusterStyles = [
 		width: 75,
 	},
 	{
-		anchor: [20, 42],
+		anchor: [25, 42],
 		textColor: 'white',
 		textSize: '18',
 		url: Symbol('marker', 100, 100, '#f16667'),
@@ -30,7 +30,7 @@ const clusterStyles = [
 		width: 100,
 	},
 	{
-		anchor: [20, 43.5],
+		anchor: [32, 42],
 		textColor: 'white',
 		textSize: '24',
 		url: Symbol('marker', 125, 125, '#f16667'),
