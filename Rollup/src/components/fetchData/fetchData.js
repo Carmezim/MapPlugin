@@ -1,9 +1,10 @@
 import Clusterize from 'clusterize.js';
-import { icon, clusterOptions } from '../map/options';
+import { clusterOptions } from '../map/options';
 import buildList from '../buildList/buildList';
 import checkData from './checkData';
 import getRandom from './getRandom';
 import MarkerClusterer from '../map/markerclusterer.js';
+import pngsList from '../characters/iconsList';
 
 
 const $ = jQuery;
@@ -13,7 +14,9 @@ const fetchData = (map, data, markers, url, domElement) => {
 	let localMap = map;
 	let listArray = [];
 	let avatarURL = url;
-	
+	let j = 0;
+
+	const pngs = Object.keys(pngsList);
 	const maxZoomLevel = 13; 
 	const scrollElement = $(domElement).find(".shiftmap-map-clusterise-wrapper").get(0);
 	const contentElement = $(domElement).find(".shiftmap-clusterize-content-wrapper").get(0);
@@ -27,6 +30,8 @@ const fetchData = (map, data, markers, url, domElement) => {
 		no_data_text: 'No users within range'
 	});
 
+
+
 	// Add markers
 	if (checkData(data)) {
 		data.map((markerPosition) => {
@@ -34,10 +39,25 @@ const fetchData = (map, data, markers, url, domElement) => {
 				console.warn('Could not find coordinates on data provided from userID: ', markerPosition.user_id);
 			}
 			else {
+				if (j === pngs.length) {j = 0};
+
+				const randKey = Math.floor((Math.random()*1000)/10 * (pngs.length/100));
+				const img = pngs[randKey]||pngs[0];
+				const imgSize = pngsList[img];
+
+				let icon = {
+					url: `${assetsPath}${img}.png`,
+					size: new google.maps.Size(imgSize[0], imgSize[1]),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(17, 34),
+					scaledSize: new google.maps.Size(imgSize[0], imgSize[1]),
+				};
+
 				let location = new google.maps.LatLng({
 					lat: markerPosition.latitude + getRandom(0, 0.5), 
 					lng: markerPosition.longitude + getRandom(0, 0.5)
 				});
+
 				const marker = new google.maps.Marker({
 					position: location,
 					map: localMap,

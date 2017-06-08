@@ -1,6 +1,5 @@
 import '../../polyfills/promise';
 import 'whatwg-fetch';
-import Symbol from '../map/svgMarkers';
 import pngsList from './iconsList';
 
 
