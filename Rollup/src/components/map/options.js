@@ -41,7 +41,7 @@ const clusterStyles = [
 
 // Cluster options
 const clusterOptions = {
-	maxZoom: 15,
+	maxZoom: 12,
 	gridSize: 75,
 	styles: clusterStyles,
 };

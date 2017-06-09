@@ -75,6 +75,28 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 };
 
 
+const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight) => {
+	google.maps.event.addListener(map, 'idle', function() {
+		const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+		const icon = {
+			url: `${imgURL}`,
+			size: new google.maps.Size(imgWidth, imgHeight),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(17, 34),
+			scaledSize: new google.maps.Size(imgWidth, imgHeight),
+		};
+		const marker = new google.maps.Marker({
+			position: location,
+			icon: icon,
+			optimized: false,
+			zindex: 0,
+			url: '',
+		}).setMap(map);
+	});
+	// google.maps.event.addDomListener(marker, 'click', clickEvent);
+};
+
+
 // Panel closed on page load
 const panelClosedOnLoad = (domElement) => {
 	const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
@@ -84,7 +106,6 @@ const panelClosedOnLoad = (domElement) => {
 
 const changeMapLocation = (lat, lng) => {
 	let location = defineCenter(lat, lng);
-		
 	map.panTo(location);
 };
 
@@ -194,6 +215,7 @@ const geolocationAPI = ( map ) => {
 
 export {
 	initialize,
+	insertMarker,
 	setWidthHeight,
 	onMapReady,
 	onMapChangeLocation,
