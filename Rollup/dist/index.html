@@ -24,6 +24,11 @@
 		var map = document.getElementById('google-map-example');
 		var assetsPath = base + 'img/';
 
+		// function 
+		function customMarkerClickEvent() {
+			alert('Marker clicked!')
+		}
+
 		// Example of fetching data from an AJAX endpoint
 		// And then loading the map
 		$.get(base + "datasets/coordinates.json").then(function(data) {
@@ -41,8 +46,8 @@
 			});
 
 			// insert custom marker
-			Maps.insertMarker(41.560757, -87.309501, '/img/dinosaur.png', 40, 60); // New Chicago
-			Maps.insertMarker(41.860757, -87.709501, '/img/person-001.png', 40, 60); // Chicago
+			Maps.insertMarker(41.560757, -87.309501, '/img/dinosaur.png', 40, 60, customMarkerClickEvent); // New Chicago
+			Maps.insertMarker(41.860757, -87.709501, '/img/person-001.png', 40, 60, customMarkerClickEvent); // Chicago
 
 		});
 		

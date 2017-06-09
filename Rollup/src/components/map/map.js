@@ -81,7 +81,8 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 };
 
 
-const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight) => {
+const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight, clickEvent) => {
+	let marker;
 	google.maps.event.addListener(map, 'idle', function() {
 		const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
 		const icon = {
@@ -91,15 +92,15 @@ const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight) => {
 			anchor: new google.maps.Point(17, 34),
 			scaledSize: new google.maps.Size(imgWidth, imgHeight),
 		};
-		const marker = new google.maps.Marker({
+		marker = new google.maps.Marker({
 			position: location,
 			icon: icon,
+			map: map,
 			optimized: false,
 			zindex: 0,
 			url: '',
-		}).setMap(map);
+		}).addListener('click', clickEvent);
 	});
-	// google.maps.event.addDomListener(marker, 'click', clickEvent);
 };
 
 
