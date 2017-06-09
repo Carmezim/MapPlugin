@@ -17,7 +17,7 @@ const fetchData = (map, data, markers, url, domElement) => {
 	let j = 0;
 
 	const pngs = Object.keys(pngsList);
-	const maxZoomLevel = 13; 
+	const maxZoomLevel = 14; 
 	const scrollElement = $(domElement).find(".shiftmap-map-clusterise-wrapper").get(0);
 	const contentElement = $(domElement).find(".shiftmap-clusterize-content-wrapper").get(0);
 
