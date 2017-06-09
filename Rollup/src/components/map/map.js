@@ -72,6 +72,12 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 			placeCharacters(map, assetsPath);
 		}
 	}, 100 );
+
+	// open panel on zoom
+	google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
+		const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
+			$panel.removeClass('default')
+	});
 };
 
 

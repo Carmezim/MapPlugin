@@ -33,12 +33,17 @@
 			Maps.setWidthHeight($(window).width(), $(window).height() );	
 			
 			$( window ).on('resize', function(){
-				Maps.setWidthHeight($(window).width(), $(window).height() );
+				Maps.setWidthHeight($(window).width(), $(window).height());
 			});
 
 			Maps.onClickUser(function( user ){
 				alert('You clicked follow on ' + JSON.stringify(user));
 			});
+
+			// insert custom marker
+			Maps.insertMarker(41.560757, -87.309501, '/img/dinosaur.png', 40, 60); // New Chicago
+			Maps.insertMarker(41.860757, -87.709501, '/img/person-001.png', 40, 60); // Chicago
+
 		});
 		
 	</script>
