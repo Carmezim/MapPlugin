@@ -112,7 +112,7 @@ const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight, clickEvent) => {
 		};
 		const marker = new google.maps.Marker({
 			position: location,
-			icon: `${imgURL}`,
+			icon: icon,
 			map: map,
 			optimized: false,
 			zindex: 0,
