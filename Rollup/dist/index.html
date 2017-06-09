@@ -23,8 +23,7 @@
 		var base = location.pathname;
 		var map = document.getElementById('google-map-example');
 		var assetsPath = base + 'img/';
-
-		// function 
+		
 		function customMarkerClickEvent() {
 			alert('Marker clicked!')
 		}
@@ -48,7 +47,7 @@
 			// insert custom marker
 			Maps.insertMarker(41.560757, -87.309501, '/img/dinosaur.png', 40, 60, customMarkerClickEvent); // New Chicago
 			Maps.insertMarker(41.860757, -87.709501, '/img/person-001.png', 40, 60, customMarkerClickEvent); // Chicago
-
+			Maps.insertMarker(35.710940, 139.730265, '/img/giraffe.png', 40, 60, customMarkerClickEvent); // Tokyo
 		});
 		
 	</script>

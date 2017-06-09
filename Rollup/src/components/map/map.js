@@ -80,9 +80,27 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 	});
 };
 
-
+// Insert markers after map is loaded
 const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight, clickEvent) => {
-	let marker;
+	lat = lat || null;
+	lng = lng || null;
+	imgURL = imgURL.toString() || null;
+	imgWidth = Math.abs(imgWidth) || null;
+	imgHeight = Math.abs(imgHeight) || null;
+	clickEvent = clickEvent || null;
+
+	if (typeof clickEvent !== 'function') {
+		throw 'Click event must be a function!';
+	}
+
+	if (!Number.isInteger(imgHeight) || !Number.isInteger(imgWidth)) {
+		throw 'Icon dimensions must be integers!';
+	}
+
+	if (typeof lat !== 'number' || typeof lng !== 'number') {
+		throw 'Coordinates must be numbers!';
+	}
+
 	google.maps.event.addListener(map, 'idle', function() {
 		const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
 		const icon = {
@@ -92,9 +110,9 @@ const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight, clickEvent) => {
 			anchor: new google.maps.Point(17, 34),
 			scaledSize: new google.maps.Size(imgWidth, imgHeight),
 		};
-		marker = new google.maps.Marker({
+		const marker = new google.maps.Marker({
 			position: location,
-			icon: icon,
+			icon: `${imgURL}`,
 			map: map,
 			optimized: false,
 			zindex: 0,
