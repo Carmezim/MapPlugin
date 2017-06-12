@@ -41,6 +41,60 @@
 	width: 100%;
 }
 
+.shiftmap-promo-area {
+	width: 90%;
+	height: 20%;
+	position: relative;
+	top: 0.5%;
+	left: 5%;
+	margin-bottom: 1%;
+	background-color: $promo-background;
+	@media(max-width:$screen-sm) {
+		display: none;	
+	}
+}
+
+.shitfmap-promo-area-text {
+	width: 80%;
+	margin: 0;
+	margin-left: 5%;
+	margin-top: 5%;
+	padding-top: 2.5%;
+	margin-bottom: 0;
+	font-size: 20px !important;
+	word-break: normal;
+	text-overflow: ellipsis;
+}
+
+.shiftmap-promo-area-button {
+	width: 60%;
+	height: 25%;
+	display: block;
+	margin-left: 5%;
+	margin-top: 10%;
+	font-weight: bold;
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	cursor: pointer;
+	-webkit-appearance: none;
+	font-size: 15px;
+	border-width: 1px 1px 4px;
+	border-style: solid;
+	border-color: rgb(0, 0, 0);
+	border-image: initial;
+	border-bottom: 4px solid rgb(0, 0, 0);
+	outline: 0px;
+	border-radius: 0px;
+}
+
+
+.shitfmap-promo-area-icon {
+	display: block;
+	margin-left: 70%;
+	margin-top: -22%;
+}
+
 .shiftmap-map-clusterise-user-panel {
 	position: absolute;
 	left:0; top:0;
