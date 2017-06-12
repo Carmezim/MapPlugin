@@ -23,7 +23,8 @@
 		var base = location.pathname;
 		var map = document.getElementById('google-map-example');
 		var assetsPath = base + 'img/';
-		
+		var isLogged = false; //change to false to see non logged component
+
 		function customMarkerClickEvent() {
 			alert('Marker clicked!')
 		}
@@ -31,7 +32,7 @@
 		// Example of fetching data from an AJAX endpoint
 		// And then loading the map
 		$.get(base + "datasets/coordinates.json").then(function(data) {
-			Maps.initialize(map, data, Maps.defineURL('https://github.com/identicons/', '.png'), assetsPath);
+			Maps.initialize(map, data, Maps.defineURL('https://github.com/identicons/', '.png'), assetsPath, isLogged);
 			Maps.onMapReady(function() {console.log('map is loaded')});
 			Maps.onMapChangeLocation(function() {console.log('map changed location')});
 			Maps.setWidthHeight($(window).width(), $(window).height() );	

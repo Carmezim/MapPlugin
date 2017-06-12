@@ -3,6 +3,7 @@ import '../../../styles/main.v2.scss';
 
 import createSearchBox from '../searchBox/createSearchBox';
 import searchBox from '../searchBox/searchBox';
+import promoAreaLogged from '../promoArea/promoAreaLogged';
 import promoArea from '../promoArea/promoArea';
 import fetchData from '../fetchData/fetchData';
 import createMap from './createMap';
@@ -48,11 +49,12 @@ if(!$){
 	throw 'jQuery is required for this map plugin';
 }
 
-const initialize = (domElement, data, avatarURL, assetsPath) => {
+const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 	domElement =  domElement || null;
 	data       =  data || null;
 	avatarURL  =  avatarURL || null;
 	assetsPath =  assetsPath || null;
+	logged = logged || null;
 
 	map = createMap(domElement);
 
@@ -64,7 +66,9 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 
-	promoArea(function(){console.log('silly test')})
+	logged ? promoAreaLogged(function(){console.log('change your location clicked')}) 
+	: promoArea(function(){console.log('Add your marker clicked!')}, markers.length);
+	
 
 	panelClosedOnLoad(domElement);
 
