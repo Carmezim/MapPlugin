@@ -3,6 +3,7 @@ import '../../../styles/main.v2.scss';
 
 import createSearchBox from '../searchBox/createSearchBox';
 import searchBox from '../searchBox/searchBox';
+import promoArea from '../promoArea/promoArea';
 import fetchData from '../fetchData/fetchData';
 import createMap from './createMap';
 import defineCenter from './defineCenter';
@@ -35,6 +36,9 @@ addCenterToOptions(london);
 // Map
 let map;
 
+// Map bounds 
+let bounds;
+
 // Search Box
 let sBox;
 
@@ -59,6 +63,8 @@ const initialize = (domElement, data, avatarURL, assetsPath) => {
 
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
+
+	promoArea(function(){console.log('silly test')})
 
 	panelClosedOnLoad(domElement);
 
