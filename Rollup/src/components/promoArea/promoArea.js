@@ -13,7 +13,7 @@ const promoArea = (insertMarker, numUsers) => {
 	image.className = 'shitfmap-promo-area-icon';
 
 	const button = document.createElement('button');
-	button.className = 'shiftmap-promo-area-yarn bbutton';
+	button.className = 'shiftmap-promo-area-button';
 	button.type = 'button'; 
 	button.value = 'Add your marker!';
 	button.innerHTML = 'Add your marker!';
