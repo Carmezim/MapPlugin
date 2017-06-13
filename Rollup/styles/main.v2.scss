@@ -51,12 +51,18 @@
 	background-color: $promo-background;
 
 	@media(max-width:$screen-sm) {
-		width: 95%;
-		height: 35%;
-		left: 2.5%;
-		margin-bottom: 2%;
-		
-		// display: none;	
+		width: 85%;
+		left: 7.5%;
+		height: 50%;
+		margin-top: -2%;
+	}
+
+	@media(max-width:$screen-xs) {
+		width: 90%;
+		height: 45%;
+		left: 5%;
+		margin-top: 2%;
+		margin-bottom: 2.5%;
 	}
 }
 
@@ -72,6 +78,10 @@
 	text-overflow: ellipsis;
 	
 	@media(max-width:$screen-sm) {
+		font-size: 18px !important;
+	}
+
+	@media(max-width:$screen-xs) {
 		font-size: 14px !important;
 		margin-top: 2.5%;
 		margin-left: 7.5%;
@@ -100,6 +110,14 @@
 	border-radius: 0px;
 	
 	@media(max-width:$screen-sm) {
+		width: 50%;
+		height: 37.5%;
+		margin-top: 2%;
+		font-size: 17px;
+
+	}
+
+	@media(max-width:$screen-xs) {
 		width: 55%;
 		height: 37%;
 		font-size: 15px;
@@ -114,12 +132,21 @@
 	margin-left: 70%;
 	margin-top: -22%;
 	
+
 	@media(max-width:$screen-sm) {
-		height: 60%;
+		height: 75%;
+		width: 70%;
+		margin-top: -12%;	
+		margin-left: 40%;
+	}
+
+	@media(max-width:$screen-xs) {
+		height: 50%;
 		width: 60%;
 		margin-left: 48%;
-		margin-top: -18%;
+		margin-top: -14%;
 	}
+
 }
 
 .shiftmap-map-clusterise-user-panel {
