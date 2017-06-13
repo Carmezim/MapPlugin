@@ -371,6 +371,17 @@
 	}
 }
 
+.shiftmap-showmap-wrapper {
+	margin: 4%;
+	margin-bottom: 0;
+	text-decoration: underline;
+	font-size: 16px;
+	
+	.shiftmap-showmap {
+		cursor: pointer;
+	}
+}
+
 .shiftmap-map-toggle-panel.alert-user::before {
 	box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
 	-webkit-animation: pulse 1.25s 6 cubic-bezier(0.66, 0, 0, 1);
