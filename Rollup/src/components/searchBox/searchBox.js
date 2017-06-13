@@ -17,6 +17,9 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 		places = sBox.getPlaces();
 		if (places.length == 0) {
 			return;
+		} else {
+			// Only one result
+			places = [places[0]];
 		}
 
 		// Clear out the old markers.
@@ -44,27 +47,28 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 
 			placeMarkers.push(marker);
 
-			if( isPlotSearch ){
-				const infoWindow = createInfoWindow(map, marker, place);
-			}
-
 			if (place.geometry.viewport) {
 				// Only geocodes have viewport.
 				bounds.union(place.geometry.viewport);
 			} else {
 				bounds.extend(place.geometry.location);
 			}
+
+			google.maps.event.addListenerOnce(map, "idle", function() { 
+				if( isPlotSearch ){
+					const infoWindow = createInfoWindow(map, marker, place);
+				}
+			});
+
+			map.fitBounds(bounds);
 		});
 
-		map.fitBounds(bounds);
+		google.maps.event.addListenerOnce(map, "idle", function() { 
 
-		var listener = google.maps.event.addListener(map, "idle", function() { 
-
-		// Disable zoom, as infowindow handles this automatically
-		if( ! isPlotSearch ){
-		  map.setZoom(8); 
-		}
-		  google.maps.event.removeListener(listener); 
+			// Disable zoom, as infowindow handles this automatically
+			if( ! isPlotSearch ){
+			  map.setZoom(8); 
+			}
 		});
 
 	});
