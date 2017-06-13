@@ -66,8 +66,8 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 
-	logged ? promoAreaLogged(function(){console.log('change your location clicked')}) 
-	: promoArea(function(){console.log('Add your marker clicked!')}, markers.length);
+	logged ? promoAreaLogged(function(){console.log('change your location clicked')}, assetsPath) 
+	: promoArea(function(){console.log('Add your marker clicked!')}, markers.length, assetsPath);
 	
 
 	panelClosedOnLoad(domElement);
@@ -87,6 +87,11 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 	google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
 		const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
 			$panel.removeClass('default')
+	});
+
+	google.maps.event.addListener(map, 'shiftms_plotted_location', function ( place, marker ) {
+		alert('Plotted! ' + place.formatted_address);
+		console.log(place, marker);
 	});
 };
 
@@ -173,7 +178,8 @@ const defineURL = (url, imgFormat) => {
 const bindEvents = ( domElement, map ) => {
 	const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
 
-	$panel.find('.shiftmap-map-toggle-panel').click(() => {
+	$panel.find('.shiftmap-map-toggle-panel').click(function(){
+		$(this).removeClass('alert-user');
 		if ($panel.hasClass('default')) {
 			$panel.removeClass('default')
 		}

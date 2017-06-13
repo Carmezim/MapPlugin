@@ -41,114 +41,6 @@
 	width: 100%;
 }
 
-.shiftmap-promo-area {
-	width: 90%;
-	height: 15%;
-	position: relative;
-	top: 0.5%;
-	left: 5%;
-	margin-bottom: 1%;
-	background-color: $promo-background;
-
-	@media(max-width:$screen-sm) {
-		width: 85%;
-		left: 7.5%;
-		height: 50%;
-		margin-top: -2%;
-	}
-
-	@media(max-width:$screen-xs) {
-		width: 90%;
-		height: 45%;
-		left: 5%;
-		margin-top: 2%;
-		margin-bottom: 2.5%;
-	}
-}
-
-.shitfmap-promo-area-text {
-	width: 80%;
-	margin: 0;
-	margin-left: 5%;
-	margin-top: 5%;
-	padding-top: 2.5%;
-	margin-bottom: 0;
-	font-size: 20px !important;
-	word-break: normal;
-	text-overflow: ellipsis;
-	
-	@media(max-width:$screen-sm) {
-		font-size: 18px !important;
-	}
-
-	@media(max-width:$screen-xs) {
-		font-size: 14px !important;
-		margin-top: 2.5%;
-		margin-left: 7.5%;
-	}
-}
-
-.shiftmap-promo-area-button {
-	width: 60%;
-	height: 25%;
-	display: block;
-	margin-left: 5%;
-	margin-top: 10%;
-	font-weight: bold;
-	text-align: center;
-	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 0);
-	cursor: pointer;
-	-webkit-appearance: none;
-	font-size: 15px;
-	border-width: 1px 1px 4px;
-	border-style: solid;
-	border-color: rgb(0, 0, 0);
-	border-image: initial;
-	border-bottom: 4px solid rgb(0, 0, 0);
-	outline: 0px;
-	border-radius: 0px;
-	
-	@media(max-width:$screen-sm) {
-		width: 50%;
-		height: 37.5%;
-		margin-top: 2%;
-		font-size: 17px;
-
-	}
-
-	@media(max-width:$screen-xs) {
-		width: 55%;
-		height: 37%;
-		font-size: 15px;
-		margin: 0;
-		margin-top: 4%;
-		margin-left: 7.5%;
-	}
-}
-
-.shitfmap-promo-area-icon {
-	display: block;
-	margin-left: 70%;
-	margin-top: -22%;
-	
-
-	@media(max-width:$screen-sm) {
-		height: 75%;
-		width: 70%;
-		margin-top: -12%;	
-		margin-left: 40%;
-	}
-
-	@media(max-width:$screen-xs) {
-		height: 50%;
-		width: 60%;
-		margin-left: 48%;
-		margin-top: -14%;
-	}
-
-}
-
 .shiftmap-map-clusterise-user-panel {
 	position: absolute;
 	left:0; top:0;
@@ -296,9 +188,9 @@
 }
 
 .shiftmap-map-toggle-panel {
-	width: 30px;
+	width: 40px;
 	position: absolute;
-	right:-30px;
+	right:-40px;
 	top:0;
 	height: 100%;
 	background:#333;
@@ -306,9 +198,12 @@
 	&::before {
 		content:'';
 		position: absolute;
+		border-radius:100%;
 		top:50%;
 		left:5px;
+		border:5px solid transparent;
 		background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff"><path d="M10.477 0h-8.977l12.024 12-12.024 12h8.977l12.023-12z"/></svg>');
+		background-repeat:no-repeat;
 		width: 20px;
 		height: 20px;
 		z-index: 1;
@@ -419,3 +314,72 @@
 		margin: 10px auto;
 	}
 }
+
+.shiftmap-promo-area {
+	padding:15px;
+	background-color: $promo-background;
+	border:1px solid darken($promo-background, 10%);
+	overflow:hidden;
+	position:relative;
+
+	.shiftmap-promo-area-tooltip {
+		position: absolute;
+		bottom:-100px;
+		height: 100px;
+		background:#333;
+		width: auto;
+		padding:15px;
+		left:0;
+		color:#fff;
+	}
+
+	&.in {
+		.shiftmap-promo-area-tooltip {
+			bottom:0;
+			transition: all 0.5s;
+		}
+	}
+}
+
+.shitfmap-promo-area-text {
+	margin: 0;
+	padding-top: 2.5%;
+	margin-bottom: 0;
+	font-size: 20px !important;
+	word-break: normal;
+	text-overflow: ellipsis;
+}
+
+.shiftmap-promo-area-button {
+	@extend .shiftmap-clusterize-user-button;
+	margin-left:0;
+	margin-top:5px;
+	background-color:$promo-background;
+}
+
+
+.shitfmap-promo-area-icon {
+	display: block;
+	float:right;
+	position: relative;
+	top:-40px;
+
+	@media(max-width:$screen-sm){
+		width:30px;
+		height: auto;
+		top:-20px;
+	}
+}
+
+.shiftmap-map-toggle-panel.alert-user::before {
+	box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+	-webkit-animation: pulse 1.25s 6 cubic-bezier(0.66, 0, 0, 1);
+	  -moz-animation: pulse 1.25s 6 cubic-bezier(0.66, 0, 0, 1);
+	  -ms-animation: pulse 1.25s 6 cubic-bezier(0.66, 0, 0, 1);
+	  animation: pulse 1.25s 6 cubic-bezier(0.66, 0, 0, 1);
+}
+
+@-webkit-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+@-moz-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+@-ms-keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+@keyframes pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}

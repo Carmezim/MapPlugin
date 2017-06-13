@@ -1,4 +1,5 @@
 import {iconPlace} from '../map/options';
+import confirmLocationContent from './confirmLocation.html';
 
 const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 
@@ -10,6 +11,9 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 	// Listen for the event fired when the user selects a prediction and retrieve
 	// more details for that place.
 	sBox.addListener('places_changed', function() {
+
+		const isPlotSearch = $('.shiftmap-promo-area.in').length;
+
 		places = sBox.getPlaces();
 		if (places.length == 0) {
 			return;
@@ -29,14 +33,20 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 				return;
 			}
 
-			placeMarkers.push(new google.maps.Marker({
+			const marker = new google.maps.Marker({
 				map: map,
 				icon: iconPlace,
 				title: place.name,
 				position: place.geometry.location,
 				optimized: false,
 				zindex: 2
-			}));
+			});
+
+			placeMarkers.push(marker);
+
+			if( isPlotSearch ){
+				const infoWindow = createInfoWindow(map, marker, place);
+			}
 
 			if (place.geometry.viewport) {
 				// Only geocodes have viewport.
@@ -45,13 +55,34 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 				bounds.extend(place.geometry.location);
 			}
 		});
+
 		map.fitBounds(bounds);
 
 		var listener = google.maps.event.addListener(map, "idle", function() { 
+		if( ! isPlotSearch ){
 		  map.setZoom(8); 
+		}
 		  google.maps.event.removeListener(listener); 
 		});
 
 	});
 };
 export default searchBox;
+
+const createInfoWindow = ( map, marker, place ) => {
+	const html = $(confirmLocationContent);
+	var infowindow = new google.maps.InfoWindow({
+      content: ''
+    });
+
+    infowindow.setContent(html.get(0));
+
+	html.find("button").click(() => {
+		google.maps.event.trigger(map, 'shiftms_plotted_location', place, marker);
+		infowindow.close();
+	});
+
+    infowindow.open(map, marker);
+    map.setZoom(8);
+    return infowindow;
+}

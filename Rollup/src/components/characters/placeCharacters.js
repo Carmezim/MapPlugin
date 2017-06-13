@@ -4,6 +4,10 @@ import pngsList from './iconsList';
 
 
 const placeCharacters = (map, assetsPath) => {
+
+	// DISABLED for now
+	return true;
+
 	const airportsMarkers = [];
 	const icons = [];
 	const localMap = map;
