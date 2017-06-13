@@ -43,14 +43,20 @@
 
 .shiftmap-promo-area {
 	width: 90%;
-	height: 20%;
+	height: 15%;
 	position: relative;
 	top: 0.5%;
 	left: 5%;
 	margin-bottom: 1%;
 	background-color: $promo-background;
+
 	@media(max-width:$screen-sm) {
-		display: none;	
+		width: 95%;
+		height: 35%;
+		left: 2.5%;
+		margin-bottom: 2%;
+		
+		// display: none;	
 	}
 }
 
@@ -64,6 +70,12 @@
 	font-size: 20px !important;
 	word-break: normal;
 	text-overflow: ellipsis;
+	
+	@media(max-width:$screen-sm) {
+		font-size: 14px !important;
+		margin-top: 2.5%;
+		margin-left: 7.5%;
+	}
 }
 
 .shiftmap-promo-area-button {
@@ -86,13 +98,28 @@
 	border-bottom: 4px solid rgb(0, 0, 0);
 	outline: 0px;
 	border-radius: 0px;
+	
+	@media(max-width:$screen-sm) {
+		width: 55%;
+		height: 37%;
+		font-size: 15px;
+		margin: 0;
+		margin-top: 4%;
+		margin-left: 7.5%;
+	}
 }
-
 
 .shitfmap-promo-area-icon {
 	display: block;
 	margin-left: 70%;
 	margin-top: -22%;
+	
+	@media(max-width:$screen-sm) {
+		height: 60%;
+		width: 60%;
+		margin-left: 48%;
+		margin-top: -18%;
+	}
 }
 
 .shiftmap-map-clusterise-user-panel {

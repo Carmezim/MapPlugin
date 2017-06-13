@@ -9,7 +9,7 @@ const promoAreaLogged = (insertMarker) => {
 	message.className = 'shitfmap-promo-area-text';
 
 	const image = new Image(70, 70)
-	image.src = '/icons/icon-2.svg';
+	image.src = '/img/icons/icon-2.svg';
 	image.className = 'shitfmap-promo-area-icon';
 
 	const button = document.createElement('button');
