@@ -60,16 +60,17 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 
 	sBox = createSearchBox(map, domElement);
 
-	// fetch dataset
+	// Fetch dataset
 	fetchData(map, data, markers, avatarURL, domElement);
 
 	// Create Search Box
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 
+	// Render promo area
 	logged ? promoAreaLogged(function(){console.log('change your location clicked')}, assetsPath) 
 	: promoArea(function(){console.log('Add your marker clicked!')}, markers.length, assetsPath);
 	
-
+	// Panel closed by default
 	panelClosedOnLoad(domElement);
 
 	bindEvents( domElement, map );
@@ -83,11 +84,14 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 		}
 	}, 100 );
 
-	// open panel on zoom
+	// Open panel on zoom
 	google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
 		const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
 			$panel.removeClass('default')
 	});
+
+	// Show whole map on click
+	showMap(domElement, map);
 
 	google.maps.event.addListener(map, 'shiftms_plotted_location', function ( place, marker ) {
 		alert('Plotted! ' + place.formatted_address);
@@ -172,6 +176,21 @@ const onMapChangeLocation = (callback) => {
 
 const defineURL = (url, imgFormat) => {
 	return [url.toString(), imgFormat.toString()];
+};
+
+
+const showMap = (domElement, map) => {
+	const showMapButton = $(domElement).find('.shiftmap-showmap');
+	const topLeft = new google.maps.LatLng(68.870136, -160.789405);
+	const bottomRight = new google.maps.LatLng(-44.879507, 178.880419)
+	const bounds = new google.maps.LatLngBounds(topLeft, bottomRight);
+	
+	const onClick = () => {
+		showMapButton.click(function() {
+			map.fitBounds(bounds)
+		});
+	}
+	google.maps.event.addListener(map, 'idle', onClick);
 };
 
 

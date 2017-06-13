@@ -8,7 +8,7 @@ const mapOptions = {
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
 	mapTypeControl: false,
 	styles: mapStyles,
-	minZoom: 3
+	minZoom: 2
 };
 
 // Cluster markers style
