@@ -59,6 +59,8 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 		map.fitBounds(bounds);
 
 		var listener = google.maps.event.addListener(map, "idle", function() { 
+
+		// Disable zoom, as infowindow handles this automatically
 		if( ! isPlotSearch ){
 		  map.setZoom(8); 
 		}
@@ -82,7 +84,7 @@ const createInfoWindow = ( map, marker, place ) => {
 		infowindow.close();
 	});
 
-    infowindow.open(map, marker);
-    map.setZoom(8);
+	infowindow.open(map, marker);
+    
     return infowindow;
 }
