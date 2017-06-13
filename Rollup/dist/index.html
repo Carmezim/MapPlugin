@@ -49,7 +49,7 @@
 			Maps.onPlotLocation(function(){console.log('onPlotLocation externally called!')});
 			
 			// Air balloon click listener
-			Maps.clickAirBalloon(map, function() {console.log('Air Balloon clicked!')});
+			Maps.onAirBalloonClick(map, function() {console.log('Air Balloon clicked!')});
 
 			// Inserting custom markers
 			Maps.insertMarker(41.560757, -87.309501, '/img/dinosaur.png', 40, 60, customMarkerClickEvent); // New Chicago

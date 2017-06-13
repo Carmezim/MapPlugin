@@ -122,7 +122,7 @@ const airBalloon = (domElement, logged, assetsPath) => {
 
 
 // Balloon click listener
-const clickAirBalloon = (domElement, callback) => {
+const onAirBalloonClick = (domElement, callback) => {
 	const balloon = $(domElement).find('.shiftmap-airballoon-image');
 		balloon.click(callback);
 }
@@ -317,5 +317,5 @@ export {
 	changeMapLocation,
 	onClickUser,
 	onPlotLocation,
-	clickAirBalloon
+	onAirBalloonClick
 };
