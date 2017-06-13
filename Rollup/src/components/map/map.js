@@ -90,14 +90,22 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 			$panel.removeClass('default')
 	});
 
-	// Show whole map on click
-	showMap(domElement, map);
-
-	google.maps.event.addListener(map, 'shiftms_plotted_location', function ( place, marker ) {
+	// Plot location	
+	onPlotLocation(function ( place, marker ) {
 		alert('Plotted! ' + place.formatted_address);
 		console.log(place, marker);
 	});
+
+	// Show whole map on click
+	showMap(domElement, map);
 };
+
+
+// plot location listener
+const onPlotLocation = (callback) => {
+	google.maps.event.addListener(map, 'shiftms_plotted_location', callback);
+};
+
 
 // Insert markers after map is loaded
 const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight, clickEvent) => {
@@ -148,12 +156,14 @@ const panelClosedOnLoad = (domElement) => {
 };
 
 
+// Move map to specified coordinates , dk why i built this though
 const changeMapLocation = (lat, lng) => {
 	let location = defineCenter(lat, lng);
 	map.panTo(location);
 };
 
 
+// Detects when map is loaded
 const onMapReady = (callback) => {
 	if (typeof callback === 'function') {
 		google.maps.event.addListenerOnce(map, 'idle', callback);
@@ -164,6 +174,7 @@ const onMapReady = (callback) => {
 };
 
 
+// Fires event when map changes locations
 const onMapChangeLocation = (callback) => {
 	if (typeof callback === 'function') {
 		google.maps.event.addListener(map, 'idle', callback);
@@ -174,11 +185,13 @@ const onMapChangeLocation = (callback) => {
 };
 
 
+// Builds assets URL in acceptable format
 const defineURL = (url, imgFormat) => {
 	return [url.toString(), imgFormat.toString()];
 };
 
 
+// Display zoomed out map 
 const showMap = (domElement, map) => {
 	const showMapButton = $(domElement).find('.shiftmap-showmap');
 	const topLeft = new google.maps.LatLng(68.870136, -160.789405);
@@ -228,6 +241,7 @@ const bindEvents = ( domElement, map ) => {
 };
 
 
+// Define map dimensions
 const setWidthHeight = (width, height) => {
 	$('.shiftmap-wrapper').width(width).height(height);
 	$('.shiftmap-map').width(width).height(height);
@@ -281,5 +295,6 @@ export {
 	onMapChangeLocation,
 	defineURL,
 	changeMapLocation,
-	onClickUser
+	onClickUser,
+	onPlotLocation
 };
