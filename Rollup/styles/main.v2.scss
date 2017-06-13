@@ -380,8 +380,23 @@
 	.shiftmap-showmap {
 		cursor: pointer;
 	}
-}
+	
+	// @media(max-width:$screen-md) {
 
+	// }
+	
+	@media(max-width:$screen-sm) {
+		margin-top: 2%;
+		margin-left: .75%;
+		margin-bottom: 2%;
+	}
+
+	@media(max-width:$screen-xs) {
+		margin-top: 2%;
+		margin-left: 1.5%;
+		margin-bottom: 2%;
+	}
+}
 .shiftmap-map-toggle-panel.alert-user::before {
 	box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
 	-webkit-animation: pulse 1.25s 6 cubic-bezier(0.66, 0, 0, 1);
