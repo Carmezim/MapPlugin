@@ -67,8 +67,9 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
 
 	// Render promo area
-	logged ? promoAreaLogged(function(){console.log('change your location clicked')}, assetsPath) 
-	: promoArea(function(){console.log('Add your marker clicked!')}, markers.length, assetsPath);
+	logged ? 
+	promoAreaLogged(function(){console.log('change your location clicked')}, assetsPath) :
+	promoArea(function(){console.log('Add your marker clicked!')}, markers.length, assetsPath);
 	
 	// Panel closed by default
 	panelClosedOnLoad(domElement);
@@ -90,6 +91,9 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 			$panel.removeClass('default')
 	});
 
+	// Display air balloon
+	airBalloon(domElement, logged, assetsPath);
+
 	// Plot location	
 	onPlotLocation(function ( place, marker ) {
 		alert('Plotted! ' + place.formatted_address);
@@ -101,11 +105,27 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 };
 
 
-// plot location listener
+// Plot location listener
 const onPlotLocation = (callback) => {
 	google.maps.event.addListener(map, 'shiftms_plotted_location', callback);
 };
 
+
+// Air Balloon
+const airBalloon = (domElement, logged, assetsPath) => {
+	let balloon = $(domElement).find('.shiftmap-airballoon-image');
+	if (logged) {
+		balloon.attr('src', `${assetsPath}promo/map-hot-air-balloon.png`);
+	}
+	else { balloon.attr('src', `${assetsPath}promo/plot-yourself.png`); }
+};
+
+
+// Balloon click listener
+const clickAirBalloon = (domElement, callback) => {
+	const balloon = $(domElement).find('.shiftmap-airballoon-image');
+		balloon.click(callback);
+}
 
 // Insert markers after map is loaded
 const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight, clickEvent) => {
@@ -296,5 +316,6 @@ export {
 	defineURL,
 	changeMapLocation,
 	onClickUser,
-	onPlotLocation
+	onPlotLocation,
+	clickAirBalloon
 };
