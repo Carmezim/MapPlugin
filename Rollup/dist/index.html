@@ -50,7 +50,7 @@
 				alert('Plotted  ' + place.formatted_address );
 				if( ! isLogged ){
 					alert('e.g. ShiftMS Redirects to signup page with data: ' + place.formatted_address);
-					location.href = location.origin + '?user=1';
+					location.href = location.origin + location.pathname + '?user=1';
 				}
 			});
 			
