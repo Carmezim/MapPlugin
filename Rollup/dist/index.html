@@ -23,7 +23,7 @@
 		var base = location.pathname;
 		var map = document.getElementById('google-map-example');
 		var assetsPath = base + 'img/';
-		var isLogged = true; //change to false to see non logged component
+		var isLogged = getParameterByName('user') || false; //change to false to see non logged component
 
 		function customMarkerClickEvent() {
 			alert('Marker clicked!')
@@ -46,16 +46,39 @@
 			});
 
 			// Plot location listener example
-			Maps.onPlotLocation(function(){console.log('onPlotLocation externally called!')});
+			Maps.onPlotLocation(function( place ){
+				alert('Plotted  ' + place.formatted_address );
+				if( ! isLogged ){
+					alert('e.g. ShiftMS Redirects to signup page with data: ' + place.formatted_address);
+					location.href = location.origin + '?user=1';
+				}
+			});
 			
 			// Air balloon click listener
-			Maps.onAirBalloonClick(map, function() {console.log('Air Balloon clicked!')});
+			Maps.onAirBalloonClick(map, function() {
+				alert('Plot yourself using the search tool');
+				Maps.enablePlotLocationMode();
+			});
 
 			// Inserting custom markers
 			Maps.insertMarker(41.560757, -87.309501, '/img/dinosaur.png', 40, 60, customMarkerClickEvent); // New Chicago
 			Maps.insertMarker(41.860757, -87.709501, '/img/person-001.png', 40, 60, customMarkerClickEvent); // Chicago
 			Maps.insertMarker(35.710940, 139.730265, '/img/giraffe.png', 40, 60, customMarkerClickEvent); // Tokyo
+
+			if(getParameterByName('location')){
+				Maps.enablePlotLocationMode();
+			}
 		});
+
+		function getParameterByName(name) {
+			var url = location.href;
+		    name = name.replace(/[\[\]]/g, "\\$&");
+		    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		        results = regex.exec(url);
+		    if (!results) return null;
+		    if (!results[2]) return '';
+		    return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
 		
 	</script>
 </body>

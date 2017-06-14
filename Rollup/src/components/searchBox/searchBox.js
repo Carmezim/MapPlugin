@@ -36,16 +36,23 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 				return;
 			}
 
-			const marker = new google.maps.Marker({
-				map: map,
-				icon: iconPlace,
-				title: place.name,
-				position: place.geometry.location,
-				optimized: false,
-				zindex: 2
-			});
+			let marker;
 
-			placeMarkers.push(marker);
+			if( isPlotSearch ){
+
+				marker = new google.maps.Marker({
+					map: map,
+					icon: iconPlace,
+					title: place.name,
+					position: place.geometry.location,
+					optimized: false,
+					zindex: 2,
+					class: 'shiftms-map-cluster-location-icon'
+				});
+
+				placeMarkers.push(marker);
+
+			}
 
 			if (place.geometry.viewport) {
 				// Only geocodes have viewport.
@@ -54,20 +61,20 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 				bounds.extend(place.geometry.location);
 			}
 
+			map.fitBounds(bounds);
+
 			google.maps.event.addListenerOnce(map, "idle", function() { 
 				if( isPlotSearch ){
 					const infoWindow = createInfoWindow(map, marker, place);
 				}
 			});
-
-			map.fitBounds(bounds);
 		});
 
 		google.maps.event.addListenerOnce(map, "idle", function() { 
 
 			// Disable zoom, as infowindow handles this automatically
 			if( ! isPlotSearch ){
-			  map.setZoom(8); 
+			  map.setZoom(6); 
 			}
 		});
 

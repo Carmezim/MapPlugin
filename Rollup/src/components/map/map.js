@@ -43,6 +43,9 @@ let bounds;
 // Search Box
 let sBox;
 
+// Wrapper element
+let wrapper;
+
 const $ = window.jQuery;
 
 if(!$){
@@ -55,6 +58,8 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 	avatarURL  =  avatarURL || null;
 	assetsPath =  assetsPath || null;
 	logged = logged || null;
+
+	wrapper = domElement;
 
 	map = createMap(domElement);
 
@@ -93,12 +98,6 @@ const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
 
 	// Display air balloon
 	airBalloon(domElement, logged, assetsPath);
-
-	// Plot location	
-	onPlotLocation(function ( place, marker ) {
-		alert('Plotted! ' + place.formatted_address);
-		console.log(place, marker);
-	});
 
 	// Show whole map on click
 	showMap(domElement, map);
@@ -306,6 +305,11 @@ const geolocationAPI = ( map ) => {
 	}
 };
 
+const enablePlotLocationMode = () => {
+	$(wrapper).find('.shiftmap-promo-area').addClass('in');
+	$(wrapper).find('.shiftmap-map-clusterise-user-panel').removeClass('default closed');
+}
+
 
 export {
 	initialize,
@@ -317,5 +321,6 @@ export {
 	changeMapLocation,
 	onClickUser,
 	onPlotLocation,
-	onAirBalloonClick
+	onAirBalloonClick,
+	enablePlotLocationMode
 };

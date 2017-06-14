@@ -1080,13 +1080,23 @@ ClusterIcon.prototype.triggerClusterClick = function() {
  */
 ClusterIcon.prototype.onAdd = function() {
   this.div_ = document.createElement('DIV');
+  var panes = this.getPanes();
   if (this.visible_) {
     var pos = this.getPosFromLatLng_(this.center_);
     this.div_.style.cssText = this.createCss(pos);
     this.div_.innerHTML = this.sums_.text;
+    if( this.sums_.text ){
+      panes.overlayMouseTarget.classList.add('shiftms-map-cluster-icon');
+      if( this.sums_.text > 1000 ){
+        this.div_.classList.add('shiftms-map-cluster-icon-large-num');
+      }
+
+      if( this.sums_.text > 0 ){
+        this.div_.classList.add('shiftms-map-cluster-icon-is-cluster');  
+      }
+    }
   }
 
-  var panes = this.getPanes();
   panes.overlayMouseTarget.appendChild(this.div_);
 
   var that = this;
