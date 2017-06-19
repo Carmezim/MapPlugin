@@ -113,8 +113,13 @@ const onPlotLocation = (callback) => {
 // Air Balloon
 const airBalloon = (domElement, logged, assetsPath) => {
 	let balloon = $(domElement).find('.shiftmap-airballoon-image');
+	let dismiss = $(domElement).find('.balloon-dismiss');
+	$(dismiss).click(( e ) => {
+		$(balloon).remove();
+	});
 	if (logged) {
-		balloon.attr('src', `${assetsPath}promo/map-hot-air-balloon.png`);
+		balloon.remove();
+		//balloon.attr('src', `${assetsPath}promo/map-hot-air-balloon.png`);
 	}
 	else { balloon.attr('src', `${assetsPath}promo/plot-yourself.png`); }
 };
@@ -123,7 +128,7 @@ const airBalloon = (domElement, logged, assetsPath) => {
 // Balloon click listener
 const onAirBalloonClick = (domElement, callback) => {
 	const balloon = $(domElement).find('.shiftmap-airballoon-image');
-		balloon.click(callback);
+	balloon.click( callback );
 }
 
 // Insert markers after map is loaded
