@@ -1,6 +1,12 @@
 @import './normalize';
 @import './variables';
 
+@mixin rotate($deg){
+	-ms-transform: rotate($deg); /* IE 9 */
+	-webkit-transform: rotate($deg); /* Chrome, Safari, Opera */
+	transform: rotate($deg);
+};
+
 // Move to sass when ready
 .shiftmap-map-clusterise-user-panel,
 .shiftmap-map-clusterise-user-panel * {
@@ -218,28 +224,26 @@
 	&::before {
 		content:'';
 		position: absolute;
-		border-radius:100%;
+		// border-radius:100%;
 		top:50%;
-		left:5px;
-		border:5px solid transparent;
-		background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff"><path d="M10.477 0h-8.977l12.024 12-12.024 12h8.977l12.023-12z"/></svg>');
+		left:15px;
+		border: solid white;
+	    border-width: 0 3px 3px 0;
+	    display: inline-block;
+	    padding: 3px;
 		background-repeat:no-repeat;
-		width: 20px;
-		height: 20px;
+		width: 10px;
+		height: 10px;
 		z-index: 1;
 		background-size: 100%;
-		-ms-transform: rotate(180deg); /* IE 9 */
-		-webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-		transform: rotate(180deg);
 		-webkit-transition: all 0.5s; /* Safari */
 		transition: all 0.5s;
+		@include rotate(135deg);
 	    @media(max-width:$screen-sm){
 	    	left:50%;
-				margin-left: -10px;
-				margin-top: -15px;
-				-ms-transform: rotate(90deg); /* IE 9 */
-		    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
-		    transform: rotate(90deg);
+			margin-left: -10px;
+			margin-top: -15px;
+			@include rotate(45deg);
 	    }
 	}	
 
@@ -254,31 +258,23 @@
 }
 
 .shiftmap-map-clusterise-user-panel.closed .shiftmap-map-toggle-panel::before {
-	-ms-transform: rotate(0); /* IE 9 */
-	-webkit-transform: rotate(0); /* Chrome, Safari, Opera */
-	transform: rotate(0);
+	@include rotate(-45deg); /* IE 9 */
+	left:5px;
+	@media(max-width:$screen-sm){
+		left:50%;
+		@include rotate(-135deg);
+		margin-top: -6px;
+	}
 }
 
 .shiftmap-map-clusterise-user-panel.default .shiftmap-map-toggle-panel::before {
-	-ms-transform: rotate(0); /* IE 9 */
-	-webkit-transform: rotate(0); /* Chrome, Safari, Opera */
-	transform: rotate(0);
-}
-
-@media(max-width:$screen-sm){
-
-	.shiftmap-map-clusterise-user-panel.closed .shiftmap-map-toggle-panel::before {
-		-ms-transform: rotate(-90deg); /* IE 9 */
-		-webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
-		transform: rotate(-90deg);
+	@include rotate(-45deg);
+	left:5px;
+	@media(max-width:$screen-sm){
+		left:50%;
+		@include rotate(-135deg);
+		margin-top: -6px;
 	}
-
-	.shiftmap-map-clusterise-user-panel.default .shiftmap-map-toggle-panel::before {
-		-ms-transform: rotate(-90deg); /* IE 9 */
-		-webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
-		transform: rotate(-90deg);
-	}
-
 }
 
 .shiftmap-clusterize-user-row-single {
