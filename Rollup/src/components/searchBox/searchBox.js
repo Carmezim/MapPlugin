@@ -42,7 +42,7 @@ const searchBox = (map, places, sBox, placeMarkers, getIcon, setIcon) => {
 
 				marker = new google.maps.Marker({
 					map: map,
-					icon: getIconPlace,
+					icon: getIconPlace(),
 					title: place.name,
 					position: place.geometry.location,
 					optimized: false,
