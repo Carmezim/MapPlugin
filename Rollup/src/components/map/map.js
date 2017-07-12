@@ -369,6 +369,7 @@ const geolocationAPI = ( map ) => {
 const enablePlotLocationMode = (wrapper) => {
 	$(wrapper).find('.shiftmap-promo-area').addClass('in');
 	$(wrapper).find('.shiftmap-map-clusterise-user-panel').removeClass('default closed');
+	$('html').addClass('map-plotting-active');
 }
 
 
