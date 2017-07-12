@@ -205,25 +205,23 @@ const insertMarker = (lat, lng, imgURL, clickEvent, map) => {
 		const imgWidth = Math.abs(img.width/2) || null;
 		const imgHeight = Math.abs(img.height/2) || null;
 
-		google.maps.event.addListener(map, 'idle', function() {
-			const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
-			const icon = {
-				url: `${imgURL}`,
-				size: new google.maps.Size(imgWidth, imgHeight),
-				origin: new google.maps.Point(0, 0),
-				anchor: new google.maps.Point(imgWidth/2, imgHeight),
-				scaledSize: new google.maps.Size(imgWidth, imgHeight),
-			};
-			const marker = new google.maps.Marker({
-				position: location,
-				icon: icon,
-				map: map,
-				// optimized: false,
-				// zindex: 0,
-				url: '',
-			}).addListener('click', function(){
-				clickEvent( marker, imgURL );
-			});
+		const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+		const icon = {
+			url: `${imgURL}`,
+			size: new google.maps.Size(imgWidth, imgHeight),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(imgWidth/2, imgHeight),
+			scaledSize: new google.maps.Size(imgWidth, imgHeight),
+		};
+		const marker = new google.maps.Marker({
+			position: location,
+			icon: icon,
+			map: map,
+			// optimized: false,
+			// zindex: 0,
+			url: '',
+		}).addListener('click', function(){
+			clickEvent( marker, imgURL );
 		});
 
 	}
