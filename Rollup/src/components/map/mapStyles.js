@@ -1,6 +1,6 @@
 // Map colors
 const land = "#EEEFF1";
-const water = "#71CAF2";
+const water = "#54b1db";
 
 const mapStyles = [
 		{
