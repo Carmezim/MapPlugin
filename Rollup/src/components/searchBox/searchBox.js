@@ -1,7 +1,7 @@
-import {iconPlace} from '../map/options';
+import {getIconPlace} from '../map/options';
 import confirmLocationContent from './confirmLocation.html';
 
-const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
+const searchBox = (map, places, sBox, placeMarkers, getIcon, setIcon) => {
 
 	// Bias searchbox results towards current map's viewport
 	map.addListener('bounds_changed', function() {
@@ -42,7 +42,7 @@ const searchBox = (map, places, sBox, placeMarkers, icon, setIcon) => {
 
 				marker = new google.maps.Marker({
 					map: map,
-					icon: iconPlace,
+					icon: getIconPlace,
 					title: place.name,
 					position: place.geometry.location,
 					optimized: false,
@@ -93,6 +93,8 @@ const createInfoWindow = ( map, marker, place ) => {
 	html.find("button").click(() => {
 		google.maps.event.trigger(map, 'shiftms_plotted_location', place, marker);
 		infowindow.close();
+		$('html').removeClass('map-plotting-active');
+		$('.shiftmap-promo-area').removeClass('in');
 	});
 
 	infowindow.open(map, marker);

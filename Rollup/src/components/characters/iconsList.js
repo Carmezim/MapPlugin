@@ -43,9 +43,7 @@ const pngsList = {
 	'person-042' : [40,63],
 	'person-043' : [40,63],
 	'person-044' : [49,66],
-	'person-045' : [37,65],
-	'dinosaur' 	 : [105,85],
-	'giraffe'	 : [64,77]
+	'person-045' : [37,65]
 }
 
 export default pngsList;

@@ -1,5 +1,5 @@
 import Clusterize from 'clusterize.js';
-import { clusterOptions } from '../map/options';
+import { getClusterOptions } from '../map/options';
 import buildList from '../buildList/buildList';
 import checkData from './checkData';
 import getRandom from './getRandom';
@@ -10,7 +10,10 @@ import pngsList from '../characters/iconsList';
 const $ = jQuery;
 let mapDragging = false;
 
-const fetchData = (map, data, markers, url, domElement) => {
+const fetchData = (map, data, markers, url, domElement, assetsPath) => {
+
+	const clusterOptions  = getClusterOptions();
+
 	let localMap = map;
 	let listArray = [];
 	let avatarURL = url;
@@ -66,7 +69,7 @@ const fetchData = (map, data, markers, url, domElement) => {
 					userName: markerPosition.full_name,
 					country: markerPosition.country,
 					city: markerPosition.city,
-					url: './img/person-example.png',
+					url: markerPosition.avatar || './img/person-example.png',
 				});
 				markers.push(marker);
 				j++;

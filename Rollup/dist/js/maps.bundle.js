@@ -1,3 +1,3298 @@
-document.write('<script src="http://'+(location.host||"localhost").split(":")[0]+':35729/livereload.js?snipver=1"><\/script>'),function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e(t.Maps=t.Maps||{})}(this,function(t){"use strict";function e(t,e){return e={exports:{}},t(e,e.exports),e.exports}function o(t,e,r){this.extend(o,google.maps.OverlayView),this.map_=t,this.markers_=[],this.clusters_=[],this.sizes=[53,56,66,78,90],this.styles_=[],this.ready_=!1;var n=r||{};this.gridSize_=n.gridSize||60,this.minClusterSize_=n.minimumClusterSize||2,this.maxZoom_=n.maxZoom||null,this.styles_=n.styles||[],this.imagePath_=n.imagePath||this.MARKER_CLUSTER_IMAGE_PATH_,this.imageExtension_=n.imageExtension||this.MARKER_CLUSTER_IMAGE_EXTENSION_,this.zoomOnClick_=!0,void 0!=n.zoomOnClick&&(this.zoomOnClick_=n.zoomOnClick),this.averageCenter_=!1,void 0!=n.averageCenter&&(this.averageCenter_=n.averageCenter),this.setupStyles_(),this.setMap(t),this.prevZoom_=this.map_.getZoom();var i=this;google.maps.event.addListener(this.map_,"zoom_changed",function(){var t=i.map_.getZoom(),e=i.map_.minZoom||0,o=Math.min(i.map_.maxZoom||100,i.map_.mapTypes[i.map_.getMapTypeId()].maxZoom);t=Math.min(Math.max(t,e),o),i.prevZoom_!=t&&(i.prevZoom_=t,i.resetViewport())}),google.maps.event.addListener(this.map_,"idle",function(){i.redraw()}),e&&(e.length||Object.keys(e).length)&&this.addMarkers(e,!1)}function r(t){this.markerClusterer_=t,this.map_=t.getMap(),this.gridSize_=t.getGridSize(),this.minClusterSize_=t.getMinClusterSize(),this.averageCenter_=t.isAverageCenter(),this.center_=null,this.markers_=[],this.bounds_=null,this.clusterIcon_=new n(this,t.getStyles(),t.getGridSize())}function n(t,e,o){t.getMarkerClusterer().extend(n,google.maps.OverlayView),this.styles_=e,this.padding_=o||0,this.cluster_=t,this.center_=null,this.map_=t.getMap(),this.div_=null,this.sums_=null,this.visible_=!1,this.setMap(this.map_)}var i=window.jQuery,s=function(t,e){var o=i(e).find("input.shiftmap-input"),r=o.get(0);return new google.maps.places.SearchBox(r)},a=function(t,e,o,r){var n={marker:{p:"M244.31,0C256.87,2.49,269.59,4.38,282,7.58c35.11,9.1,65.15,27.29,90.44,53.07C401.19,90,419.56,125,427,165.51q12.58,68.25-18.92,130.11Q319.47,469.54,230.64,643.36c-.73,1.42-1.59,2.78-2.79,4.87-1.41-2.43-2.5-4.14-3.42-5.93C165.11,526,104.62,410.27,46.93,293.17,8.94,216.08,18.43,141.32,71.6,74c34-43,80.17-66.6,134.87-72.86A44.62,44.62,0,0,0,211.37,0Z",v:"0 0 430.62 648.23"}};return"data:image/svg+xml;base64,"+window.btoa('<svg xmlns="http://www.w3.org/2000/svg" height="'+o+'" viewBox="0 0 430.62 648.23" width="'+e+'" ><g><path fill="'+r+'" d="'+n[t].p+'" /></g></svg>')},l="#EEEFF1",p=[{elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"administrative",elementType:"geometry",stylers:[{visibility:"off"}]},{featureType:"administrative.land_parcel",stylers:[{visibility:"off"}]},{featureType:"administrative.neighborhood",stylers:[{visibility:"off"}]},{featureType:"landscape.man_made",stylers:[{color:l}]},{featureType:"landscape.natural",stylers:[{color:l}]},{featureType:"landscape.natural.landcover",stylers:[{color:l}]},{featureType:"landscape.natural.terrain",stylers:[{color:l}]},{featureType:"poi",stylers:[{visibility:"off"}]},{featureType:"road",stylers:[{visibility:"off"}]},{featureType:"road",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"transit",stylers:[{visibility:"off"}]},{featureType:"water",stylers:[{color:"#71CAF2"}]}],c=[{featureType:"road.arterial",stylers:[{visibility:"off"}]},{featureType:"road.highway",elementType:"labels",stylers:[{visibility:"off"}]},{featureType:"road.local",stylers:[{visibility:"off"}]},{featureType:"water",stylers:[{color:"#71CAF2"}]},{featureType:"landscape.man_made",stylers:[{color:l}]},{featureType:"landscape.natural",stylers:[{color:l}]},{featureType:"landscape.natural.landcover",stylers:[{color:l}]},{featureType:"landscape.natural.terrain",stylers:[{color:l}]}],u={zoom:3,center:null,mapTypeId:google.maps.MapTypeId.ROADMAP,mapTypeControl:!1,styles:p,minZoom:2},h=[{anchor:[17,35],textColor:"white",textSize:"16",url:"./img/icons/icon-2.svg",height:75,width:75},{anchor:[25,42],textColor:"white",textSize:"18",url:"./img/icons/icon-2.svg",height:100,width:100},{anchor:[32,42],textColor:"white",textSize:"26",url:"./img/icons/icon-2.svg",height:125,width:125}],d={maxZoom:12,gridSize:75,styles:h},f=(a("marker",25,25,"#f16667"),new google.maps.Size(71,71),new google.maps.Point(0,0),new google.maps.Point(17,34),new google.maps.Size(25,25),{url:a("marker",50,50,"#77bf2f"),size:new google.maps.Size(50,50),origin:new google.maps.Point(0,0),anchor:new google.maps.Point(25,50)}),m=function(t,e,o,r,n,i){t.addListener("bounds_changed",function(){o.setBounds(t.getBounds())}),o.addListener("places_changed",function(){var n=$(".shiftmap-promo-area.in").length;if(e=o.getPlaces(),0!=e.length){e=[e[0]],r.forEach(function(t){t.setMap(null)}),r=[];var i=new google.maps.LatLngBounds;e.forEach(function(e){if(!e.geometry)return void console.log("Returned place contains no geometry");var o=void 0;n&&(o=new google.maps.Marker({map:t,icon:f,title:e.name,position:e.geometry.location,optimized:!1,zindex:2,class:"shiftms-map-cluster-location-icon"}),r.push(o)),e.geometry.viewport?i.union(e.geometry.viewport):i.extend(e.geometry.location),t.fitBounds(i),google.maps.event.addListenerOnce(t,"idle",function(){if(n){g(t,o,e)}})}),google.maps.event.addListenerOnce(t,"idle",function(){n||t.setZoom(6)})}})},g=function(t,e,o){var r=$('<div class="shiftmap-confirm-location">\r\n\t<button class="shiftmap-promo-area-button" type="button" value="Change your location">Confirm location</button>\r\n</div>'),n=new google.maps.InfoWindow({content:""});return n.setContent(r.get(0)),r.find("button").click(function(){google.maps.event.trigger(t,"shiftms_plotted_location",o,e),n.close()}),n.open(t,e),n},y='<div class="shiftmap-promo-area">\r\n\t<h3 class="shitfmap-promo-area-text">Relocation, relocation, relocation...</h3>\r\n\t<button class="shiftmap-promo-area-button" type="button" value="Change your location">Change your location</button><img width="70" height="70" src="%assetspath%/icons/icon-2.svg" class="shitfmap-promo-area-icon">\r\n\t<div class="shiftmap-promo-area-tooltip">\r\n\t\tSearch for a landmark below. Once the map shows the landmark, click confirm to save this as your location marker. Do not use your own physical address.\r\n\t\t<a href="javascript:;">Cancel</a>\r\n\t</div>\r\n</div>',_=function(t,e){var o=y;o=$(y.replace("%assetspath%",e));var r=$(".shiftmap-map-clusterise-wrapper");r.prepend(o),o.find("button").click(t).click(function(){o.addClass("in");var t=r.find("input.shiftmap-input").one("blur",function(){});setTimeout(function(){t.focus()},100)}),o.find("a").click(function(){o.removeClass("in")})},v='<div class="shiftmap-promo-area">\r\n\t<h3 class="shitfmap-promo-area-text">There are currently %total% people on the map</h3>\r\n\t<button class="shiftmap-promo-area-button" type="button" value="Add your marker!">Add your marker!</button>\r\n\t<img width="70" height="70" src="%assetspath%/icons/icon-2.svg" class="shitfmap-promo-area-icon">\r\n\t<div class="shiftmap-promo-area-tooltip">\r\n\t\tSearch for a landmark below. Once the map shows the landmark, click confirm to save this as your location marker. Do not use your own physical address.\r\n\t\t<a href="javascript:;">Cancel</a>\r\n\t</div>\r\n</div>',w=function(t,e,o){var r=v;r=$(v.replace("%total%",e).replace("%assetspath%",o));var n=$(".shiftmap-map-clusterise-wrapper");n.prepend(r),r.find("button").click(t).click(function(){r.addClass("in");var t=n.find("input.shiftmap-input").one("blur",function(){});setTimeout(function(){t.focus()},100)}),r.find("a").click(function(){r.removeClass("in")})},b="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},k=e(function(t){!function(e,o){t.exports=function(){function t(t,e,o){return e.addEventListener?e.addEventListener(t,o,!1):e.attachEvent("on"+t,o)}function e(t,e,o){return e.removeEventListener?e.removeEventListener(t,o,!1):e.detachEvent("on"+t,o)}function o(t){return"[object Array]"===Object.prototype.toString.call(t)}function r(t,e){return window.getComputedStyle?window.getComputedStyle(e)[t]:e.currentStyle[t]}var n=function(){for(var t=3,e=document.createElement("b"),o=e.all||[];e.innerHTML="\x3c!--[if gt IE "+ ++t+"]><i><![endif]--\x3e",o[0];);return t>4?t:document.documentMode}(),i=navigator.platform.toLowerCase().indexOf("mac")+1,s=function r(n){if(!(this instanceof r))return new r(n);var s=this,a={rows_in_block:50,blocks_in_cluster:4,tag:null,show_no_data_row:!0,no_data_class:"clusterize-no-data",no_data_text:"No data",keep_parity:!0,callbacks:{}};s.options={};for(var l,p=["rows_in_block","blocks_in_cluster","show_no_data_row","no_data_class","no_data_text","keep_parity","tag","callbacks"],c=0;l=p[c];c++)s.options[l]=void 0!==n[l]&&null!=n[l]?n[l]:a[l];for(var u,h=["scroll","content"],c=0;u=h[c];c++)if(s[u+"_elem"]=n[u+"Id"]?document.getElementById(n[u+"Id"]):n[u+"Elem"],!s[u+"_elem"])throw new Error("Error! Could not find "+u+" element");s.content_elem.hasAttribute("tabindex")||s.content_elem.setAttribute("tabindex",0);var d=o(n.rows)?n.rows:s.fetchMarkup(),f={},m=s.scroll_elem.scrollTop;s.insertToDOM(d,f),s.scroll_elem.scrollTop=m;var g=!1,y=0,_=!1,v=function(){i&&(_||(s.content_elem.style.pointerEvents="none"),_=!0,clearTimeout(y),y=setTimeout(function(){s.content_elem.style.pointerEvents="auto",_=!1},50)),g!=(g=s.getClusterNum())&&s.insertToDOM(d,f),s.options.callbacks.scrollingProgress&&s.options.callbacks.scrollingProgress(s.getScrollProgress())},w=0,b=function(){clearTimeout(w),w=setTimeout(s.refresh,100)};t("scroll",s.scroll_elem,v),t("resize",window,b),s.destroy=function(t){e("scroll",s.scroll_elem,v),e("resize",window,b),s.html((t?s.generateEmptyRow():d).join(""))},s.refresh=function(t){(s.getRowsHeight(d)||t)&&s.update(d)},s.update=function(t){d=o(t)?t:[];var e=s.scroll_elem.scrollTop;d.length*s.options.item_height<e&&(s.scroll_elem.scrollTop=0,g=0),s.insertToDOM(d,f),s.scroll_elem.scrollTop=e},s.clear=function(){s.update([])},s.getRowsAmount=function(){return d.length},s.getScrollProgress=function(){return this.options.scroll_top/(d.length*this.options.item_height)*100||0};var k=function(t,e){var r=o(e)?e:[];r.length&&(d="append"==t?d.concat(r):r.concat(d),s.insertToDOM(d,f))};s.append=function(t){k("append",t)},s.prepend=function(t){k("prepend",t)}};return s.prototype={constructor:s,fetchMarkup:function(){for(var t=[],e=this.getChildNodes(this.content_elem);e.length;)t.push(e.shift().outerHTML);return t},exploreEnvironment:function(t,e){var o=this.options;o.content_tag=this.content_elem.tagName.toLowerCase(),t.length&&(n&&n<=9&&!o.tag&&(o.tag=t[0].match(/<([^>\s\/]*)/)[1].toLowerCase()),this.content_elem.children.length<=1&&(e.data=this.html(t[0]+t[0]+t[0])),o.tag||(o.tag=this.content_elem.children[0].tagName.toLowerCase()),this.getRowsHeight(t))},getRowsHeight:function(t){var e=this.options,o=e.item_height;if(e.cluster_height=0,t.length){var n=this.content_elem.children,i=n[Math.floor(n.length/2)];if(e.item_height=i.offsetHeight,"tr"==e.tag&&"collapse"!=r("borderCollapse",this.content_elem)&&(e.item_height+=parseInt(r("borderSpacing",this.content_elem),10)||0),"tr"!=e.tag){var s=parseInt(r("marginTop",i),10)||0,a=parseInt(r("marginBottom",i),10)||0;e.item_height+=Math.max(s,a)}return e.block_height=e.item_height*e.rows_in_block,e.rows_in_cluster=e.blocks_in_cluster*e.rows_in_block,e.cluster_height=e.blocks_in_cluster*e.block_height,o!=e.item_height}},getClusterNum:function(){return this.options.scroll_top=this.scroll_elem.scrollTop,Math.floor(this.options.scroll_top/(this.options.cluster_height-this.options.block_height))||0},generateEmptyRow:function(){var t=this.options;if(!t.tag||!t.show_no_data_row)return[];var e,o=document.createElement(t.tag),r=document.createTextNode(t.no_data_text);return o.className=t.no_data_class,"tr"==t.tag&&(e=document.createElement("td"),e.colSpan=100,e.appendChild(r)),o.appendChild(e||r),[o.outerHTML]},generate:function(t,e){var o=this.options,r=t.length;if(r<o.rows_in_block)return{top_offset:0,bottom_offset:0,rows_above:0,rows:r?t:this.generateEmptyRow()};var n=Math.max((o.rows_in_cluster-o.rows_in_block)*e,0),i=n+o.rows_in_cluster,s=Math.max(n*o.item_height,0),a=Math.max((r-i)*o.item_height,0),l=[],p=n;s<1&&p++;for(var c=n;c<i;c++)t[c]&&l.push(t[c]);return{top_offset:s,bottom_offset:a,rows_above:p,rows:l}},renderExtraTag:function(t,e){var o=document.createElement(this.options.tag);return o.className=["clusterize-extra-row","clusterize-"+t].join(" "),e&&(o.style.height=e+"px"),o.outerHTML},insertToDOM:function(t,e){this.options.cluster_height||this.exploreEnvironment(t,e);var o=this.generate(t,this.getClusterNum()),r=o.rows.join(""),n=this.checkChanges("data",r,e),i=this.checkChanges("top",o.top_offset,e),s=this.checkChanges("bottom",o.bottom_offset,e),a=this.options.callbacks,l=[];n||i?(o.top_offset&&(this.options.keep_parity&&l.push(this.renderExtraTag("keep-parity")),l.push(this.renderExtraTag("top-space",o.top_offset))),l.push(r),o.bottom_offset&&l.push(this.renderExtraTag("bottom-space",o.bottom_offset)),a.clusterWillChange&&a.clusterWillChange(),this.html(l.join("")),"ol"==this.options.content_tag&&this.content_elem.setAttribute("start",o.rows_above),a.clusterChanged&&a.clusterChanged()):s&&(this.content_elem.lastChild.style.height=o.bottom_offset+"px")},html:function(t){var e=this.content_elem;if(n&&n<=9&&"tr"==this.options.tag){var o,r=document.createElement("div");for(r.innerHTML="<table><tbody>"+t+"</tbody></table>";o=e.lastChild;)e.removeChild(o);for(var i=this.getChildNodes(r.firstChild.firstChild);i.length;)e.appendChild(i.shift())}else e.innerHTML=t},getChildNodes:function(t){for(var e=t.children,o=[],r=0,n=e.length;r<n;r++)o.push(e[r]);return o},checkChanges:function(t,e,o){var r=e!=o[t];return o[t]=e,r}},s}()}()}),x=!1,C=function(t,e,o,r,n){x||(e=[],t.clear(),o.map(function(o){r.getBounds().contains(o.getPosition())&&e.push('<div class="shiftmap-clusterize-user-row shiftmap-clusterize-user-row-'+o.userID+'">\n\t\t\t\t<div class="shiftmap-clusterize-user-cell">\n\t\t\t\t\t<div class="shiftmap-clusterize-avatar">\n\t\t\t\t\t\t<div style="background-image:url(\''+o.url+'\')"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="shiftmap-clusterize-content">\n\t\t\t\t\t\t<h3 class="shiftmap-clusterize-user-name">'+o.userName+'</h3>\n\t\t\t\t\t\t<div class="active">Last active 2 weeks ago</div>\n\t\t\t\t\t\t<button class="shiftmap-clusterize-user-button" data-clickuser="'+o.userID+'">Follow</button>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>');var i=function(){$(n).trigger("openpanel"),t.clear(),t.update(['\n\t\t\t\t<div class="shiftmap-clusterize-user-row shiftmap-clusterize-user-row-single">\n\t\t\t\t\t<div class="shiftmap-clusterize-user-cell">\n\t\t\t\t\t\t<div class="shiftmap-clusterize-avatar">\n\t\t\t\t\t\t\t<div style="background-image:url(\''+o.url+'\')"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="shiftmap-clusterize-content">\n\t\t\t\t\t\t\t <div class="visible"><span data-clickuser="'+o.userID+'">User:</span> '+o.userName+'</div>\n\t\t\t\t\t\t\t <div class="'+(o.city&&"visible")+'"><span>City:</span> '+o.city+'</div>\n\t\t\t\t\t\t\t <div class="'+(o.country&&"visible")+'"><span>Country:</span> '+o.country+'</div>\n\t\t\t\t\t\t\t <div class="'+((o.active||!0)&&"visible active")+'">Last active 2 weeks ago</div>\n\t\t\t\t\t\t\t <div class="visible">\n\t\t\t\t\t\t\t \t<button class="shiftmap-clusterize-user-button" data-clickuser="'+o.userID+'">Follow</button>\n\t\t\t\t\t\t\t </div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t']),t.refresh()};o.clickEventBound||(google.maps.event.addDomListener(o,"click",function(){x=!0,i(),r.getZoom()<8&&r.setZoom(8),r.setCenter(o.getPosition()),setTimeout(function(){x=!1},1e3)}),o.clickEventBound=!0)}),t.update(e),t.refresh())},M=function(t){try{return JSON.stringify(t),!0}catch(t){return console.error("Data is not JSON format!"),!1}},T=function(t,e){return Math.random()*(e-t)+t},S="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};o.prototype.MARKER_CLUSTER_IMAGE_PATH_="../images/m",o.prototype.MARKER_CLUSTER_IMAGE_EXTENSION_="png",o.prototype.extend=function(t,e){return function(t){for(var e in t.prototype)this.prototype[e]=t.prototype[e];return this}.apply(t,[e])},o.prototype.onAdd=function(){this.setReady_(!0)},o.prototype.draw=function(){},o.prototype.setupStyles_=function(){if(!this.styles_.length)for(var t,e=0;t=this.sizes[e];e++)this.styles_.push({url:this.imagePath_+(e+1)+"."+this.imageExtension_,height:t,width:t})},o.prototype.fitMapToMarkers=function(){for(var t,e=this.getMarkers(),o=new google.maps.LatLngBounds,r=0;t=e[r];r++)o.extend(t.getPosition());this.map_.fitBounds(o)},o.prototype.setStyles=function(t){this.styles_=t},o.prototype.getStyles=function(){return this.styles_},o.prototype.isZoomOnClick=function(){return this.zoomOnClick_},o.prototype.isAverageCenter=function(){return this.averageCenter_},o.prototype.getMarkers=function(){return this.markers_},o.prototype.getTotalMarkers=function(){return this.markers_.length},o.prototype.setMaxZoom=function(t){this.maxZoom_=t},o.prototype.getMaxZoom=function(){return this.maxZoom_},o.prototype.calculator_=function(t,e){for(var o=0,r=t.length,n=r;0!==n;)n=parseInt(n/10,10),o++;return o=Math.min(o,e),{text:r,index:o}},o.prototype.setCalculator=function(t){this.calculator_=t},o.prototype.getCalculator=function(){return this.calculator_},o.prototype.addMarkers=function(t,e){if(t.length)for(var o,r=0;o=t[r];r++)this.pushMarkerTo_(o);else if(Object.keys(t).length)for(var o in t)this.pushMarkerTo_(t[o]);e||this.redraw()},o.prototype.pushMarkerTo_=function(t){if(t.isAdded=!1,t.draggable){var e=this;google.maps.event.addListener(t,"dragend",function(){t.isAdded=!1,e.repaint()})}this.markers_.push(t)},o.prototype.addMarker=function(t,e){this.pushMarkerTo_(t),e||this.redraw()},o.prototype.removeMarker_=function(t){var e=-1;if(this.markers_.indexOf)e=this.markers_.indexOf(t);else for(var o,r=0;o=this.markers_[r];r++)if(o==t){e=r;break}return-1!=e&&(t.setMap(null),this.markers_.splice(e,1),!0)},o.prototype.removeMarker=function(t,e){var o=this.removeMarker_(t);return!(e||!o)&&(this.resetViewport(),this.redraw(),!0)},o.prototype.removeMarkers=function(t,e){for(var o,r=t===this.getMarkers()?t.slice():t,n=!1,i=0;o=r[i];i++){var s=this.removeMarker_(o);n=n||s}if(!e&&n)return this.resetViewport(),this.redraw(),!0},o.prototype.setReady_=function(t){this.ready_||(this.ready_=t,this.createClusters_())},o.prototype.getTotalClusters=function(){return this.clusters_.length},o.prototype.getMap=function(){return this.map_},o.prototype.setMap=function(t){this.map_=t},o.prototype.getGridSize=function(){return this.gridSize_},o.prototype.setGridSize=function(t){this.gridSize_=t},o.prototype.getMinClusterSize=function(){return this.minClusterSize_},o.prototype.setMinClusterSize=function(t){this.minClusterSize_=t},o.prototype.getExtendedBounds=function(t){var e=this.getProjection(),o=new google.maps.LatLng(t.getNorthEast().lat(),t.getNorthEast().lng()),r=new google.maps.LatLng(t.getSouthWest().lat(),t.getSouthWest().lng()),n=e.fromLatLngToDivPixel(o);n.x+=this.gridSize_,n.y-=this.gridSize_;var i=e.fromLatLngToDivPixel(r);i.x-=this.gridSize_,i.y+=this.gridSize_;var s=e.fromDivPixelToLatLng(n),a=e.fromDivPixelToLatLng(i);return t.extend(s),t.extend(a),t},o.prototype.isMarkerInBounds_=function(t,e){return e.contains(t.getPosition())},o.prototype.clearMarkers=function(){this.resetViewport(!0),this.markers_=[]},o.prototype.resetViewport=function(t){for(var e,o=0;e=this.clusters_[o];o++)e.remove();for(var r,o=0;r=this.markers_[o];o++)r.isAdded=!1,t&&r.setMap(null);this.clusters_=[]},o.prototype.repaint=function(){var t=this.clusters_.slice();this.clusters_.length=0,this.resetViewport(),this.redraw(),window.setTimeout(function(){for(var e,o=0;e=t[o];o++)e.remove()},0)},o.prototype.redraw=function(){this.createClusters_()},o.prototype.distanceBetweenPoints_=function(t,e){if(!t||!e)return 0;var o=(e.lat()-t.lat())*Math.PI/180,r=(e.lng()-t.lng())*Math.PI/180,n=Math.sin(o/2)*Math.sin(o/2)+Math.cos(t.lat()*Math.PI/180)*Math.cos(e.lat()*Math.PI/180)*Math.sin(r/2)*Math.sin(r/2);return 2*Math.atan2(Math.sqrt(n),Math.sqrt(1-n))*6371},o.prototype.addToClosestCluster_=function(t){for(var e,o=4e4,n=null,i=(t.getPosition(),0);e=this.clusters_[i];i++){var s=e.getCenter();if(s){var a=this.distanceBetweenPoints_(s,t.getPosition());a<o&&(o=a,n=e)}}if(n&&n.isMarkerInClusterBounds(t))n.addMarker(t);else{var e=new r(this);e.addMarker(t),this.clusters_.push(e)}},o.prototype.createClusters_=function(){if(this.ready_)for(var t,e=new google.maps.LatLngBounds(this.map_.getBounds().getSouthWest(),this.map_.getBounds().getNorthEast()),o=this.getExtendedBounds(e),r=0;t=this.markers_[r];r++)!t.isAdded&&this.isMarkerInBounds_(t,o)&&this.addToClosestCluster_(t)},r.prototype.isMarkerAlreadyAdded=function(t){if(this.markers_.indexOf)return-1!=this.markers_.indexOf(t);for(var e,o=0;e=this.markers_[o];o++)if(e==t)return!0;return!1},r.prototype.addMarker=function(t){if(this.isMarkerAlreadyAdded(t))return!1;if(this.center_){if(this.averageCenter_){var e=this.markers_.length+1,o=(this.center_.lat()*(e-1)+t.getPosition().lat())/e,r=(this.center_.lng()*(e-1)+t.getPosition().lng())/e;this.center_=new google.maps.LatLng(o,r),this.calculateBounds_()}}else this.center_=t.getPosition(),this.calculateBounds_();t.isAdded=!0,this.markers_.push(t);var n=this.markers_.length;if(n<this.minClusterSize_&&t.getMap()!=this.map_&&t.setMap(this.map_),n==this.minClusterSize_)for(var i=0;i<n;i++)this.markers_[i].setMap(null);return n>=this.minClusterSize_&&t.setMap(null),this.updateIcon(),!0},r.prototype.getMarkerClusterer=function(){return this.markerClusterer_},r.prototype.getBounds=function(){for(var t,e=new google.maps.LatLngBounds(this.center_,this.center_),o=this.getMarkers(),r=0;t=o[r];r++)e.extend(t.getPosition());return e},r.prototype.remove=function(){this.clusterIcon_.remove(),this.markers_.length=0,delete this.markers_},r.prototype.getSize=function(){return this.markers_.length},r.prototype.getMarkers=function(){return this.markers_},r.prototype.getCenter=function(){return this.center_},r.prototype.calculateBounds_=function(){var t=new google.maps.LatLngBounds(this.center_,this.center_);this.bounds_=this.markerClusterer_.getExtendedBounds(t)},r.prototype.isMarkerInClusterBounds=function(t){return this.bounds_.contains(t.getPosition())},r.prototype.getMap=function(){return this.map_},r.prototype.updateIcon=function(){var t=this.map_.getZoom(),e=this.markerClusterer_.getMaxZoom();if(e&&t>e)for(var o,r=0;o=this.markers_[r];r++)o.setMap(this.map_);else{if(this.markers_.length<this.minClusterSize_)return void this.clusterIcon_.hide();var n=this.markerClusterer_.getStyles().length,i=this.markerClusterer_.getCalculator()(this.markers_,n);this.clusterIcon_.setCenter(this.center_),this.clusterIcon_.setSums(i),this.clusterIcon_.show()}},n.prototype.triggerClusterClick=function(){var t=this.cluster_.getMarkerClusterer();google.maps.event.trigger(t,"clusterclick",this.cluster_),t.isZoomOnClick()&&this.map_.fitBounds(this.cluster_.getBounds())},n.prototype.onAdd=function(){this.div_=document.createElement("DIV");var t=this.getPanes();if(this.visible_){var e=this.getPosFromLatLng_(this.center_);this.div_.style.cssText=this.createCss(e),this.div_.innerHTML=this.sums_.text,this.sums_.text&&(t.overlayMouseTarget.classList.add("shiftms-map-cluster-icon"),this.sums_.text>1e3&&this.div_.classList.add("shiftms-map-cluster-icon-large-num"),this.sums_.text>0&&this.div_.classList.add("shiftms-map-cluster-icon-is-cluster"))}t.overlayMouseTarget.appendChild(this.div_);var o=this;google.maps.event.addDomListener(this.div_,"click",function(){o.triggerClusterClick()})},n.prototype.getPosFromLatLng_=function(t){var e=this.getProjection().fromLatLngToDivPixel(t);return e.x-=parseInt(this.width_/2,10),e.y-=parseInt(this.height_/2,10),e},n.prototype.draw=function(){if(this.visible_){var t=this.getPosFromLatLng_(this.center_);this.div_.style.top=t.y+"px",this.div_.style.left=t.x+"px"}},n.prototype.hide=function(){this.div_&&(this.div_.style.display="none"),this.visible_=!1},n.prototype.show=function(){if(this.div_){var t=this.getPosFromLatLng_(this.center_);this.div_.style.cssText=this.createCss(t),this.div_.style.display=""}this.visible_=!0},n.prototype.remove=function(){this.setMap(null)},n.prototype.onRemove=function(){this.div_&&this.div_.parentNode&&(this.hide(),this.div_.parentNode.removeChild(this.div_),this.div_=null)},n.prototype.setSums=function(t){this.sums_=t,this.text_=t.text,this.index_=t.index,this.div_&&(this.div_.innerHTML=t.text),this.useStyle()},n.prototype.useStyle=function(){var t=Math.max(0,this.sums_.index-1);t=Math.min(this.styles_.length-1,t);var e=this.styles_[t];this.url_=e.url,this.height_=e.height,this.width_=e.width,this.textColor_=e.textColor,this.anchor_=e.anchor,this.textSize_=e.textSize,this.backgroundPosition_=e.backgroundPosition},n.prototype.setCenter=function(t){this.center_=t},n.prototype.createCss=function(t){var e=[];e.push("background-image:url("+this.url_+");");var o=this.backgroundPosition_?this.backgroundPosition_:"0 0";e.push("background-position:"+o+";"),"object"===S(this.anchor_)?("number"==typeof this.anchor_[0]&&this.anchor_[0]>0&&this.anchor_[0]<this.height_?e.push("height:"+(this.height_-this.anchor_[0])+"px; padding-top:"+this.anchor_[0]+"px;"):e.push("height:"+this.height_+"px; line-height:"+this.height_+"px;"),"number"==typeof this.anchor_[1]&&this.anchor_[1]>0&&this.anchor_[1]<this.width_?e.push("width:"+(this.width_-this.anchor_[1])+"px; padding-left:"+this.anchor_[1]+"px;"):e.push("width:"+this.width_+"px; text-align:center;")):e.push("height:"+this.height_+"px; line-height:"+this.height_+"px; width:"+this.width_+"px; text-align:center;");var r=this.textColor_?this.textColor_:"black",n=this.textSize_?this.textSize_:11;return e.push("cursor:pointer; top:"+t.y+"px; left:"+t.x+"px; color:"+r+"; position:absolute; font-size:"+n+"px; font-family:Arial,sans-serif; font-weight:bold"),e.join("")},window.MarkerClusterer=o,o.prototype.addMarker=o.prototype.addMarker,o.prototype.addMarkers=o.prototype.addMarkers,o.prototype.clearMarkers=o.prototype.clearMarkers,o.prototype.fitMapToMarkers=o.prototype.fitMapToMarkers,o.prototype.getCalculator=o.prototype.getCalculator,o.prototype.getGridSize=o.prototype.getGridSize,o.prototype.getExtendedBounds=o.prototype.getExtendedBounds,o.prototype.getMap=o.prototype.getMap,o.prototype.getMarkers=o.prototype.getMarkers,o.prototype.getMaxZoom=o.prototype.getMaxZoom,o.prototype.getStyles=o.prototype.getStyles,o.prototype.getTotalClusters=o.prototype.getTotalClusters,o.prototype.getTotalMarkers=o.prototype.getTotalMarkers,o.prototype.redraw=o.prototype.redraw,o.prototype.removeMarker=o.prototype.removeMarker,o.prototype.removeMarkers=o.prototype.removeMarkers,o.prototype.resetViewport=o.prototype.resetViewport,o.prototype.repaint=o.prototype.repaint,o.prototype.setCalculator=o.prototype.setCalculator,o.prototype.setGridSize=o.prototype.setGridSize,o.prototype.setMaxZoom=o.prototype.setMaxZoom,o.prototype.onAdd=o.prototype.onAdd,o.prototype.draw=o.prototype.draw,r.prototype.getCenter=r.prototype.getCenter,r.prototype.getSize=r.prototype.getSize,r.prototype.getMarkers=r.prototype.getMarkers,n.prototype.onAdd=n.prototype.onAdd,n.prototype.draw=n.prototype.draw,n.prototype.onRemove=n.prototype.onRemove,Object.keys=Object.keys||function(t){var e=[];for(var o in t)t.hasOwnProperty(o)&&e.push(o);return e};var L={"person-001":[40,63],"person-002":[38,63],"person-003":[45,43],"person-004":[40,62],"person-005":[39,63],"person-006":[41,63],"person-007":[38,63],"person-008":[40,63],"person-009":[37,62],"person-010":[37,62],"person-011":[38,63],"person-012":[37,61],"person-013":[36,63],"person-014":[37,63],"person-015":[39,62],"person-016":[38,62],"person-017":[37,61],"person-018":[37,63],"person-019":[36,61],"person-020":[39,61],"person-021":[37,61],"person-022":[37,60],"person-023":[41,68],"person-024":[40,61],"person-025":[36,61],"person-026":[38,61],"person-027":[38,60],"person-028":[36,60],"person-029":[37,65],"person-030":[35,61],"person-031":[37,63],"person-032":[44,53],"person-033":[39,63],"person-034":[39,63],"person-035":[68,65],"person-036":[37,60],"person-037":[37,60],"person-038":[37,60],"person-039":[36,61],"person-040":[57,62],"person-041":[65,63],"person-042":[40,63],"person-043":[40,63],"person-044":[49,66],"person-045":[37,65],dinosaur:[105,85],giraffe:[64,77]},z=jQuery,E=!1,P=function(t,e,r,n,i){var s=t,a=[],l=0,p=Object.keys(L),c=z(i).find(".shiftmap-map-clusterise-wrapper").get(0),u=z(i).find(".shiftmap-clusterize-content-wrapper").get(0),h=new k({rows:null,rows_in_block:2,scrollElem:c,contentElem:u,no_data_text:"No users within range"});if(M(e)){e.map(function(t){if(t.latitude&&t.longitude){l===p.length&&(l=0);var e=Math.floor(1e3*Math.random()/10*(p.length/100)),o=p[e]||p[0],n=L[o],i={url:""+assetsPath+o+".png",size:new google.maps.Size(n[0],n[1]),origin:new google.maps.Point(0,0),anchor:new google.maps.Point(17,34),scaledSize:new google.maps.Size(n[0],n[1])},a=new google.maps.LatLng({lat:t.latitude+T(0,.5),lng:t.longitude+T(0,.5)}),c=new google.maps.Marker({position:a,map:s,icon:i,optimized:!1,zindex:0,userID:t.user_id,userName:t.full_name,country:t.country,city:t.city,url:"./img/person-example.png"});r.push(c),l++}else console.warn("Could not find coordinates on data provided from userID: ",t.user_id)});var f=new o(s,r,d);google.maps.event.addListener(s,"bounds_changed",function(){setTimeout(function(){C(h,a,r,s,i)},200)}),google.maps.event.addListener(t,"idle",function(){setTimeout(function(){google.maps.event.trigger(t,"resize")},200)}),google.maps.event.addListener(t,"drag",function(){E=!0}),google.maps.event.addListener(t,"dragend",function(){setTimeout(function(){return E=!1},50)}),google.maps.event.addListener(t,"zoom_changed",function(){t.getZoom()>13&&t.setZoom(13)}),A(t,f)}},A=function(t,e){google.maps.event.addListener(e,"clusterclick",function(t){if(E)throw"Cannot click while dragging"})},B=function(t){var e=window.jQuery,o=e(t).html('<div class="shiftmap-wrapper">\r\n\t<div class="shiftmap-airballoon">\r\n\t\t<a href="javascript:;" class="balloon-dismiss"></a>\r\n\t\t<img class="shiftmap-airballoon-image" width="160" height="200">\r\n\t</div>\r\n\t<div class="shiftmap-map-clusterise-user-panel">\r\n\t\t<div class="shiftmap-map-clusterise-wrapper">\r\n\t\t\t<div class="shiftmap-input-wrapper">\r\n\t\t\t\t<input type="text" placeholder="Search the map" class="shiftmap-input">\r\n\t\t\t</div>\r\n\t\t\t<div class="shiftmap-showmap-wrapper">\r\n\t\t\t\t<span class="shiftmap-showmap">\r\n\t\t\t\t\tShow me the whole world\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t\t<div class="shiftmap-clusterize">\r\n\t\t\t\t<div class="shiftmap-clusterize-scroll">\r\n\t\t\t\t\t<div class="shiftmap-clusterize-user-table">\r\n\t\t\t\t\t\t<div class="shiftmap-clusterize-content-wrapper"></div>\r\n\t\t\t\t\t\t<div class="shiftmap-clusterize-no-data" style="display:none">\r\n\t\t\t\t\t\t\t<div>Zoom to display user data…</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class="shiftmap-map-toggle-panel alert-user">\r\n\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class="shiftmap-map-wrapper">\r\n\t\t<div class="shiftmap-map"></div>\r\n\t</div>\r\n</div>'),r=o.find(".shiftmap-map");return new google.maps.Map(r.get(0),u)},I=function(t,e){return new google.maps.LatLng(parseFloat(t).toFixed(6),parseFloat(e).toFixed(6))
-},O="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},R=e(function(t){!function(e){function o(){}function r(t,e){return function(){t.apply(e,arguments)}}function n(t){if("object"!==O(this))throw new TypeError("Promises must be constructed via new");if("function"!=typeof t)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],c(t,this)}function i(t,e){for(;3===t._state;)t=t._value;if(0===t._state)return void t._deferreds.push(e);t._handled=!0,n._immediateFn(function(){var o=1===t._state?e.onFulfilled:e.onRejected;if(null===o)return void(1===t._state?s:a)(e.promise,t._value);var r;try{r=o(t._value)}catch(t){return void a(e.promise,t)}s(e.promise,r)})}function s(t,e){try{if(e===t)throw new TypeError("A promise cannot be resolved with itself.");if(e&&("object"===(void 0===e?"undefined":O(e))||"function"==typeof e)){var o=e.then;if(e instanceof n)return t._state=3,t._value=e,void l(t);if("function"==typeof o)return void c(r(o,e),t)}t._state=1,t._value=e,l(t)}catch(e){a(t,e)}}function a(t,e){t._state=2,t._value=e,l(t)}function l(t){2===t._state&&0===t._deferreds.length&&n._immediateFn(function(){t._handled||n._unhandledRejectionFn(t._value)});for(var e=0,o=t._deferreds.length;e<o;e++)i(t,t._deferreds[e]);t._deferreds=null}function p(t,e,o){this.onFulfilled="function"==typeof t?t:null,this.onRejected="function"==typeof e?e:null,this.promise=o}function c(t,e){var o=!1;try{t(function(t){o||(o=!0,s(e,t))},function(t){o||(o=!0,a(e,t))})}catch(t){if(o)return;o=!0,a(e,t)}}var u=setTimeout;n.prototype.catch=function(t){return this.then(null,t)},n.prototype.then=function(t,e){var r=new this.constructor(o);return i(this,new p(t,e,r)),r},n.all=function(t){var e=Array.prototype.slice.call(t);return new n(function(t,o){function r(i,s){try{if(s&&("object"===(void 0===s?"undefined":O(s))||"function"==typeof s)){var a=s.then;if("function"==typeof a)return void a.call(s,function(t){r(i,t)},o)}e[i]=s,0==--n&&t(e)}catch(t){o(t)}}if(0===e.length)return t([]);for(var n=e.length,i=0;i<e.length;i++)r(i,e[i])})},n.resolve=function(t){return t&&"object"===(void 0===t?"undefined":O(t))&&t.constructor===n?t:new n(function(e){e(t)})},n.reject=function(t){return new n(function(e,o){o(t)})},n.race=function(t){return new n(function(e,o){for(var r=0,n=t.length;r<n;r++)t[r].then(e,o)})},n._immediateFn="function"==typeof setImmediate&&function(t){setImmediate(t)}||function(t){u(t,0)},n._unhandledRejectionFn=function(t){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",t)},n._setImmediateFn=function(t){n._immediateFn=t},n._setUnhandledRejectionFn=function(t){n._unhandledRejectionFn=t},t.exports?t.exports=n:e.Promise||(e.Promise=n)}(b)});window.Promise||(window.Promise=R),function(t){function e(t){if("string"!=typeof t&&(t=String(t)),/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(t))throw new TypeError("Invalid character in header field name");return t.toLowerCase()}function o(t){return"string"!=typeof t&&(t=String(t)),t}function r(t){var e={next:function(){var e=t.shift();return{done:void 0===e,value:e}}};return y.iterable&&(e[Symbol.iterator]=function(){return e}),e}function n(t){this.map={},t instanceof n?t.forEach(function(t,e){this.append(e,t)},this):Array.isArray(t)?t.forEach(function(t){this.append(t[0],t[1])},this):t&&Object.getOwnPropertyNames(t).forEach(function(e){this.append(e,t[e])},this)}function i(t){if(t.bodyUsed)return Promise.reject(new TypeError("Already read"));t.bodyUsed=!0}function s(t){return new Promise(function(e,o){t.onload=function(){e(t.result)},t.onerror=function(){o(t.error)}})}function a(t){var e=new FileReader,o=s(e);return e.readAsArrayBuffer(t),o}function l(t){var e=new FileReader,o=s(e);return e.readAsText(t),o}function p(t){for(var e=new Uint8Array(t),o=new Array(e.length),r=0;r<e.length;r++)o[r]=String.fromCharCode(e[r]);return o.join("")}function c(t){if(t.slice)return t.slice(0);var e=new Uint8Array(t.byteLength);return e.set(new Uint8Array(t)),e.buffer}function u(){return this.bodyUsed=!1,this._initBody=function(t){if(this._bodyInit=t,t)if("string"==typeof t)this._bodyText=t;else if(y.blob&&Blob.prototype.isPrototypeOf(t))this._bodyBlob=t;else if(y.formData&&FormData.prototype.isPrototypeOf(t))this._bodyFormData=t;else if(y.searchParams&&URLSearchParams.prototype.isPrototypeOf(t))this._bodyText=t.toString();else if(y.arrayBuffer&&y.blob&&v(t))this._bodyArrayBuffer=c(t.buffer),this._bodyInit=new Blob([this._bodyArrayBuffer]);else{if(!y.arrayBuffer||!ArrayBuffer.prototype.isPrototypeOf(t)&&!w(t))throw new Error("unsupported BodyInit type");this._bodyArrayBuffer=c(t)}else this._bodyText="";this.headers.get("content-type")||("string"==typeof t?this.headers.set("content-type","text/plain;charset=UTF-8"):this._bodyBlob&&this._bodyBlob.type?this.headers.set("content-type",this._bodyBlob.type):y.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)&&this.headers.set("content-type","application/x-www-form-urlencoded;charset=UTF-8"))},y.blob&&(this.blob=function(){var t=i(this);if(t)return t;if(this._bodyBlob)return Promise.resolve(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(new Blob([this._bodyArrayBuffer]));if(this._bodyFormData)throw new Error("could not read FormData body as blob");return Promise.resolve(new Blob([this._bodyText]))},this.arrayBuffer=function(){return this._bodyArrayBuffer?i(this)||Promise.resolve(this._bodyArrayBuffer):this.blob().then(a)}),this.text=function(){var t=i(this);if(t)return t;if(this._bodyBlob)return l(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(p(this._bodyArrayBuffer));if(this._bodyFormData)throw new Error("could not read FormData body as text");return Promise.resolve(this._bodyText)},y.formData&&(this.formData=function(){return this.text().then(f)}),this.json=function(){return this.text().then(JSON.parse)},this}function h(t){var e=t.toUpperCase();return b.indexOf(e)>-1?e:t}function d(t,e){e=e||{};var o=e.body;if(t instanceof d){if(t.bodyUsed)throw new TypeError("Already read");this.url=t.url,this.credentials=t.credentials,e.headers||(this.headers=new n(t.headers)),this.method=t.method,this.mode=t.mode,o||null==t._bodyInit||(o=t._bodyInit,t.bodyUsed=!0)}else this.url=String(t);if(this.credentials=e.credentials||this.credentials||"omit",!e.headers&&this.headers||(this.headers=new n(e.headers)),this.method=h(e.method||this.method||"GET"),this.mode=e.mode||this.mode||null,this.referrer=null,("GET"===this.method||"HEAD"===this.method)&&o)throw new TypeError("Body not allowed for GET or HEAD requests");this._initBody(o)}function f(t){var e=new FormData;return t.trim().split("&").forEach(function(t){if(t){var o=t.split("="),r=o.shift().replace(/\+/g," "),n=o.join("=").replace(/\+/g," ");e.append(decodeURIComponent(r),decodeURIComponent(n))}}),e}function m(t){var e=new n;return t.split(/\r?\n/).forEach(function(t){var o=t.split(":"),r=o.shift().trim();if(r){var n=o.join(":").trim();e.append(r,n)}}),e}function g(t,e){e||(e={}),this.type="default",this.status="status"in e?e.status:200,this.ok=this.status>=200&&this.status<300,this.statusText="statusText"in e?e.statusText:"OK",this.headers=new n(e.headers),this.url=e.url||"",this._initBody(t)}if(!t.fetch){var y={searchParams:"URLSearchParams"in t,iterable:"Symbol"in t&&"iterator"in Symbol,blob:"FileReader"in t&&"Blob"in t&&function(){try{return new Blob,!0}catch(t){return!1}}(),formData:"FormData"in t,arrayBuffer:"ArrayBuffer"in t};if(y.arrayBuffer)var _=["[object Int8Array]","[object Uint8Array]","[object Uint8ClampedArray]","[object Int16Array]","[object Uint16Array]","[object Int32Array]","[object Uint32Array]","[object Float32Array]","[object Float64Array]"],v=function(t){return t&&DataView.prototype.isPrototypeOf(t)},w=ArrayBuffer.isView||function(t){return t&&_.indexOf(Object.prototype.toString.call(t))>-1};n.prototype.append=function(t,r){t=e(t),r=o(r);var n=this.map[t];this.map[t]=n?n+","+r:r},n.prototype.delete=function(t){delete this.map[e(t)]},n.prototype.get=function(t){return t=e(t),this.has(t)?this.map[t]:null},n.prototype.has=function(t){return this.map.hasOwnProperty(e(t))},n.prototype.set=function(t,r){this.map[e(t)]=o(r)},n.prototype.forEach=function(t,e){for(var o in this.map)this.map.hasOwnProperty(o)&&t.call(e,this.map[o],o,this)},n.prototype.keys=function(){var t=[];return this.forEach(function(e,o){t.push(o)}),r(t)},n.prototype.values=function(){var t=[];return this.forEach(function(e){t.push(e)}),r(t)},n.prototype.entries=function(){var t=[];return this.forEach(function(e,o){t.push([o,e])}),r(t)},y.iterable&&(n.prototype[Symbol.iterator]=n.prototype.entries);var b=["DELETE","GET","HEAD","OPTIONS","POST","PUT"];d.prototype.clone=function(){return new d(this,{body:this._bodyInit})},u.call(d.prototype),u.call(g.prototype),g.prototype.clone=function(){return new g(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new n(this.headers),url:this.url})},g.error=function(){var t=new g(null,{status:0,statusText:""});return t.type="error",t};var k=[301,302,303,307,308];g.redirect=function(t,e){if(-1===k.indexOf(e))throw new RangeError("Invalid status code");return new g(null,{status:e,headers:{location:t}})},t.Headers=n,t.Request=d,t.Response=g,t.fetch=function(t,e){return new Promise(function(o,r){var n=new d(t,e),i=new XMLHttpRequest;i.onload=function(){var t={status:i.status,statusText:i.statusText,headers:m(i.getAllResponseHeaders()||"")};t.url="responseURL"in i?i.responseURL:t.headers.get("X-Request-URL");var e="response"in i?i.response:i.responseText;o(new g(e,t))},i.onerror=function(){r(new TypeError("Network request failed"))},i.ontimeout=function(){r(new TypeError("Network request failed"))},i.open(n.method,n.url,!0),"include"===n.credentials&&(i.withCredentials=!0),"responseType"in i&&y.blob&&(i.responseType="blob"),n.headers.forEach(function(t,e){i.setRequestHeader(e,t)}),i.send(void 0===n._bodyInit?null:n._bodyInit)})},t.fetch.polyfill=!0}}("undefined"!=typeof self?self:void 0);var j=function(t,e){return!0},F=function(t){if(RegExp("^(/[^/ ]*)+/$").test(t))return!0;console.error('Please provide the icons directory as in "/path/to/icons/"')},D=[],N=[],U=[],Z=I(51.521723,-.134581);!function(t){u.center=t}(Z);var H=void 0,G=void 0,V=void 0,q=window.jQuery;if(!q)throw"jQuery is required for this map plugin";var W=function(t,e,o,r,n){t=t||null,e=e||null,o=o||null,r=r||null,n=n||null,V=t,H=B(t),G=s(0,t),P(H,e,N,0,t),m(H,void 0,G,D),n?_(function(){console.log("change your location clicked")},r):w(function(){console.log("Add your marker clicked!")},N.length,r),Y(t),it(t,H),lt(t,e),setTimeout(function(){F(r)&&j()},100),google.maps.event.addListenerOnce(H,"zoom_changed",function(){q(t).find(".shiftmap-map-clusterise-user-panel").removeClass("default")}),K(t,n,r),nt(t,H)},Q=function(t){google.maps.event.addListener(H,"shiftms_plotted_location",t)},K=function(t,e,o){var r=q(t).find(".shiftmap-airballoon-image"),n=q(t).find(".balloon-dismiss");q(n).click(function(t){q(r).remove()}),e?r.remove():r.attr("src",o+"promo/plot-yourself.png")},X=function(t,e){q(t).find(".shiftmap-airballoon-image").click(e)},J=function(t,e,o,r,n,i){if(t=t||null,e=e||null,o=o.toString()||null,r=Math.abs(r)||null,n=Math.abs(n)||null,"function"!=typeof(i=i||null))throw"Click event must be a function!";if(!Number.isInteger(n)||!Number.isInteger(r))throw"Icon dimensions must be integers!";if("number"!=typeof t||"number"!=typeof e)throw"Coordinates must be numbers!";google.maps.event.addListener(H,"idle",function(){var s=new google.maps.LatLng(parseFloat(t).toFixed(6),parseFloat(e).toFixed(6)),a={url:""+o,size:new google.maps.Size(r,n),origin:new google.maps.Point(0,0),anchor:new google.maps.Point(17,34),scaledSize:new google.maps.Size(r,n)};new google.maps.Marker({position:s,icon:a,map:H,optimized:!1,zindex:0,url:""}).addListener("click",i)})},Y=function(t){q(t).find(".shiftmap-map-clusterise-user-panel").toggleClass("default")},tt=function(t,e){var o=I(t,e);H.panTo(o)},et=function(t){"function"==typeof t?google.maps.event.addListenerOnce(H,"idle",t):console.error("provide a callback function")},ot=function(t){"function"==typeof t?google.maps.event.addListener(H,"idle",t):console.error("provide a callback function")},rt=function(t,e){return[t.toString(),e.toString()]},nt=function(t,e){var o=q(t).find(".shiftmap-showmap"),r=new google.maps.LatLng(68.870136,-160.789405),n=new google.maps.LatLng(-44.879507,178.880419),i=new google.maps.LatLngBounds(r,n),s=function(){o.click(function(){e.fitBounds(i)})};google.maps.event.addListener(e,"idle",s)},it=function(t,e){var o=q(t).find(".shiftmap-map-clusterise-user-panel");o.find(".shiftmap-map-toggle-panel").click(function(){q(this).removeClass("alert-user"),o.hasClass("default")?o.removeClass("default"):o.toggleClass("closed")}),google.maps.event.addListener(e,"zoom_changed",function(){e.getZoom()>7?e.setOptions({styles:c}):e.setOptions({styles:p})}),q(t).on("openpanel",function(){o.removeClass("closed")}),google.maps.event.addListenerOnce(e,"idle",function(){pt(e)})},st=function(t,e){q(".shiftmap-wrapper").width(t).height(e),q(".shiftmap-map").width(t).height(e);var o=q(".shiftmap-map").get(0);google.maps.event.trigger(o,"resize"),google.maps.event.addListenerOnce(o,"idle",function(){google.maps.event.trigger(o,"resize")})},at=function(t,e){t?U.push(t):U.map(function(t){return t(e)})},lt=function(t,e){q(t).on("click","[data-clickuser]",function(){var t=q(this).data("clickuser"),o=void 0;e.map(function(e){e.user_id===t&&(o=e)}),at(!1,o)})},pt=function(t){navigator.geolocation&&navigator.geolocation.getCurrentPosition(function(e){var o=new google.maps.LatLng(e.coords.latitude,e.coords.longitude);t.setCenter(o),t.setZoom(5)})},ct=function(){q(V).find(".shiftmap-promo-area").addClass("in"),q(V).find(".shiftmap-map-clusterise-user-panel").removeClass("default closed")};t.initialize=W,t.insertMarker=J,t.setWidthHeight=st,t.onMapReady=et,t.onMapChangeLocation=ot,t.defineURL=rt,t.changeMapLocation=tt,t.onClickUser=at,t.onPlotLocation=Q,t.onAirBalloonClick=X,t.enablePlotLocationMode=ct,Object.defineProperty(t,"__esModule",{value:!0})});
+document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.Maps = global.Maps || {})));
+}(this, (function (exports) { 'use strict';
+
+var $$2 = window.jQuery;
+
+var createSearchBox = function createSearchBox(map, mapWrapper) {
+	var localMap = map;
+	// Create search box and link it to UI
+	var $input = $$2(mapWrapper).find('input.shiftmap-input');
+	var input = $input.get(0);
+	var searchBox = new google.maps.places.SearchBox(input);
+	return searchBox;
+};
+
+// Cluster markers SVG
+var _Symbol = function _Symbol(id, width, height, fill) {
+	var marker_svg = {
+		marker: {
+			p: 'M244.31,0C256.87,2.49,269.59,4.38,282,7.58c35.11,9.1,65.15,27.29,90.44,53.07C401.19,90,419.56,125,427,165.51q12.58,68.25-18.92,130.11Q319.47,469.54,230.64,643.36c-.73,1.42-1.59,2.78-2.79,4.87-1.41-2.43-2.5-4.14-3.42-5.93C165.11,526,104.62,410.27,46.93,293.17,8.94,216.08,18.43,141.32,71.6,74c34-43,80.17-66.6,134.87-72.86A44.62,44.62,0,0,0,211.37,0Z',
+			v: "0 0 430.62 648.23"
+		}
+	};
+	return 'data:image/svg+xml;base64,' + window.btoa('<svg xmlns="http://www.w3.org/2000/svg" height="' + height + '" viewBox="0 0 430.62 648.23" width="' + width + '" ><g><path fill="' + fill + '" d="' + marker_svg[id].p + '" /></g></svg>');
+};
+
+// Map colors
+var land = "#EEEFF1";
+var water = "#71CAF2";
+
+var mapStyles = [{
+	"elementType": "labels",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "administrative",
+	"elementType": "geometry",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "administrative.land_parcel",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "administrative.neighborhood",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "landscape.man_made",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural.landcover",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural.terrain",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "poi",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "road",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "road",
+	"elementType": "labels.icon",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "transit",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "water",
+	"stylers": [{
+		"color": water
+	}]
+}];
+
+var mapDetailStyles = [{
+	"featureType": "road.arterial",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "road.highway",
+	"elementType": "labels",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "road.local",
+	"stylers": [{
+		"visibility": "off"
+	}]
+}, {
+	"featureType": "water",
+	"stylers": [{
+		"color": water
+	}]
+}, {
+	"featureType": "landscape.man_made",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural.landcover",
+	"stylers": [{
+		"color": land
+	}]
+}, {
+	"featureType": "landscape.natural.terrain",
+	"stylers": [{
+		"color": land
+	}]
+}];
+
+var defineCenter = function defineCenter(lat, lng) {
+  return new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+};
+
+var options = {};
+var clusterOptions = {};
+
+// Map options
+var getMapOptions = function getMapOptions() {
+	$.extend(options, {
+		zoom: 3,
+		center: defineCenter(51.521723, -0.134581),
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		mapTypeControl: false,
+		styles: mapStyles,
+		minZoom: 2
+	});
+
+	return options;
+};
+
+// Cluster markers style
+var clusterStyles = [{
+	anchor: [17, 35],
+	textColor: 'white',
+	textSize: '16',
+	url: './img/icons/icon-2.svg',
+	height: 75,
+	width: 75
+}, {
+	anchor: [25, 42],
+	textColor: 'white',
+	textSize: '18',
+	url: './img/icons/icon-2.svg',
+	height: 100,
+	width: 100
+}, {
+	anchor: [32, 42],
+	textColor: 'white',
+	textSize: '26',
+	url: './img/icons/icon-2.svg',
+	height: 125,
+	width: 125
+}];
+
+// Cluster options
+var getClusterOptions = function getClusterOptions() {
+	$.extend(clusterOptions, {
+		maxZoom: 12,
+		gridSize: 75,
+		styles: clusterStyles
+	});
+	return clusterOptions;
+};
+
+// Set new icon
+var getIconPlace = function getIconPlace() {
+	return {
+		url: _Symbol('marker', 50, 50, '#77bf2f'),
+		size: new google.maps.Size(50, 50),
+		origin: new google.maps.Point(0, 0),
+		anchor: new google.maps.Point(25, 50)
+	};
+};
+
+var confirmLocationContent = "<div class=\"shiftmap-confirm-location\">\r\n\t<button class=\"shiftmap-promo-area-button\" type=\"button\" value=\"Change your location\">Confirm location</button>\r\n</div>";
+
+var searchBox = function searchBox(map, places, sBox, placeMarkers, getIcon$$1, setIcon$$1) {
+
+	// Bias searchbox results towards current map's viewport
+	map.addListener('bounds_changed', function () {
+		sBox.setBounds(map.getBounds());
+	});
+
+	// Listen for the event fired when the user selects a prediction and retrieve
+	// more details for that place.
+	sBox.addListener('places_changed', function () {
+
+		var isPlotSearch = $('.shiftmap-promo-area.in').length;
+
+		places = sBox.getPlaces();
+		if (places.length == 0) {
+			return;
+		} else {
+			// Only one result
+			places = [places[0]];
+		}
+
+		// Clear out the old markers.
+		placeMarkers.forEach(function (marker) {
+			marker.setMap(null);
+		});
+		placeMarkers = [];
+
+		// For each place, get the icon, name and location.
+		var bounds = new google.maps.LatLngBounds();
+		places.forEach(function (place) {
+			if (!place.geometry) {
+				console.log("Returned place contains no geometry");
+				return;
+			}
+
+			var marker = void 0;
+
+			if (isPlotSearch) {
+
+				marker = new google.maps.Marker({
+					map: map,
+					icon: getIconPlace,
+					title: place.name,
+					position: place.geometry.location,
+					optimized: false,
+					zindex: 2,
+					class: 'shiftms-map-cluster-location-icon'
+				});
+
+				placeMarkers.push(marker);
+			}
+
+			if (place.geometry.viewport) {
+				// Only geocodes have viewport.
+				bounds.union(place.geometry.viewport);
+			} else {
+				bounds.extend(place.geometry.location);
+			}
+
+			map.fitBounds(bounds);
+
+			google.maps.event.addListenerOnce(map, "idle", function () {
+				if (isPlotSearch) {
+					var infoWindow = createInfoWindow(map, marker, place);
+				}
+			});
+		});
+
+		google.maps.event.addListenerOnce(map, "idle", function () {
+
+			// Disable zoom, as infowindow handles this automatically
+			if (!isPlotSearch) {
+				map.setZoom(6);
+			}
+		});
+	});
+};
+var createInfoWindow = function createInfoWindow(map, marker, place) {
+	var html = $(confirmLocationContent);
+	var infowindow = new google.maps.InfoWindow({
+		content: ''
+	});
+
+	infowindow.setContent(html.get(0));
+
+	html.find("button").click(function () {
+		google.maps.event.trigger(map, 'shiftms_plotted_location', place, marker);
+		infowindow.close();
+		$('html').removeClass('map-plotting-active');
+		$('.shiftmap-promo-area').removeClass('in');
+	});
+
+	infowindow.open(map, marker);
+
+	return infowindow;
+};
+
+var promoHtml = "<div class=\"shiftmap-promo-area\">\r\n\t<h3 class=\"shitfmap-promo-area-text\">Relocation, relocation, relocation...</h3>\r\n\t<button class=\"shiftmap-promo-area-button\" type=\"button\" value=\"Change your location\">Change your location</button><img width=\"70\" height=\"70\" src=\"%assetspath%/icons/icon-2.svg\" class=\"shiftmap-promo-area-icon\">\r\n\t<div class=\"shiftmap-promo-area-tooltip\">\r\n\t\tSearch the map for a landmark to place your marker... don't use your own physical address!\r\n\t\t<a href=\"javascript:;\">Cancel</a>\r\n\t</div>\r\n</div>";
+
+var promoArea = function promoArea(insertMarker, assetsPath) {
+	var html = promoHtml;
+	html = $(promoHtml.replace('%assetspath%', assetsPath));
+
+	var userPanel = $('.shiftmap-map-clusterise-wrapper');
+	userPanel.prepend(html);
+	html.find('button').click(insertMarker).click(function () {
+		html.addClass('in');
+		$('html').addClass('map-plotting-active');
+		var input = userPanel.find("input.shiftmap-input").one('blur', function () {});
+		setTimeout(function () {
+			input.focus();
+		}, 100);
+	});
+
+	html.find('a').click(function () {
+		html.removeClass('in');
+		$('html').removeClass('map-plotting-active');
+	});
+};
+
+var promoHtml$1 = "<div class=\"shiftmap-promo-area\">\r\n\t<h3 class=\"shitfmap-promo-area-text\">There are currently %total% people on the map</h3>\r\n\t<button class=\"shiftmap-promo-area-button\" type=\"button\" value=\"Add your marker\">Add your marker</button>\r\n\t<img width=\"70\" height=\"70\" src=\"%assetspath%/icons/icon-2.svg\" class=\"shiftmap-promo-area-icon\">\r\n\t<div class=\"shiftmap-promo-area-tooltip\">\r\n\t\tSearch the map for a landmark to place your marker... don't use your own physical address!\r\n\t\t<a href=\"javascript:;\">Cancel</a>\r\n\t</div>\r\n</div>";
+
+var promoArea$1 = function promoArea(insertMarker, numUsers, assetsPath) {
+	var html = promoHtml$1;
+	html = $(promoHtml$1.replace('%total%', numUsers).replace('%assetspath%', assetsPath));
+
+	var userPanel = $('.shiftmap-map-clusterise-wrapper');
+	userPanel.prepend(html);
+	html.find('button').click(insertMarker).click(function () {
+		html.addClass('in');
+		$('html').addClass('map-plotting-active');
+		var input = userPanel.find("input.shiftmap-input").one('blur', function () {
+			// setTimeout(() => html.removeClass('in'), 500 );
+		});
+		setTimeout(function () {
+			input.focus();
+		}, 100);
+	});
+
+	html.find('a').click(function () {
+		html.removeClass('in');
+		$('html').removeClass('map-plotting-active');
+	});
+};
+
+var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+
+
+
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var clusterize = createCommonjsModule(function (module) {
+  /*! Clusterize.js - v0.17.6 - 2017-03-05
+  * http://NeXTs.github.com/Clusterize.js/
+  * Copyright (c) 2015 Denis Lukov; Licensed GPLv3 */
+
+  (function (name, definition) {
+    module.exports = definition();
+  })('Clusterize', function () {
+    "use strict";
+
+    // detect ie9 and lower
+    // https://gist.github.com/padolsey/527683#comment-786682
+
+    var ie = function () {
+      for (var v = 3, el = document.createElement('b'), all = el.all || []; el.innerHTML = '<!--[if gt IE ' + ++v + ']><i><![endif]-->', all[0];) {}
+      return v > 4 ? v : document.documentMode;
+    }(),
+        is_mac = navigator.platform.toLowerCase().indexOf('mac') + 1;
+    var Clusterize = function Clusterize(data) {
+      if (!(this instanceof Clusterize)) return new Clusterize(data);
+      var self = this;
+
+      var defaults = {
+        rows_in_block: 50,
+        blocks_in_cluster: 4,
+        tag: null,
+        show_no_data_row: true,
+        no_data_class: 'clusterize-no-data',
+        no_data_text: 'No data',
+        keep_parity: true,
+        callbacks: {}
+      };
+
+      // public parameters
+      self.options = {};
+      var options = ['rows_in_block', 'blocks_in_cluster', 'show_no_data_row', 'no_data_class', 'no_data_text', 'keep_parity', 'tag', 'callbacks'];
+      for (var i = 0, option; option = options[i]; i++) {
+        self.options[option] = typeof data[option] != 'undefined' && data[option] != null ? data[option] : defaults[option];
+      }
+
+      var elems = ['scroll', 'content'];
+      for (var i = 0, elem; elem = elems[i]; i++) {
+        self[elem + '_elem'] = data[elem + 'Id'] ? document.getElementById(data[elem + 'Id']) : data[elem + 'Elem'];
+        if (!self[elem + '_elem']) throw new Error("Error! Could not find " + elem + " element");
+      }
+
+      // tabindex forces the browser to keep focus on the scrolling list, fixes #11
+      if (!self.content_elem.hasAttribute('tabindex')) self.content_elem.setAttribute('tabindex', 0);
+
+      // private parameters
+      var rows = isArray(data.rows) ? data.rows : self.fetchMarkup(),
+          cache = {},
+          scroll_top = self.scroll_elem.scrollTop;
+
+      // append initial data
+      self.insertToDOM(rows, cache);
+
+      // restore the scroll position
+      self.scroll_elem.scrollTop = scroll_top;
+
+      // adding scroll handler
+      var last_cluster = false,
+          scroll_debounce = 0,
+          pointer_events_set = false,
+          scrollEv = function scrollEv() {
+        // fixes scrolling issue on Mac #3
+        if (is_mac) {
+          if (!pointer_events_set) self.content_elem.style.pointerEvents = 'none';
+          pointer_events_set = true;
+          clearTimeout(scroll_debounce);
+          scroll_debounce = setTimeout(function () {
+            self.content_elem.style.pointerEvents = 'auto';
+            pointer_events_set = false;
+          }, 50);
+        }
+        if (last_cluster != (last_cluster = self.getClusterNum())) self.insertToDOM(rows, cache);
+        if (self.options.callbacks.scrollingProgress) self.options.callbacks.scrollingProgress(self.getScrollProgress());
+      },
+          resize_debounce = 0,
+          resizeEv = function resizeEv() {
+        clearTimeout(resize_debounce);
+        resize_debounce = setTimeout(self.refresh, 100);
+      };
+      on('scroll', self.scroll_elem, scrollEv);
+      on('resize', window, resizeEv);
+
+      // public methods
+      self.destroy = function (clean) {
+        off('scroll', self.scroll_elem, scrollEv);
+        off('resize', window, resizeEv);
+        self.html((clean ? self.generateEmptyRow() : rows).join(''));
+      };
+      self.refresh = function (force) {
+        if (self.getRowsHeight(rows) || force) self.update(rows);
+      };
+      self.update = function (new_rows) {
+        rows = isArray(new_rows) ? new_rows : [];
+        var scroll_top = self.scroll_elem.scrollTop;
+        // fixes #39
+        if (rows.length * self.options.item_height < scroll_top) {
+          self.scroll_elem.scrollTop = 0;
+          last_cluster = 0;
+        }
+        self.insertToDOM(rows, cache);
+        self.scroll_elem.scrollTop = scroll_top;
+      };
+      self.clear = function () {
+        self.update([]);
+      };
+      self.getRowsAmount = function () {
+        return rows.length;
+      };
+      self.getScrollProgress = function () {
+        return this.options.scroll_top / (rows.length * this.options.item_height) * 100 || 0;
+      };
+
+      var add = function add(where, _new_rows) {
+        var new_rows = isArray(_new_rows) ? _new_rows : [];
+        if (!new_rows.length) return;
+        rows = where == 'append' ? rows.concat(new_rows) : new_rows.concat(rows);
+        self.insertToDOM(rows, cache);
+      };
+      self.append = function (rows) {
+        add('append', rows);
+      };
+      self.prepend = function (rows) {
+        add('prepend', rows);
+      };
+    };
+
+    Clusterize.prototype = {
+      constructor: Clusterize,
+      // fetch existing markup
+      fetchMarkup: function fetchMarkup() {
+        var rows = [],
+            rows_nodes = this.getChildNodes(this.content_elem);
+        while (rows_nodes.length) {
+          rows.push(rows_nodes.shift().outerHTML);
+        }
+        return rows;
+      },
+      // get tag name, content tag name, tag height, calc cluster height
+      exploreEnvironment: function exploreEnvironment(rows, cache) {
+        var opts = this.options;
+        opts.content_tag = this.content_elem.tagName.toLowerCase();
+        if (!rows.length) return;
+        if (ie && ie <= 9 && !opts.tag) opts.tag = rows[0].match(/<([^>\s/]*)/)[1].toLowerCase();
+        if (this.content_elem.children.length <= 1) cache.data = this.html(rows[0] + rows[0] + rows[0]);
+        if (!opts.tag) opts.tag = this.content_elem.children[0].tagName.toLowerCase();
+        this.getRowsHeight(rows);
+      },
+      getRowsHeight: function getRowsHeight(rows) {
+        var opts = this.options,
+            prev_item_height = opts.item_height;
+        opts.cluster_height = 0;
+        if (!rows.length) return;
+        var nodes = this.content_elem.children;
+        var node = nodes[Math.floor(nodes.length / 2)];
+        opts.item_height = node.offsetHeight;
+        // consider table's border-spacing
+        if (opts.tag == 'tr' && getStyle('borderCollapse', this.content_elem) != 'collapse') opts.item_height += parseInt(getStyle('borderSpacing', this.content_elem), 10) || 0;
+        // consider margins (and margins collapsing)
+        if (opts.tag != 'tr') {
+          var marginTop = parseInt(getStyle('marginTop', node), 10) || 0;
+          var marginBottom = parseInt(getStyle('marginBottom', node), 10) || 0;
+          opts.item_height += Math.max(marginTop, marginBottom);
+        }
+        opts.block_height = opts.item_height * opts.rows_in_block;
+        opts.rows_in_cluster = opts.blocks_in_cluster * opts.rows_in_block;
+        opts.cluster_height = opts.blocks_in_cluster * opts.block_height;
+        return prev_item_height != opts.item_height;
+      },
+      // get current cluster number
+      getClusterNum: function getClusterNum() {
+        this.options.scroll_top = this.scroll_elem.scrollTop;
+        return Math.floor(this.options.scroll_top / (this.options.cluster_height - this.options.block_height)) || 0;
+      },
+      // generate empty row if no data provided
+      generateEmptyRow: function generateEmptyRow() {
+        var opts = this.options;
+        if (!opts.tag || !opts.show_no_data_row) return [];
+        var empty_row = document.createElement(opts.tag),
+            no_data_content = document.createTextNode(opts.no_data_text),
+            td;
+        empty_row.className = opts.no_data_class;
+        if (opts.tag == 'tr') {
+          td = document.createElement('td');
+          // fixes #53
+          td.colSpan = 100;
+          td.appendChild(no_data_content);
+        }
+        empty_row.appendChild(td || no_data_content);
+        return [empty_row.outerHTML];
+      },
+      // generate cluster for current scroll position
+      generate: function generate(rows, cluster_num) {
+        var opts = this.options,
+            rows_len = rows.length;
+        if (rows_len < opts.rows_in_block) {
+          return {
+            top_offset: 0,
+            bottom_offset: 0,
+            rows_above: 0,
+            rows: rows_len ? rows : this.generateEmptyRow()
+          };
+        }
+        var items_start = Math.max((opts.rows_in_cluster - opts.rows_in_block) * cluster_num, 0),
+            items_end = items_start + opts.rows_in_cluster,
+            top_offset = Math.max(items_start * opts.item_height, 0),
+            bottom_offset = Math.max((rows_len - items_end) * opts.item_height, 0),
+            this_cluster_rows = [],
+            rows_above = items_start;
+        if (top_offset < 1) {
+          rows_above++;
+        }
+        for (var i = items_start; i < items_end; i++) {
+          rows[i] && this_cluster_rows.push(rows[i]);
+        }
+        return {
+          top_offset: top_offset,
+          bottom_offset: bottom_offset,
+          rows_above: rows_above,
+          rows: this_cluster_rows
+        };
+      },
+      renderExtraTag: function renderExtraTag(class_name, height) {
+        var tag = document.createElement(this.options.tag),
+            clusterize_prefix = 'clusterize-';
+        tag.className = [clusterize_prefix + 'extra-row', clusterize_prefix + class_name].join(' ');
+        height && (tag.style.height = height + 'px');
+        return tag.outerHTML;
+      },
+      // if necessary verify data changed and insert to DOM
+      insertToDOM: function insertToDOM(rows, cache) {
+        // explore row's height
+        if (!this.options.cluster_height) {
+          this.exploreEnvironment(rows, cache);
+        }
+        var data = this.generate(rows, this.getClusterNum()),
+            this_cluster_rows = data.rows.join(''),
+            this_cluster_content_changed = this.checkChanges('data', this_cluster_rows, cache),
+            top_offset_changed = this.checkChanges('top', data.top_offset, cache),
+            only_bottom_offset_changed = this.checkChanges('bottom', data.bottom_offset, cache),
+            callbacks = this.options.callbacks,
+            layout = [];
+
+        if (this_cluster_content_changed || top_offset_changed) {
+          if (data.top_offset) {
+            this.options.keep_parity && layout.push(this.renderExtraTag('keep-parity'));
+            layout.push(this.renderExtraTag('top-space', data.top_offset));
+          }
+          layout.push(this_cluster_rows);
+          data.bottom_offset && layout.push(this.renderExtraTag('bottom-space', data.bottom_offset));
+          callbacks.clusterWillChange && callbacks.clusterWillChange();
+          this.html(layout.join(''));
+          this.options.content_tag == 'ol' && this.content_elem.setAttribute('start', data.rows_above);
+          callbacks.clusterChanged && callbacks.clusterChanged();
+        } else if (only_bottom_offset_changed) {
+          this.content_elem.lastChild.style.height = data.bottom_offset + 'px';
+        }
+      },
+      // unfortunately ie <= 9 does not allow to use innerHTML for table elements, so make a workaround
+      html: function html(data) {
+        var content_elem = this.content_elem;
+        if (ie && ie <= 9 && this.options.tag == 'tr') {
+          var div = document.createElement('div'),
+              last;
+          div.innerHTML = '<table><tbody>' + data + '</tbody></table>';
+          while (last = content_elem.lastChild) {
+            content_elem.removeChild(last);
+          }
+          var rows_nodes = this.getChildNodes(div.firstChild.firstChild);
+          while (rows_nodes.length) {
+            content_elem.appendChild(rows_nodes.shift());
+          }
+        } else {
+          content_elem.innerHTML = data;
+        }
+      },
+      getChildNodes: function getChildNodes(tag) {
+        var child_nodes = tag.children,
+            nodes = [];
+        for (var i = 0, ii = child_nodes.length; i < ii; i++) {
+          nodes.push(child_nodes[i]);
+        }
+        return nodes;
+      },
+      checkChanges: function checkChanges(type, value, cache) {
+        var changed = value != cache[type];
+        cache[type] = value;
+        return changed;
+      }
+    };
+
+    // support functions
+    function on(evt, element, fnc) {
+      return element.addEventListener ? element.addEventListener(evt, fnc, false) : element.attachEvent("on" + evt, fnc);
+    }
+    function off(evt, element, fnc) {
+      return element.removeEventListener ? element.removeEventListener(evt, fnc, false) : element.detachEvent("on" + evt, fnc);
+    }
+    function isArray(arr) {
+      return Object.prototype.toString.call(arr) === '[object Array]';
+    }
+    function getStyle(prop, elem) {
+      return window.getComputedStyle ? window.getComputedStyle(elem)[prop] : elem.currentStyle[prop];
+    }
+
+    return Clusterize;
+  });
+});
+
+var zoomingOnSingle = false;
+var buildList = function buildList(clusterize, listArray, markers, localMap, domElement) {
+
+	if (zoomingOnSingle) {
+		return;
+	}
+
+	listArray = [];
+	clusterize.clear();
+
+	markers.map(function (user) {
+		if (localMap.getBounds().contains(user.getPosition())) {
+			listArray.push('<div class="shiftmap-clusterize-user-row shiftmap-clusterize-user-row-' + user.userID + '">\n\t\t\t\t<div class="shiftmap-clusterize-user-cell">\n\t\t\t\t\t<div class="shiftmap-clusterize-avatar">\n\t\t\t\t\t\t<div style="background-image:url(\'' + user.url + '\')"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="shiftmap-clusterize-content">\n\t\t\t\t\t\t<h3 class="shiftmap-clusterize-user-name">' + user.userName + '</h3>\n\t\t\t\t\t\t<div class="active">Last active 2 weeks ago</div>\n\t\t\t\t\t\t<button class="shiftmap-clusterize-user-button" data-clickuser="' + user.userID + '">Follow</button>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>');
+		}
+
+		// Dsiplay user info on sidebar 
+		var showUserInfo = function showUserInfo() {
+			$(domElement).trigger('openpanel');
+			clusterize.clear();
+			clusterize.update(['\n\t\t\t\t<div class="shiftmap-clusterize-user-row shiftmap-clusterize-user-row-single">\n\t\t\t\t\t<div class="shiftmap-clusterize-user-cell">\n\t\t\t\t\t\t<div class="shiftmap-clusterize-avatar">\n\t\t\t\t\t\t\t<div style="background-image:url(\'' + user.url + '\')"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="shiftmap-clusterize-content">\n\t\t\t\t\t\t\t <div class="visible"><span data-clickuser="' + user.userID + '">User:</span> ' + user.userName + '</div>\n\t\t\t\t\t\t\t <div class="' + (user.city && 'visible') + '"><span>City:</span> ' + user.city + '</div>\n\t\t\t\t\t\t\t <div class="' + (user.country && 'visible') + '"><span>Country:</span> ' + user.country + '</div>\n\t\t\t\t\t\t\t <div class="' + ((user.active || true) && 'visible active') + '">Last active 2 weeks ago</div>\n\t\t\t\t\t\t\t <div class="visible">\n\t\t\t\t\t\t\t \t<button class="shiftmap-clusterize-user-button" data-clickuser="' + user.userID + '">Follow</button>\n\t\t\t\t\t\t\t </div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t']);
+			clusterize.refresh();
+		};
+
+		// On marker clikc user info is displayed
+		if (!user.clickEventBound) {
+			google.maps.event.addDomListener(user, 'click', function () {
+				zoomingOnSingle = true;
+				showUserInfo();
+
+				if (localMap.getZoom() < 8) {
+					localMap.setZoom(8);
+				}
+
+				localMap.setCenter(user.getPosition());
+
+				setTimeout(function () {
+					zoomingOnSingle = false;
+				}, 1000);
+			});
+			user.clickEventBound = true;
+		}
+	});
+
+	clusterize.update(listArray);
+	clusterize.refresh();
+};
+
+var checkData = function checkData(dataset) {
+	try {
+		JSON.stringify(dataset);
+		return true;
+	} catch (err) {
+		console.error('Data is not JSON format!');
+		return false;
+	}
+};
+
+// Generate random numbers between a min and a max values
+var getRandom = function getRandom(min, max) {
+	return Math.random() * (max - min) + min;
+};
+
+var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// ==ClosureCompiler==
+// @compilation_level ADVANCED_OPTIMIZATIONS
+// @externs_url http://closure-compiler.googlecode.com/svn/trunk/contrib/externs/maps/google_maps_api_v3_3.js
+// ==/ClosureCompiler==
+
+/**
+ * @name MarkerClusterer for Google Maps v3
+ * @version version 1.0.1
+ * @author Luke Mahe
+ * @fileoverview
+ * The library creates and manages per-zoom-level clusters for large amounts of
+ * markers.
+ * <br/>
+ * This is a v3 implementation of the
+ * <a href="http://gmaps-utility-library-dev.googlecode.com/svn/tags/markerclusterer/"
+ * >v2 MarkerClusterer</a>.
+ */
+
+/**
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * A Marker Clusterer that clusters markers.
+ *
+ * @param {google.maps.Map} map The Google map to attach to.
+ * @param {Array.<google.maps.Marker>=} opt_markers Optional markers to add to
+ *   the cluster.
+ * @param {Object=} opt_options support the following options:
+ *     'gridSize': (number) The grid size of a cluster in pixels.
+ *     'maxZoom': (number) The maximum zoom level that a marker can be part of a
+ *                cluster.
+ *     'zoomOnClick': (boolean) Whether the default behaviour of clicking on a
+ *                    cluster is to zoom into it.
+ *     'imagePath': (string) The base URL where the images representing
+ *                  clusters will be found. The full URL will be:
+ *                  {imagePath}[1-5].{imageExtension}
+ *                  Default: '../images/m'.
+ *     'imageExtension': (string) The suffix for images URL representing
+ *                       clusters will be found. See _imagePath_ for details.
+ *                       Default: 'png'.
+ *     'averageCenter': (boolean) Whether the center of each cluster should be
+ *                      the average of all markers in the cluster.
+ *     'minimumClusterSize': (number) The minimum number of markers to be in a
+ *                           cluster before the markers are hidden and a count
+ *                           is shown.
+ *     'styles': (object) An object that has style properties:
+ *       'url': (string) The image url.
+ *       'height': (number) The image height.
+ *       'width': (number) The image width.
+ *       'anchor': (Array) The anchor position of the label text.
+ *       'textColor': (string) The text color.
+ *       'textSize': (number) The text size.
+ *       'backgroundPosition': (string) The position of the backgound x, y.
+ * @constructor
+ * @extends google.maps.OverlayView
+ */
+function MarkerClusterer(map, opt_markers, opt_options) {
+  // MarkerClusterer implements google.maps.OverlayView interface. We use the
+  // extend function to extend MarkerClusterer with google.maps.OverlayView
+  // because it might not always be available when the code is defined so we
+  // look for it at the last possible moment. If it doesn't exist now then
+  // there is no point going ahead :)
+  this.extend(MarkerClusterer, google.maps.OverlayView);
+  this.map_ = map;
+
+  /**
+   * @type {Array.<google.maps.Marker>}
+   * @private
+   */
+  this.markers_ = [];
+
+  /**
+   *  @type {Array.<Cluster>}
+   */
+  this.clusters_ = [];
+
+  this.sizes = [53, 56, 66, 78, 90];
+
+  /**
+   * @private
+   */
+  this.styles_ = [];
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.ready_ = false;
+
+  var options = opt_options || {};
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.gridSize_ = options['gridSize'] || 60;
+
+  /**
+   * @private
+   */
+  this.minClusterSize_ = options['minimumClusterSize'] || 2;
+
+  /**
+   * @type {?number}
+   * @private
+   */
+  this.maxZoom_ = options['maxZoom'] || null;
+
+  this.styles_ = options['styles'] || [];
+
+  /**
+   * @type {string}
+   * @private
+   */
+  this.imagePath_ = options['imagePath'] || this.MARKER_CLUSTER_IMAGE_PATH_;
+
+  /**
+   * @type {string}
+   * @private
+   */
+  this.imageExtension_ = options['imageExtension'] || this.MARKER_CLUSTER_IMAGE_EXTENSION_;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.zoomOnClick_ = true;
+
+  if (options['zoomOnClick'] != undefined) {
+    this.zoomOnClick_ = options['zoomOnClick'];
+  }
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.averageCenter_ = false;
+
+  if (options['averageCenter'] != undefined) {
+    this.averageCenter_ = options['averageCenter'];
+  }
+
+  this.setupStyles_();
+
+  this.setMap(map);
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.prevZoom_ = this.map_.getZoom();
+
+  // Add the map event listeners
+  var that = this;
+  google.maps.event.addListener(this.map_, 'zoom_changed', function () {
+    // Determines map type and prevent illegal zoom levels
+    var zoom = that.map_.getZoom();
+    var minZoom = that.map_.minZoom || 0;
+    var maxZoom = Math.min(that.map_.maxZoom || 100, that.map_.mapTypes[that.map_.getMapTypeId()].maxZoom);
+    zoom = Math.min(Math.max(zoom, minZoom), maxZoom);
+
+    if (that.prevZoom_ != zoom) {
+      that.prevZoom_ = zoom;
+      that.resetViewport();
+    }
+  });
+
+  google.maps.event.addListener(this.map_, 'idle', function () {
+    that.redraw();
+  });
+
+  // Finally, add the markers
+  if (opt_markers && (opt_markers.length || Object.keys(opt_markers).length)) {
+    this.addMarkers(opt_markers, false);
+  }
+}
+
+/**
+ * The marker cluster image path.
+ *
+ * @type {string}
+ * @private
+ */
+MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = '../images/m';
+
+/**
+ * The marker cluster image path.
+ *
+ * @type {string}
+ * @private
+ */
+MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_EXTENSION_ = 'png';
+
+/**
+ * Extends a objects prototype by anothers.
+ *
+ * @param {Object} obj1 The object to be extended.
+ * @param {Object} obj2 The object to extend with.
+ * @return {Object} The new extended object.
+ * @ignore
+ */
+MarkerClusterer.prototype.extend = function (obj1, obj2) {
+  return function (object) {
+    for (var property in object.prototype) {
+      this.prototype[property] = object.prototype[property];
+    }
+    return this;
+  }.apply(obj1, [obj2]);
+};
+
+/**
+ * Implementaion of the interface method.
+ * @ignore
+ */
+MarkerClusterer.prototype.onAdd = function () {
+  this.setReady_(true);
+};
+
+/**
+ * Implementaion of the interface method.
+ * @ignore
+ */
+MarkerClusterer.prototype.draw = function () {};
+
+/**
+ * Sets up the styles object.
+ *
+ * @private
+ */
+MarkerClusterer.prototype.setupStyles_ = function () {
+  if (this.styles_.length) {
+    return;
+  }
+
+  for (var i = 0, size; size = this.sizes[i]; i++) {
+    this.styles_.push({
+      url: this.imagePath_ + (i + 1) + '.' + this.imageExtension_,
+      height: size,
+      width: size
+    });
+  }
+};
+
+/**
+ *  Fit the map to the bounds of the markers in the clusterer.
+ */
+MarkerClusterer.prototype.fitMapToMarkers = function () {
+  var markers = this.getMarkers();
+  var bounds = new google.maps.LatLngBounds();
+  for (var i = 0, marker; marker = markers[i]; i++) {
+    bounds.extend(marker.getPosition());
+  }
+
+  this.map_.fitBounds(bounds);
+};
+
+/**
+ *  Sets the styles.
+ *
+ *  @param {Object} styles The style to set.
+ */
+MarkerClusterer.prototype.setStyles = function (styles) {
+  this.styles_ = styles;
+};
+
+/**
+ *  Gets the styles.
+ *
+ *  @return {Object} The styles object.
+ */
+MarkerClusterer.prototype.getStyles = function () {
+  return this.styles_;
+};
+
+/**
+ * Whether zoom on click is set.
+ *
+ * @return {boolean} True if zoomOnClick_ is set.
+ */
+MarkerClusterer.prototype.isZoomOnClick = function () {
+  return this.zoomOnClick_;
+};
+
+/**
+ * Whether average center is set.
+ *
+ * @return {boolean} True if averageCenter_ is set.
+ */
+MarkerClusterer.prototype.isAverageCenter = function () {
+  return this.averageCenter_;
+};
+
+/**
+ *  Returns the array of markers in the clusterer.
+ *
+ *  @return {Array.<google.maps.Marker>} The markers.
+ */
+MarkerClusterer.prototype.getMarkers = function () {
+  return this.markers_;
+};
+
+/**
+ *  Returns the number of markers in the clusterer
+ *
+ *  @return {Number} The number of markers.
+ */
+MarkerClusterer.prototype.getTotalMarkers = function () {
+  return this.markers_.length;
+};
+
+/**
+ *  Sets the max zoom for the clusterer.
+ *
+ *  @param {number} maxZoom The max zoom level.
+ */
+MarkerClusterer.prototype.setMaxZoom = function (maxZoom) {
+  this.maxZoom_ = maxZoom;
+};
+
+/**
+ *  Gets the max zoom for the clusterer.
+ *
+ *  @return {number} The max zoom level.
+ */
+MarkerClusterer.prototype.getMaxZoom = function () {
+  return this.maxZoom_;
+};
+
+/**
+ *  The function for calculating the cluster icon image.
+ *
+ *  @param {Array.<google.maps.Marker>} markers The markers in the clusterer.
+ *  @param {number} numStyles The number of styles available.
+ *  @return {Object} A object properties: 'text' (string) and 'index' (number).
+ *  @private
+ */
+MarkerClusterer.prototype.calculator_ = function (markers, numStyles) {
+  var index = 0;
+  var count = markers.length;
+  var dv = count;
+  while (dv !== 0) {
+    dv = parseInt(dv / 10, 10);
+    index++;
+  }
+
+  index = Math.min(index, numStyles);
+  return {
+    text: count,
+    index: index
+  };
+};
+
+/**
+ * Set the calculator function.
+ *
+ * @param {function(Array, number)} calculator The function to set as the
+ *     calculator. The function should return a object properties:
+ *     'text' (string) and 'index' (number).
+ *
+ */
+MarkerClusterer.prototype.setCalculator = function (calculator) {
+  this.calculator_ = calculator;
+};
+
+/**
+ * Get the calculator function.
+ *
+ * @return {function(Array, number)} the calculator function.
+ */
+MarkerClusterer.prototype.getCalculator = function () {
+  return this.calculator_;
+};
+
+/**
+ * Add an array of markers to the clusterer.
+ *
+ * @param {Array.<google.maps.Marker>} markers The markers to add.
+ * @param {boolean=} opt_nodraw Whether to redraw the clusters.
+ */
+MarkerClusterer.prototype.addMarkers = function (markers, opt_nodraw) {
+  if (markers.length) {
+    for (var i = 0, marker; marker = markers[i]; i++) {
+      this.pushMarkerTo_(marker);
+    }
+  } else if (Object.keys(markers).length) {
+    for (var marker in markers) {
+      this.pushMarkerTo_(markers[marker]);
+    }
+  }
+  if (!opt_nodraw) {
+    this.redraw();
+  }
+};
+
+/**
+ * Pushes a marker to the clusterer.
+ *
+ * @param {google.maps.Marker} marker The marker to add.
+ * @private
+ */
+MarkerClusterer.prototype.pushMarkerTo_ = function (marker) {
+  marker.isAdded = false;
+  if (marker['draggable']) {
+    // If the marker is draggable add a listener so we update the clusters on
+    // the drag end.
+    var that = this;
+    google.maps.event.addListener(marker, 'dragend', function () {
+      marker.isAdded = false;
+      that.repaint();
+    });
+  }
+  this.markers_.push(marker);
+};
+
+/**
+ * Adds a marker to the clusterer and redraws if needed.
+ *
+ * @param {google.maps.Marker} marker The marker to add.
+ * @param {boolean=} opt_nodraw Whether to redraw the clusters.
+ */
+MarkerClusterer.prototype.addMarker = function (marker, opt_nodraw) {
+  this.pushMarkerTo_(marker);
+  if (!opt_nodraw) {
+    this.redraw();
+  }
+};
+
+/**
+ * Removes a marker and returns true if removed, false if not
+ *
+ * @param {google.maps.Marker} marker The marker to remove
+ * @return {boolean} Whether the marker was removed or not
+ * @private
+ */
+MarkerClusterer.prototype.removeMarker_ = function (marker) {
+  var index = -1;
+  if (this.markers_.indexOf) {
+    index = this.markers_.indexOf(marker);
+  } else {
+    for (var i = 0, m; m = this.markers_[i]; i++) {
+      if (m == marker) {
+        index = i;
+        break;
+      }
+    }
+  }
+
+  if (index == -1) {
+    // Marker is not in our list of markers.
+    return false;
+  }
+
+  marker.setMap(null);
+
+  this.markers_.splice(index, 1);
+
+  return true;
+};
+
+/**
+ * Remove a marker from the cluster.
+ *
+ * @param {google.maps.Marker} marker The marker to remove.
+ * @param {boolean=} opt_nodraw Optional boolean to force no redraw.
+ * @return {boolean} True if the marker was removed.
+ */
+MarkerClusterer.prototype.removeMarker = function (marker, opt_nodraw) {
+  var removed = this.removeMarker_(marker);
+
+  if (!opt_nodraw && removed) {
+    this.resetViewport();
+    this.redraw();
+    return true;
+  } else {
+    return false;
+  }
+};
+
+/**
+ * Removes an array of markers from the cluster.
+ *
+ * @param {Array.<google.maps.Marker>} markers The markers to remove.
+ * @param {boolean=} opt_nodraw Optional boolean to force no redraw.
+ */
+MarkerClusterer.prototype.removeMarkers = function (markers, opt_nodraw) {
+  // create a local copy of markers if required
+  // (removeMarker_ modifies the getMarkers() array in place)
+  var markersCopy = markers === this.getMarkers() ? markers.slice() : markers;
+  var removed = false;
+
+  for (var i = 0, marker; marker = markersCopy[i]; i++) {
+    var r = this.removeMarker_(marker);
+    removed = removed || r;
+  }
+
+  if (!opt_nodraw && removed) {
+    this.resetViewport();
+    this.redraw();
+    return true;
+  }
+};
+
+/**
+ * Sets the clusterer's ready state.
+ *
+ * @param {boolean} ready The state.
+ * @private
+ */
+MarkerClusterer.prototype.setReady_ = function (ready) {
+  if (!this.ready_) {
+    this.ready_ = ready;
+    this.createClusters_();
+  }
+};
+
+/**
+ * Returns the number of clusters in the clusterer.
+ *
+ * @return {number} The number of clusters.
+ */
+MarkerClusterer.prototype.getTotalClusters = function () {
+  return this.clusters_.length;
+};
+
+/**
+ * Returns the google map that the clusterer is associated with.
+ *
+ * @return {google.maps.Map} The map.
+ */
+MarkerClusterer.prototype.getMap = function () {
+  return this.map_;
+};
+
+/**
+ * Sets the google map that the clusterer is associated with.
+ *
+ * @param {google.maps.Map} map The map.
+ */
+MarkerClusterer.prototype.setMap = function (map) {
+  this.map_ = map;
+};
+
+/**
+ * Returns the size of the grid.
+ *
+ * @return {number} The grid size.
+ */
+MarkerClusterer.prototype.getGridSize = function () {
+  return this.gridSize_;
+};
+
+/**
+ * Sets the size of the grid.
+ *
+ * @param {number} size The grid size.
+ */
+MarkerClusterer.prototype.setGridSize = function (size) {
+  this.gridSize_ = size;
+};
+
+/**
+ * Returns the min cluster size.
+ *
+ * @return {number} The grid size.
+ */
+MarkerClusterer.prototype.getMinClusterSize = function () {
+  return this.minClusterSize_;
+};
+
+/**
+ * Sets the min cluster size.
+ *
+ * @param {number} size The grid size.
+ */
+MarkerClusterer.prototype.setMinClusterSize = function (size) {
+  this.minClusterSize_ = size;
+};
+
+/**
+ * Extends a bounds object by the grid size.
+ *
+ * @param {google.maps.LatLngBounds} bounds The bounds to extend.
+ * @return {google.maps.LatLngBounds} The extended bounds.
+ */
+MarkerClusterer.prototype.getExtendedBounds = function (bounds) {
+  var projection = this.getProjection();
+
+  // Turn the bounds into latlng.
+  var tr = new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getNorthEast().lng());
+  var bl = new google.maps.LatLng(bounds.getSouthWest().lat(), bounds.getSouthWest().lng());
+
+  // Convert the points to pixels and the extend out by the grid size.
+  var trPix = projection.fromLatLngToDivPixel(tr);
+  trPix.x += this.gridSize_;
+  trPix.y -= this.gridSize_;
+
+  var blPix = projection.fromLatLngToDivPixel(bl);
+  blPix.x -= this.gridSize_;
+  blPix.y += this.gridSize_;
+
+  // Convert the pixel points back to LatLng
+  var ne = projection.fromDivPixelToLatLng(trPix);
+  var sw = projection.fromDivPixelToLatLng(blPix);
+
+  // Extend the bounds to contain the new bounds.
+  bounds.extend(ne);
+  bounds.extend(sw);
+
+  return bounds;
+};
+
+/**
+ * Determins if a marker is contained in a bounds.
+ *
+ * @param {google.maps.Marker} marker The marker to check.
+ * @param {google.maps.LatLngBounds} bounds The bounds to check against.
+ * @return {boolean} True if the marker is in the bounds.
+ * @private
+ */
+MarkerClusterer.prototype.isMarkerInBounds_ = function (marker, bounds) {
+  return bounds.contains(marker.getPosition());
+};
+
+/**
+ * Clears all clusters and markers from the clusterer.
+ */
+MarkerClusterer.prototype.clearMarkers = function () {
+  this.resetViewport(true);
+
+  // Set the markers a empty array.
+  this.markers_ = [];
+};
+
+/**
+ * Clears all existing clusters and recreates them.
+ * @param {boolean} opt_hide To also hide the marker.
+ */
+MarkerClusterer.prototype.resetViewport = function (opt_hide) {
+  // Remove all the clusters
+  for (var i = 0, cluster; cluster = this.clusters_[i]; i++) {
+    cluster.remove();
+  }
+
+  // Reset the markers to not be added and to be invisible.
+  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+    marker.isAdded = false;
+    if (opt_hide) {
+      marker.setMap(null);
+    }
+  }
+
+  this.clusters_ = [];
+};
+
+/**
+ *
+ */
+MarkerClusterer.prototype.repaint = function () {
+  var oldClusters = this.clusters_.slice();
+  this.clusters_.length = 0;
+  this.resetViewport();
+  this.redraw();
+
+  // Remove the old clusters.
+  // Do it in a timeout so the other clusters have been drawn first.
+  window.setTimeout(function () {
+    for (var i = 0, cluster; cluster = oldClusters[i]; i++) {
+      cluster.remove();
+    }
+  }, 0);
+};
+
+/**
+ * Redraws the clusters.
+ */
+MarkerClusterer.prototype.redraw = function () {
+  this.createClusters_();
+};
+
+/**
+ * Calculates the distance between two latlng locations in km.
+ * @see http://www.movable-type.co.uk/scripts/latlong.html
+ *
+ * @param {google.maps.LatLng} p1 The first lat lng point.
+ * @param {google.maps.LatLng} p2 The second lat lng point.
+ * @return {number} The distance between the two points in km.
+ * @private
+*/
+MarkerClusterer.prototype.distanceBetweenPoints_ = function (p1, p2) {
+  if (!p1 || !p2) {
+    return 0;
+  }
+
+  var R = 6371; // Radius of the Earth in km
+  var dLat = (p2.lat() - p1.lat()) * Math.PI / 180;
+  var dLon = (p2.lng() - p1.lng()) * Math.PI / 180;
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(p1.lat() * Math.PI / 180) * Math.cos(p2.lat() * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d;
+};
+
+/**
+ * Add a marker to a cluster, or creates a new cluster.
+ *
+ * @param {google.maps.Marker} marker The marker to add.
+ * @private
+ */
+MarkerClusterer.prototype.addToClosestCluster_ = function (marker) {
+  var distance = 40000; // Some large number
+  var clusterToAddTo = null;
+  var pos = marker.getPosition();
+  for (var i = 0, cluster; cluster = this.clusters_[i]; i++) {
+    var center = cluster.getCenter();
+    if (center) {
+      var d = this.distanceBetweenPoints_(center, marker.getPosition());
+      if (d < distance) {
+        distance = d;
+        clusterToAddTo = cluster;
+      }
+    }
+  }
+
+  if (clusterToAddTo && clusterToAddTo.isMarkerInClusterBounds(marker)) {
+    clusterToAddTo.addMarker(marker);
+  } else {
+    var cluster = new Cluster(this);
+    cluster.addMarker(marker);
+    this.clusters_.push(cluster);
+  }
+};
+
+/**
+ * Creates the clusters.
+ *
+ * @private
+ */
+MarkerClusterer.prototype.createClusters_ = function () {
+  if (!this.ready_) {
+    return;
+  }
+
+  // Get our current map view bounds.
+  // Create a new bounds object so we don't affect the map.
+  var mapBounds = new google.maps.LatLngBounds(this.map_.getBounds().getSouthWest(), this.map_.getBounds().getNorthEast());
+  var bounds = this.getExtendedBounds(mapBounds);
+
+  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+    if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {
+      this.addToClosestCluster_(marker);
+    }
+  }
+};
+
+/**
+ * A cluster that contains markers.
+ *
+ * @param {MarkerClusterer} markerClusterer The markerclusterer that this
+ *     cluster is associated with.
+ * @constructor
+ * @ignore
+ */
+function Cluster(markerClusterer) {
+  this.markerClusterer_ = markerClusterer;
+  this.map_ = markerClusterer.getMap();
+  this.gridSize_ = markerClusterer.getGridSize();
+  this.minClusterSize_ = markerClusterer.getMinClusterSize();
+  this.averageCenter_ = markerClusterer.isAverageCenter();
+  this.center_ = null;
+  this.markers_ = [];
+  this.bounds_ = null;
+  this.clusterIcon_ = new ClusterIcon(this, markerClusterer.getStyles(), markerClusterer.getGridSize());
+}
+
+/**
+ * Determins if a marker is already added to the cluster.
+ *
+ * @param {google.maps.Marker} marker The marker to check.
+ * @return {boolean} True if the marker is already added.
+ */
+Cluster.prototype.isMarkerAlreadyAdded = function (marker) {
+  if (this.markers_.indexOf) {
+    return this.markers_.indexOf(marker) != -1;
+  } else {
+    for (var i = 0, m; m = this.markers_[i]; i++) {
+      if (m == marker) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+/**
+ * Add a marker the cluster.
+ *
+ * @param {google.maps.Marker} marker The marker to add.
+ * @return {boolean} True if the marker was added.
+ */
+Cluster.prototype.addMarker = function (marker) {
+  if (this.isMarkerAlreadyAdded(marker)) {
+    return false;
+  }
+
+  if (!this.center_) {
+    this.center_ = marker.getPosition();
+    this.calculateBounds_();
+  } else {
+    if (this.averageCenter_) {
+      var l = this.markers_.length + 1;
+      var lat = (this.center_.lat() * (l - 1) + marker.getPosition().lat()) / l;
+      var lng = (this.center_.lng() * (l - 1) + marker.getPosition().lng()) / l;
+      this.center_ = new google.maps.LatLng(lat, lng);
+      this.calculateBounds_();
+    }
+  }
+
+  marker.isAdded = true;
+  this.markers_.push(marker);
+
+  var len = this.markers_.length;
+  if (len < this.minClusterSize_ && marker.getMap() != this.map_) {
+    // Min cluster size not reached so show the marker.
+    marker.setMap(this.map_);
+  }
+
+  if (len == this.minClusterSize_) {
+    // Hide the markers that were showing.
+    for (var i = 0; i < len; i++) {
+      this.markers_[i].setMap(null);
+    }
+  }
+
+  if (len >= this.minClusterSize_) {
+    marker.setMap(null);
+  }
+
+  this.updateIcon();
+  return true;
+};
+
+/**
+ * Returns the marker clusterer that the cluster is associated with.
+ *
+ * @return {MarkerClusterer} The associated marker clusterer.
+ */
+Cluster.prototype.getMarkerClusterer = function () {
+  return this.markerClusterer_;
+};
+
+/**
+ * Returns the bounds of the cluster.
+ *
+ * @return {google.maps.LatLngBounds} the cluster bounds.
+ */
+Cluster.prototype.getBounds = function () {
+  var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
+  var markers = this.getMarkers();
+  for (var i = 0, marker; marker = markers[i]; i++) {
+    bounds.extend(marker.getPosition());
+  }
+  return bounds;
+};
+
+/**
+ * Removes the cluster
+ */
+Cluster.prototype.remove = function () {
+  this.clusterIcon_.remove();
+  this.markers_.length = 0;
+  delete this.markers_;
+};
+
+/**
+ * Returns the number of markers in the cluster.
+ *
+ * @return {number} The number of markers in the cluster.
+ */
+Cluster.prototype.getSize = function () {
+  return this.markers_.length;
+};
+
+/**
+ * Returns a list of the markers in the cluster.
+ *
+ * @return {Array.<google.maps.Marker>} The markers in the cluster.
+ */
+Cluster.prototype.getMarkers = function () {
+  return this.markers_;
+};
+
+/**
+ * Returns the center of the cluster.
+ *
+ * @return {google.maps.LatLng} The cluster center.
+ */
+Cluster.prototype.getCenter = function () {
+  return this.center_;
+};
+
+/**
+ * Calculated the extended bounds of the cluster with the grid.
+ *
+ * @private
+ */
+Cluster.prototype.calculateBounds_ = function () {
+  var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
+  this.bounds_ = this.markerClusterer_.getExtendedBounds(bounds);
+};
+
+/**
+ * Determines if a marker lies in the clusters bounds.
+ *
+ * @param {google.maps.Marker} marker The marker to check.
+ * @return {boolean} True if the marker lies in the bounds.
+ */
+Cluster.prototype.isMarkerInClusterBounds = function (marker) {
+  return this.bounds_.contains(marker.getPosition());
+};
+
+/**
+ * Returns the map that the cluster is associated with.
+ *
+ * @return {google.maps.Map} The map.
+ */
+Cluster.prototype.getMap = function () {
+  return this.map_;
+};
+
+/**
+ * Updates the cluster icon
+ */
+Cluster.prototype.updateIcon = function () {
+  var zoom = this.map_.getZoom();
+  var mz = this.markerClusterer_.getMaxZoom();
+
+  if (mz && zoom > mz) {
+    // The zoom is greater than our max zoom so show all the markers in cluster.
+    for (var i = 0, marker; marker = this.markers_[i]; i++) {
+      marker.setMap(this.map_);
+    }
+    return;
+  }
+
+  if (this.markers_.length < this.minClusterSize_) {
+    // Min cluster size not yet reached.
+    this.clusterIcon_.hide();
+    return;
+  }
+
+  var numStyles = this.markerClusterer_.getStyles().length;
+  var sums = this.markerClusterer_.getCalculator()(this.markers_, numStyles);
+  this.clusterIcon_.setCenter(this.center_);
+  this.clusterIcon_.setSums(sums);
+  this.clusterIcon_.show();
+};
+
+/**
+ * A cluster icon
+ *
+ * @param {Cluster} cluster The cluster to be associated with.
+ * @param {Object} styles An object that has style properties:
+ *     'url': (string) The image url.
+ *     'height': (number) The image height.
+ *     'width': (number) The image width.
+ *     'anchor': (Array) The anchor position of the label text.
+ *     'textColor': (string) The text color.
+ *     'textSize': (number) The text size.
+ *     'backgroundPosition: (string) The background postition x, y.
+ * @param {number=} opt_padding Optional padding to apply to the cluster icon.
+ * @constructor
+ * @extends google.maps.OverlayView
+ * @ignore
+ */
+function ClusterIcon(cluster, styles, opt_padding) {
+  cluster.getMarkerClusterer().extend(ClusterIcon, google.maps.OverlayView);
+
+  this.styles_ = styles;
+  this.padding_ = opt_padding || 0;
+  this.cluster_ = cluster;
+  this.center_ = null;
+  this.map_ = cluster.getMap();
+  this.div_ = null;
+  this.sums_ = null;
+  this.visible_ = false;
+
+  this.setMap(this.map_);
+}
+
+/**
+ * Triggers the clusterclick event and zoom's if the option is set.
+ */
+ClusterIcon.prototype.triggerClusterClick = function () {
+  var markerClusterer = this.cluster_.getMarkerClusterer();
+
+  // Trigger the clusterclick event.
+  google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_);
+
+  if (markerClusterer.isZoomOnClick()) {
+    // Zoom into the cluster.
+    this.map_.fitBounds(this.cluster_.getBounds());
+  }
+};
+
+/**
+ * Adding the cluster icon to the dom.
+ * @ignore
+ */
+ClusterIcon.prototype.onAdd = function () {
+  this.div_ = document.createElement('DIV');
+  var panes = this.getPanes();
+  if (this.visible_) {
+    var pos = this.getPosFromLatLng_(this.center_);
+    this.div_.style.cssText = this.createCss(pos);
+    this.div_.innerHTML = this.sums_.text;
+    if (this.sums_.text) {
+      panes.overlayMouseTarget.classList.add('shiftms-map-cluster-icon');
+      if (this.sums_.text > 1000) {
+        this.div_.classList.add('shiftms-map-cluster-icon-large-num');
+      }
+
+      if (this.sums_.text > 0) {
+        this.div_.classList.add('shiftms-map-cluster-icon-is-cluster');
+      }
+    }
+  }
+
+  panes.overlayMouseTarget.appendChild(this.div_);
+
+  var that = this;
+  google.maps.event.addDomListener(this.div_, 'click', function () {
+    that.triggerClusterClick();
+  });
+};
+
+/**
+ * Returns the position to place the div dending on the latlng.
+ *
+ * @param {google.maps.LatLng} latlng The position in latlng.
+ * @return {google.maps.Point} The position in pixels.
+ * @private
+ */
+ClusterIcon.prototype.getPosFromLatLng_ = function (latlng) {
+  var pos = this.getProjection().fromLatLngToDivPixel(latlng);
+  pos.x -= parseInt(this.width_ / 2, 10);
+  pos.y -= parseInt(this.height_ / 2, 10);
+  return pos;
+};
+
+/**
+ * Draw the icon.
+ * @ignore
+ */
+ClusterIcon.prototype.draw = function () {
+  if (this.visible_) {
+    var pos = this.getPosFromLatLng_(this.center_);
+    this.div_.style.top = pos.y + 'px';
+    this.div_.style.left = pos.x + 'px';
+  }
+};
+
+/**
+ * Hide the icon.
+ */
+ClusterIcon.prototype.hide = function () {
+  if (this.div_) {
+    this.div_.style.display = 'none';
+  }
+  this.visible_ = false;
+};
+
+/**
+ * Position and show the icon.
+ */
+ClusterIcon.prototype.show = function () {
+  if (this.div_) {
+    var pos = this.getPosFromLatLng_(this.center_);
+    this.div_.style.cssText = this.createCss(pos);
+    this.div_.style.display = '';
+  }
+  this.visible_ = true;
+};
+
+/**
+ * Remove the icon from the map
+ */
+ClusterIcon.prototype.remove = function () {
+  this.setMap(null);
+};
+
+/**
+ * Implementation of the onRemove interface.
+ * @ignore
+ */
+ClusterIcon.prototype.onRemove = function () {
+  if (this.div_ && this.div_.parentNode) {
+    this.hide();
+    this.div_.parentNode.removeChild(this.div_);
+    this.div_ = null;
+  }
+};
+
+/**
+ * Set the sums of the icon.
+ *
+ * @param {Object} sums The sums containing:
+ *   'text': (string) The text to display in the icon.
+ *   'index': (number) The style index of the icon.
+ */
+ClusterIcon.prototype.setSums = function (sums) {
+  this.sums_ = sums;
+  this.text_ = sums.text;
+  this.index_ = sums.index;
+  if (this.div_) {
+    this.div_.innerHTML = sums.text;
+  }
+
+  this.useStyle();
+};
+
+/**
+ * Sets the icon to the the styles.
+ */
+ClusterIcon.prototype.useStyle = function () {
+  var index = Math.max(0, this.sums_.index - 1);
+  index = Math.min(this.styles_.length - 1, index);
+  var style = this.styles_[index];
+  this.url_ = style['url'];
+  this.height_ = style['height'];
+  this.width_ = style['width'];
+  this.textColor_ = style['textColor'];
+  this.anchor_ = style['anchor'];
+  this.textSize_ = style['textSize'];
+  this.backgroundPosition_ = style['backgroundPosition'];
+};
+
+/**
+ * Sets the center of the icon.
+ *
+ * @param {google.maps.LatLng} center The latlng to set as the center.
+ */
+ClusterIcon.prototype.setCenter = function (center) {
+  this.center_ = center;
+};
+
+/**
+ * Create the css text based on the position of the icon.
+ *
+ * @param {google.maps.Point} pos The position.
+ * @return {string} The css style text.
+ */
+ClusterIcon.prototype.createCss = function (pos) {
+  var style = [];
+  style.push('background-image:url(' + this.url_ + ');');
+  var backgroundPosition = this.backgroundPosition_ ? this.backgroundPosition_ : '0 0';
+  style.push('background-position:' + backgroundPosition + ';');
+
+  if (_typeof$1(this.anchor_) === 'object') {
+    if (typeof this.anchor_[0] === 'number' && this.anchor_[0] > 0 && this.anchor_[0] < this.height_) {
+      style.push('height:' + (this.height_ - this.anchor_[0]) + 'px; padding-top:' + this.anchor_[0] + 'px;');
+    } else {
+      style.push('height:' + this.height_ + 'px; line-height:' + this.height_ + 'px;');
+    }
+    if (typeof this.anchor_[1] === 'number' && this.anchor_[1] > 0 && this.anchor_[1] < this.width_) {
+      style.push('width:' + (this.width_ - this.anchor_[1]) + 'px; padding-left:' + this.anchor_[1] + 'px;');
+    } else {
+      style.push('width:' + this.width_ + 'px; text-align:center;');
+    }
+  } else {
+    style.push('height:' + this.height_ + 'px; line-height:' + this.height_ + 'px; width:' + this.width_ + 'px; text-align:center;');
+  }
+
+  var txtColor = this.textColor_ ? this.textColor_ : 'black';
+  var txtSize = this.textSize_ ? this.textSize_ : 11;
+
+  style.push('cursor:pointer; top:' + pos.y + 'px; left:' + pos.x + 'px; color:' + txtColor + '; position:absolute; font-size:' + txtSize + 'px; font-family:Arial,sans-serif; font-weight:bold');
+  return style.join('');
+};
+
+// Export Symbols for Closure
+// If you are not going to compile with closure then you can remove the
+// code below.
+window['MarkerClusterer'] = MarkerClusterer;
+MarkerClusterer.prototype['addMarker'] = MarkerClusterer.prototype.addMarker;
+MarkerClusterer.prototype['addMarkers'] = MarkerClusterer.prototype.addMarkers;
+MarkerClusterer.prototype['clearMarkers'] = MarkerClusterer.prototype.clearMarkers;
+MarkerClusterer.prototype['fitMapToMarkers'] = MarkerClusterer.prototype.fitMapToMarkers;
+MarkerClusterer.prototype['getCalculator'] = MarkerClusterer.prototype.getCalculator;
+MarkerClusterer.prototype['getGridSize'] = MarkerClusterer.prototype.getGridSize;
+MarkerClusterer.prototype['getExtendedBounds'] = MarkerClusterer.prototype.getExtendedBounds;
+MarkerClusterer.prototype['getMap'] = MarkerClusterer.prototype.getMap;
+MarkerClusterer.prototype['getMarkers'] = MarkerClusterer.prototype.getMarkers;
+MarkerClusterer.prototype['getMaxZoom'] = MarkerClusterer.prototype.getMaxZoom;
+MarkerClusterer.prototype['getStyles'] = MarkerClusterer.prototype.getStyles;
+MarkerClusterer.prototype['getTotalClusters'] = MarkerClusterer.prototype.getTotalClusters;
+MarkerClusterer.prototype['getTotalMarkers'] = MarkerClusterer.prototype.getTotalMarkers;
+MarkerClusterer.prototype['redraw'] = MarkerClusterer.prototype.redraw;
+MarkerClusterer.prototype['removeMarker'] = MarkerClusterer.prototype.removeMarker;
+MarkerClusterer.prototype['removeMarkers'] = MarkerClusterer.prototype.removeMarkers;
+MarkerClusterer.prototype['resetViewport'] = MarkerClusterer.prototype.resetViewport;
+MarkerClusterer.prototype['repaint'] = MarkerClusterer.prototype.repaint;
+MarkerClusterer.prototype['setCalculator'] = MarkerClusterer.prototype.setCalculator;
+MarkerClusterer.prototype['setGridSize'] = MarkerClusterer.prototype.setGridSize;
+MarkerClusterer.prototype['setMaxZoom'] = MarkerClusterer.prototype.setMaxZoom;
+MarkerClusterer.prototype['onAdd'] = MarkerClusterer.prototype.onAdd;
+MarkerClusterer.prototype['draw'] = MarkerClusterer.prototype.draw;
+
+Cluster.prototype['getCenter'] = Cluster.prototype.getCenter;
+Cluster.prototype['getSize'] = Cluster.prototype.getSize;
+Cluster.prototype['getMarkers'] = Cluster.prototype.getMarkers;
+
+ClusterIcon.prototype['onAdd'] = ClusterIcon.prototype.onAdd;
+ClusterIcon.prototype['draw'] = ClusterIcon.prototype.draw;
+ClusterIcon.prototype['onRemove'] = ClusterIcon.prototype.onRemove;
+
+Object.keys = Object.keys || function (o) {
+  var result = [];
+  for (var name in o) {
+    if (o.hasOwnProperty(name)) result.push(name);
+  }
+  return result;
+};
+
+var pngsList = {
+	'person-001': [40, 63],
+	'person-002': [38, 63],
+	'person-003': [45, 43],
+	'person-004': [40, 62],
+	'person-005': [39, 63],
+	'person-006': [41, 63],
+	'person-007': [38, 63],
+	'person-008': [40, 63],
+	'person-009': [37, 62],
+	'person-010': [37, 62],
+	'person-011': [38, 63],
+	'person-012': [37, 61],
+	'person-013': [36, 63],
+	'person-014': [37, 63],
+	'person-015': [39, 62],
+	'person-016': [38, 62],
+	'person-017': [37, 61],
+	'person-018': [37, 63],
+	'person-019': [36, 61],
+	'person-020': [39, 61],
+	'person-021': [37, 61],
+	'person-022': [37, 60],
+	'person-023': [41, 68],
+	'person-024': [40, 61],
+	'person-025': [36, 61],
+	'person-026': [38, 61],
+	'person-027': [38, 60],
+	'person-028': [36, 60],
+	'person-029': [37, 65],
+	'person-030': [35, 61],
+	'person-031': [37, 63],
+	'person-032': [44, 53],
+	'person-033': [39, 63],
+	'person-034': [39, 63],
+	'person-035': [68, 65],
+	'person-036': [37, 60],
+	'person-037': [37, 60],
+	'person-038': [37, 60],
+	'person-039': [36, 61],
+	'person-040': [57, 62],
+	'person-041': [65, 63],
+	'person-042': [40, 63],
+	'person-043': [40, 63],
+	'person-044': [49, 66],
+	'person-045': [37, 65]
+};
+
+var $$3 = jQuery;
+var mapDragging = false;
+
+var fetchData = function fetchData(map, data, markers, url, domElement, assetsPath) {
+
+	var clusterOptions = getClusterOptions();
+
+	var localMap = map;
+	var listArray = [];
+	var avatarURL = url;
+	var j = 0;
+
+	var pngs = Object.keys(pngsList);
+	var maxZoomLevel = 13;
+	var scrollElement = $$3(domElement).find(".shiftmap-map-clusterise-wrapper").get(0);
+	var contentElement = $$3(domElement).find(".shiftmap-clusterize-content-wrapper").get(0);
+
+	// Create list
+	var clusterize$$1 = new clusterize({
+		rows: null,
+		rows_in_block: 2,
+		scrollElem: scrollElement,
+		contentElem: contentElement,
+		no_data_text: 'No users within range'
+	});
+
+	// Add markers
+	if (checkData(data)) {
+		data.map(function (markerPosition) {
+			if (!markerPosition.latitude || !markerPosition.longitude) {
+				console.warn('Could not find coordinates on data provided from userID: ', markerPosition.user_id);
+			} else {
+				if (j === pngs.length) {
+					j = 0;
+				}
+
+				var randKey = Math.floor(Math.random() * 1000 / 10 * (pngs.length / 100));
+				var img = pngs[randKey] || pngs[0];
+				var imgSize = pngsList[img];
+
+				var icon = {
+					url: '' + assetsPath + img + '.png',
+					size: new google.maps.Size(imgSize[0], imgSize[1]),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(17, 34),
+					scaledSize: new google.maps.Size(imgSize[0], imgSize[1])
+				};
+
+				var location = new google.maps.LatLng({
+					lat: markerPosition.latitude + getRandom(0, 0.5),
+					lng: markerPosition.longitude + getRandom(0, 0.5)
+				});
+
+				var marker = new google.maps.Marker({
+					position: location,
+					map: localMap,
+					icon: icon,
+					optimized: false,
+					zindex: 0,
+					userID: markerPosition.user_id,
+					userName: markerPosition.full_name,
+					country: markerPosition.country,
+					city: markerPosition.city,
+					url: markerPosition.avatar || './img/person-example.png'
+				});
+				markers.push(marker);
+				j++;
+			}
+		});
+
+		// Create MarkerClusterer
+		var markerCluster = new MarkerClusterer(localMap, markers, clusterOptions);
+
+		// Updates list when viewport changes
+		google.maps.event.addListener(localMap, 'bounds_changed', function () {
+			setTimeout(function () {
+				buildList(clusterize$$1, listArray, markers, localMap, domElement);
+			}, 200);
+		});
+
+		google.maps.event.addListener(map, "idle", function () {
+			setTimeout(function () {
+				google.maps.event.trigger(map, 'resize');
+			}, 200);
+		});
+
+		google.maps.event.addListener(map, "drag", function () {
+			mapDragging = true;
+		});
+
+		google.maps.event.addListener(map, "dragend", function () {
+			setTimeout(function () {
+				return mapDragging = false;
+			}, 50);
+		});
+
+		// Limit the zoom level
+		google.maps.event.addListener(map, 'zoom_changed', function () {
+			if (map.getZoom() > maxZoomLevel) map.setZoom(maxZoomLevel);
+		});
+
+		bindListeners(map, markerCluster);
+	}
+};
+
+var bindListeners = function bindListeners(map, markerCluster) {
+	google.maps.event.addListener(markerCluster, "clusterclick", function (cluster) {
+		// Stops event propagation
+		// Ugly but can't find event.preventDefault
+		if (mapDragging) {
+			throw "Cannot click while dragging";
+		}
+	});
+};
+
+var template = "<div class=\"shiftmap-wrapper\">\r\n\t<div class=\"shiftmap-airballoon\">\r\n\t\t<a href=\"javascript:;\" class=\"balloon-dismiss\"></a>\r\n\t\t<img class=\"shiftmap-airballoon-image\" width=\"160\" height=\"200\">\r\n\t</div>\r\n\t<div class=\"shiftmap-map-clusterise-user-panel\">\r\n\t\t<div class=\"shiftmap-map-clusterise-wrapper\">\r\n\t\t\t<div class=\"shiftmap-input-wrapper\">\r\n\t\t\t\t<input type=\"text\" placeholder=\"Search the map\" class=\"shiftmap-input\">\r\n\t\t\t</div>\r\n\t\t\t<div class=\"shiftmap-showmap-wrapper\">\r\n\t\t\t\t<span class=\"shiftmap-showmap\">\r\n\t\t\t\t\tShow me the whole world\r\n\t\t\t\t</span>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"shiftmap-clusterize\">\r\n\t\t\t\t<div class=\"shiftmap-clusterize-scroll\">\r\n\t\t\t\t\t<div class=\"shiftmap-clusterize-user-table\">\r\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-content-wrapper\"></div>\r\n\t\t\t\t\t\t<div class=\"shiftmap-clusterize-no-data\" style=\"display:none\">\r\n\t\t\t\t\t\t\t<div>Zoom to display user data…</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"shiftmap-map-toggle-panel alert-user\">\r\n\t\t\t\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"shiftmap-map-wrapper\">\r\n\t\t<div class=\"shiftmap-map\"></div>\r\n\t</div>\r\n</div>";
+
+var createMap = function createMap(domElement) {
+	var $ = window.jQuery;
+	var $wrapper = $(domElement).html(template);
+	var $map = $wrapper.find('.shiftmap-map');
+	var opt = getMapOptions();
+	return new google.maps.Map($map.get(0), opt);
+};
+
+var _typeof$2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var promise = createCommonjsModule(function (module) {
+  (function (root) {
+
+    // Store setTimeout reference so promise-polyfill will be unaffected by
+    // other code modifying setTimeout (like sinon.useFakeTimers())
+    var setTimeoutFunc = setTimeout;
+
+    function noop() {}
+
+    // Polyfill for Function.prototype.bind
+    function bind(fn, thisArg) {
+      return function () {
+        fn.apply(thisArg, arguments);
+      };
+    }
+
+    function Promise(fn) {
+      if (_typeof$2(this) !== 'object') throw new TypeError('Promises must be constructed via new');
+      if (typeof fn !== 'function') throw new TypeError('not a function');
+      this._state = 0;
+      this._handled = false;
+      this._value = undefined;
+      this._deferreds = [];
+
+      doResolve(fn, this);
+    }
+
+    function handle(self, deferred) {
+      while (self._state === 3) {
+        self = self._value;
+      }
+      if (self._state === 0) {
+        self._deferreds.push(deferred);
+        return;
+      }
+      self._handled = true;
+      Promise._immediateFn(function () {
+        var cb = self._state === 1 ? deferred.onFulfilled : deferred.onRejected;
+        if (cb === null) {
+          (self._state === 1 ? resolve : reject)(deferred.promise, self._value);
+          return;
+        }
+        var ret;
+        try {
+          ret = cb(self._value);
+        } catch (e) {
+          reject(deferred.promise, e);
+          return;
+        }
+        resolve(deferred.promise, ret);
+      });
+    }
+
+    function resolve(self, newValue) {
+      try {
+        // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+        if (newValue === self) throw new TypeError('A promise cannot be resolved with itself.');
+        if (newValue && ((typeof newValue === 'undefined' ? 'undefined' : _typeof$2(newValue)) === 'object' || typeof newValue === 'function')) {
+          var then = newValue.then;
+          if (newValue instanceof Promise) {
+            self._state = 3;
+            self._value = newValue;
+            finale(self);
+            return;
+          } else if (typeof then === 'function') {
+            doResolve(bind(then, newValue), self);
+            return;
+          }
+        }
+        self._state = 1;
+        self._value = newValue;
+        finale(self);
+      } catch (e) {
+        reject(self, e);
+      }
+    }
+
+    function reject(self, newValue) {
+      self._state = 2;
+      self._value = newValue;
+      finale(self);
+    }
+
+    function finale(self) {
+      if (self._state === 2 && self._deferreds.length === 0) {
+        Promise._immediateFn(function () {
+          if (!self._handled) {
+            Promise._unhandledRejectionFn(self._value);
+          }
+        });
+      }
+
+      for (var i = 0, len = self._deferreds.length; i < len; i++) {
+        handle(self, self._deferreds[i]);
+      }
+      self._deferreds = null;
+    }
+
+    function Handler(onFulfilled, onRejected, promise) {
+      this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
+      this.onRejected = typeof onRejected === 'function' ? onRejected : null;
+      this.promise = promise;
+    }
+
+    /**
+     * Take a potentially misbehaving resolver function and make sure
+     * onFulfilled and onRejected are only called once.
+     *
+     * Makes no guarantees about asynchrony.
+     */
+    function doResolve(fn, self) {
+      var done = false;
+      try {
+        fn(function (value) {
+          if (done) return;
+          done = true;
+          resolve(self, value);
+        }, function (reason) {
+          if (done) return;
+          done = true;
+          reject(self, reason);
+        });
+      } catch (ex) {
+        if (done) return;
+        done = true;
+        reject(self, ex);
+      }
+    }
+
+    Promise.prototype['catch'] = function (onRejected) {
+      return this.then(null, onRejected);
+    };
+
+    Promise.prototype.then = function (onFulfilled, onRejected) {
+      var prom = new this.constructor(noop);
+
+      handle(this, new Handler(onFulfilled, onRejected, prom));
+      return prom;
+    };
+
+    Promise.all = function (arr) {
+      var args = Array.prototype.slice.call(arr);
+
+      return new Promise(function (resolve, reject) {
+        if (args.length === 0) return resolve([]);
+        var remaining = args.length;
+
+        function res(i, val) {
+          try {
+            if (val && ((typeof val === 'undefined' ? 'undefined' : _typeof$2(val)) === 'object' || typeof val === 'function')) {
+              var then = val.then;
+              if (typeof then === 'function') {
+                then.call(val, function (val) {
+                  res(i, val);
+                }, reject);
+                return;
+              }
+            }
+            args[i] = val;
+            if (--remaining === 0) {
+              resolve(args);
+            }
+          } catch (ex) {
+            reject(ex);
+          }
+        }
+
+        for (var i = 0; i < args.length; i++) {
+          res(i, args[i]);
+        }
+      });
+    };
+
+    Promise.resolve = function (value) {
+      if (value && (typeof value === 'undefined' ? 'undefined' : _typeof$2(value)) === 'object' && value.constructor === Promise) {
+        return value;
+      }
+
+      return new Promise(function (resolve) {
+        resolve(value);
+      });
+    };
+
+    Promise.reject = function (value) {
+      return new Promise(function (resolve, reject) {
+        reject(value);
+      });
+    };
+
+    Promise.race = function (values) {
+      return new Promise(function (resolve, reject) {
+        for (var i = 0, len = values.length; i < len; i++) {
+          values[i].then(resolve, reject);
+        }
+      });
+    };
+
+    // Use polyfill for setImmediate for performance gains
+    Promise._immediateFn = typeof setImmediate === 'function' && function (fn) {
+      setImmediate(fn);
+    } || function (fn) {
+      setTimeoutFunc(fn, 0);
+    };
+
+    Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
+      if (typeof console !== 'undefined' && console) {
+        console.warn('Possible Unhandled Promise Rejection:', err); // eslint-disable-line no-console
+      }
+    };
+
+    /**
+     * Set the immediate function to execute callbacks
+     * @param fn {function} Function to execute
+     * @deprecated
+     */
+    Promise._setImmediateFn = function _setImmediateFn(fn) {
+      Promise._immediateFn = fn;
+    };
+
+    /**
+     * Change the function to execute on unhandled rejection
+     * @param {function} fn Function to execute on unhandled rejection
+     * @deprecated
+     */
+    Promise._setUnhandledRejectionFn = function _setUnhandledRejectionFn(fn) {
+      Promise._unhandledRejectionFn = fn;
+    };
+
+    if ('object' !== 'undefined' && module.exports) {
+      module.exports = Promise;
+    } else if (!root.Promise) {
+      root.Promise = Promise;
+    }
+  })(commonjsGlobal);
+});
+
+if (!window.Promise) {
+  window.Promise = promise;
+}
+
+(function (self) {
+  'use strict';
+
+  if (self.fetch) {
+    return;
+  }
+
+  var support = {
+    searchParams: 'URLSearchParams' in self,
+    iterable: 'Symbol' in self && 'iterator' in Symbol,
+    blob: 'FileReader' in self && 'Blob' in self && function () {
+      try {
+        new Blob();
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }(),
+    formData: 'FormData' in self,
+    arrayBuffer: 'ArrayBuffer' in self
+  };
+
+  if (support.arrayBuffer) {
+    var viewClasses = ['[object Int8Array]', '[object Uint8Array]', '[object Uint8ClampedArray]', '[object Int16Array]', '[object Uint16Array]', '[object Int32Array]', '[object Uint32Array]', '[object Float32Array]', '[object Float64Array]'];
+
+    var isDataView = function isDataView(obj) {
+      return obj && DataView.prototype.isPrototypeOf(obj);
+    };
+
+    var isArrayBufferView = ArrayBuffer.isView || function (obj) {
+      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1;
+    };
+  }
+
+  function normalizeName(name) {
+    if (typeof name !== 'string') {
+      name = String(name);
+    }
+    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+      throw new TypeError('Invalid character in header field name');
+    }
+    return name.toLowerCase();
+  }
+
+  function normalizeValue(value) {
+    if (typeof value !== 'string') {
+      value = String(value);
+    }
+    return value;
+  }
+
+  // Build a destructive iterator for the value list
+  function iteratorFor(items) {
+    var iterator = {
+      next: function next() {
+        var value = items.shift();
+        return { done: value === undefined, value: value };
+      }
+    };
+
+    if (support.iterable) {
+      iterator[Symbol.iterator] = function () {
+        return iterator;
+      };
+    }
+
+    return iterator;
+  }
+
+  function Headers(headers) {
+    this.map = {};
+
+    if (headers instanceof Headers) {
+      headers.forEach(function (value, name) {
+        this.append(name, value);
+      }, this);
+    } else if (Array.isArray(headers)) {
+      headers.forEach(function (header) {
+        this.append(header[0], header[1]);
+      }, this);
+    } else if (headers) {
+      Object.getOwnPropertyNames(headers).forEach(function (name) {
+        this.append(name, headers[name]);
+      }, this);
+    }
+  }
+
+  Headers.prototype.append = function (name, value) {
+    name = normalizeName(name);
+    value = normalizeValue(value);
+    var oldValue = this.map[name];
+    this.map[name] = oldValue ? oldValue + ',' + value : value;
+  };
+
+  Headers.prototype['delete'] = function (name) {
+    delete this.map[normalizeName(name)];
+  };
+
+  Headers.prototype.get = function (name) {
+    name = normalizeName(name);
+    return this.has(name) ? this.map[name] : null;
+  };
+
+  Headers.prototype.has = function (name) {
+    return this.map.hasOwnProperty(normalizeName(name));
+  };
+
+  Headers.prototype.set = function (name, value) {
+    this.map[normalizeName(name)] = normalizeValue(value);
+  };
+
+  Headers.prototype.forEach = function (callback, thisArg) {
+    for (var name in this.map) {
+      if (this.map.hasOwnProperty(name)) {
+        callback.call(thisArg, this.map[name], name, this);
+      }
+    }
+  };
+
+  Headers.prototype.keys = function () {
+    var items = [];
+    this.forEach(function (value, name) {
+      items.push(name);
+    });
+    return iteratorFor(items);
+  };
+
+  Headers.prototype.values = function () {
+    var items = [];
+    this.forEach(function (value) {
+      items.push(value);
+    });
+    return iteratorFor(items);
+  };
+
+  Headers.prototype.entries = function () {
+    var items = [];
+    this.forEach(function (value, name) {
+      items.push([name, value]);
+    });
+    return iteratorFor(items);
+  };
+
+  if (support.iterable) {
+    Headers.prototype[Symbol.iterator] = Headers.prototype.entries;
+  }
+
+  function consumed(body) {
+    if (body.bodyUsed) {
+      return Promise.reject(new TypeError('Already read'));
+    }
+    body.bodyUsed = true;
+  }
+
+  function fileReaderReady(reader) {
+    return new Promise(function (resolve, reject) {
+      reader.onload = function () {
+        resolve(reader.result);
+      };
+      reader.onerror = function () {
+        reject(reader.error);
+      };
+    });
+  }
+
+  function readBlobAsArrayBuffer(blob) {
+    var reader = new FileReader();
+    var promise = fileReaderReady(reader);
+    reader.readAsArrayBuffer(blob);
+    return promise;
+  }
+
+  function readBlobAsText(blob) {
+    var reader = new FileReader();
+    var promise = fileReaderReady(reader);
+    reader.readAsText(blob);
+    return promise;
+  }
+
+  function readArrayBufferAsText(buf) {
+    var view = new Uint8Array(buf);
+    var chars = new Array(view.length);
+
+    for (var i = 0; i < view.length; i++) {
+      chars[i] = String.fromCharCode(view[i]);
+    }
+    return chars.join('');
+  }
+
+  function bufferClone(buf) {
+    if (buf.slice) {
+      return buf.slice(0);
+    } else {
+      var view = new Uint8Array(buf.byteLength);
+      view.set(new Uint8Array(buf));
+      return view.buffer;
+    }
+  }
+
+  function Body() {
+    this.bodyUsed = false;
+
+    this._initBody = function (body) {
+      this._bodyInit = body;
+      if (!body) {
+        this._bodyText = '';
+      } else if (typeof body === 'string') {
+        this._bodyText = body;
+      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+        this._bodyBlob = body;
+      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+        this._bodyFormData = body;
+      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+        this._bodyText = body.toString();
+      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+        this._bodyArrayBuffer = bufferClone(body.buffer);
+        // IE 10-11 can't handle a DataView body.
+        this._bodyInit = new Blob([this._bodyArrayBuffer]);
+      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+        this._bodyArrayBuffer = bufferClone(body);
+      } else {
+        throw new Error('unsupported BodyInit type');
+      }
+
+      if (!this.headers.get('content-type')) {
+        if (typeof body === 'string') {
+          this.headers.set('content-type', 'text/plain;charset=UTF-8');
+        } else if (this._bodyBlob && this._bodyBlob.type) {
+          this.headers.set('content-type', this._bodyBlob.type);
+        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        }
+      }
+    };
+
+    if (support.blob) {
+      this.blob = function () {
+        var rejected = consumed(this);
+        if (rejected) {
+          return rejected;
+        }
+
+        if (this._bodyBlob) {
+          return Promise.resolve(this._bodyBlob);
+        } else if (this._bodyArrayBuffer) {
+          return Promise.resolve(new Blob([this._bodyArrayBuffer]));
+        } else if (this._bodyFormData) {
+          throw new Error('could not read FormData body as blob');
+        } else {
+          return Promise.resolve(new Blob([this._bodyText]));
+        }
+      };
+
+      this.arrayBuffer = function () {
+        if (this._bodyArrayBuffer) {
+          return consumed(this) || Promise.resolve(this._bodyArrayBuffer);
+        } else {
+          return this.blob().then(readBlobAsArrayBuffer);
+        }
+      };
+    }
+
+    this.text = function () {
+      var rejected = consumed(this);
+      if (rejected) {
+        return rejected;
+      }
+
+      if (this._bodyBlob) {
+        return readBlobAsText(this._bodyBlob);
+      } else if (this._bodyArrayBuffer) {
+        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer));
+      } else if (this._bodyFormData) {
+        throw new Error('could not read FormData body as text');
+      } else {
+        return Promise.resolve(this._bodyText);
+      }
+    };
+
+    if (support.formData) {
+      this.formData = function () {
+        return this.text().then(decode);
+      };
+    }
+
+    this.json = function () {
+      return this.text().then(JSON.parse);
+    };
+
+    return this;
+  }
+
+  // HTTP methods whose capitalization should be normalized
+  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'];
+
+  function normalizeMethod(method) {
+    var upcased = method.toUpperCase();
+    return methods.indexOf(upcased) > -1 ? upcased : method;
+  }
+
+  function Request(input, options) {
+    options = options || {};
+    var body = options.body;
+
+    if (input instanceof Request) {
+      if (input.bodyUsed) {
+        throw new TypeError('Already read');
+      }
+      this.url = input.url;
+      this.credentials = input.credentials;
+      if (!options.headers) {
+        this.headers = new Headers(input.headers);
+      }
+      this.method = input.method;
+      this.mode = input.mode;
+      if (!body && input._bodyInit != null) {
+        body = input._bodyInit;
+        input.bodyUsed = true;
+      }
+    } else {
+      this.url = String(input);
+    }
+
+    this.credentials = options.credentials || this.credentials || 'omit';
+    if (options.headers || !this.headers) {
+      this.headers = new Headers(options.headers);
+    }
+    this.method = normalizeMethod(options.method || this.method || 'GET');
+    this.mode = options.mode || this.mode || null;
+    this.referrer = null;
+
+    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+      throw new TypeError('Body not allowed for GET or HEAD requests');
+    }
+    this._initBody(body);
+  }
+
+  Request.prototype.clone = function () {
+    return new Request(this, { body: this._bodyInit });
+  };
+
+  function decode(body) {
+    var form = new FormData();
+    body.trim().split('&').forEach(function (bytes) {
+      if (bytes) {
+        var split = bytes.split('=');
+        var name = split.shift().replace(/\+/g, ' ');
+        var value = split.join('=').replace(/\+/g, ' ');
+        form.append(decodeURIComponent(name), decodeURIComponent(value));
+      }
+    });
+    return form;
+  }
+
+  function parseHeaders(rawHeaders) {
+    var headers = new Headers();
+    rawHeaders.split(/\r?\n/).forEach(function (line) {
+      var parts = line.split(':');
+      var key = parts.shift().trim();
+      if (key) {
+        var value = parts.join(':').trim();
+        headers.append(key, value);
+      }
+    });
+    return headers;
+  }
+
+  Body.call(Request.prototype);
+
+  function Response(bodyInit, options) {
+    if (!options) {
+      options = {};
+    }
+
+    this.type = 'default';
+    this.status = 'status' in options ? options.status : 200;
+    this.ok = this.status >= 200 && this.status < 300;
+    this.statusText = 'statusText' in options ? options.statusText : 'OK';
+    this.headers = new Headers(options.headers);
+    this.url = options.url || '';
+    this._initBody(bodyInit);
+  }
+
+  Body.call(Response.prototype);
+
+  Response.prototype.clone = function () {
+    return new Response(this._bodyInit, {
+      status: this.status,
+      statusText: this.statusText,
+      headers: new Headers(this.headers),
+      url: this.url
+    });
+  };
+
+  Response.error = function () {
+    var response = new Response(null, { status: 0, statusText: '' });
+    response.type = 'error';
+    return response;
+  };
+
+  var redirectStatuses = [301, 302, 303, 307, 308];
+
+  Response.redirect = function (url, status) {
+    if (redirectStatuses.indexOf(status) === -1) {
+      throw new RangeError('Invalid status code');
+    }
+
+    return new Response(null, { status: status, headers: { location: url } });
+  };
+
+  self.Headers = Headers;
+  self.Request = Request;
+  self.Response = Response;
+
+  self.fetch = function (input, init) {
+    return new Promise(function (resolve, reject) {
+      var request = new Request(input, init);
+      var xhr = new XMLHttpRequest();
+
+      xhr.onload = function () {
+        var options = {
+          status: xhr.status,
+          statusText: xhr.statusText,
+          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+        };
+        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
+        var body = 'response' in xhr ? xhr.response : xhr.responseText;
+        resolve(new Response(body, options));
+      };
+
+      xhr.onerror = function () {
+        reject(new TypeError('Network request failed'));
+      };
+
+      xhr.ontimeout = function () {
+        reject(new TypeError('Network request failed'));
+      };
+
+      xhr.open(request.method, request.url, true);
+
+      if (request.credentials === 'include') {
+        xhr.withCredentials = true;
+      }
+
+      if ('responseType' in xhr && support.blob) {
+        xhr.responseType = 'blob';
+      }
+
+      request.headers.forEach(function (value, name) {
+        xhr.setRequestHeader(name, value);
+      });
+
+      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
+    });
+  };
+  self.fetch.polyfill = true;
+})(typeof self !== 'undefined' ? self : undefined);
+
+var placeCharacters = function placeCharacters(map, assetsPath) {
+
+	// DISABLED for now
+	return true;
+
+	var airportsMarkers = [];
+	var icons = [];
+	var localMap = map;
+	var pngs = Object.keys(pngsList);
+	var j = 0;
+
+	fetch("./datasets/airports.json").then(function (response) {
+		return response.json();
+	}).then(function (airports) {
+		airports.map(function (airport) {
+			if (j === pngs.length) {
+				j = 0;
+			}
+			var randKey = Math.floor(Math.random() * 1000 / 10 * (pngs.length / 100));
+			var img = pngs[randKey] || pngs[0];
+			var imgSize = pngsList[img];
+
+			// Character object 
+			var character = {
+				position: new google.maps.LatLng(airport.latitude, airport.longitude),
+				icon: {
+					url: '' + assetsPath + img + '.png',
+					size: new google.maps.Size(imgSize[0], imgSize[1]),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(17, 34),
+					scaledSize: new google.maps.Size(imgSize[0], imgSize[1])
+				}
+			};
+			// Add a marker for each character
+			airportsMarkers.push(new google.maps.Marker({
+				position: character.position,
+				map: localMap,
+				icon: character.icon,
+				visible: false
+			}));
+			icons.push(character);
+			j++;
+		});
+
+		// Shuffle the markers
+		shuffle(airportsMarkers);
+
+		// Initial visibility
+		setVisibleMarkers(localMap.getZoom());
+	}).catch(function (err) {
+		console.log(err);
+	});
+
+	//	Change markers on zoom
+	google.maps.event.addListener(localMap, 'zoom_changed', function () {
+		setVisibleMarkers(localMap.getZoom());
+		var zoom = localMap.getZoom();
+	});
+
+	function setVisibleMarkers(zoom) {
+		var maxZoom = 8;
+		var max = airportsMarkers.length * (zoom / maxZoom / 20);
+		var y = 0;
+		airportsMarkers.map(function (marker, i) {
+			marker.setVisible(i < max);
+			i < max && y++;
+		});
+		console.log(y + ' markers display at ' + zoom + ' with max at ' + max);
+	}
+};
+
+function shuffle(a) {
+	for (var i = a.length; i; i--) {
+		var j = Math.floor(Math.random() * i);
+		var _ref = [a[j], a[i - 1]];
+		a[i - 1] = _ref[0];
+		a[j] = _ref[1];
+	}
+}
+
+var checkAssetsPath = function checkAssetsPath(assetsPath) {
+
+	if (RegExp('^(/[^/ ]*)+/$').test(assetsPath)) {
+		return true;
+	} else {
+		console.error('Please provide the icons directory as in "/path/to/icons/"');
+	}
+};
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*eslint-disable */
+var $$1 = window.jQuery;
+
+if (!$$1) {
+	throw 'jQuery is required for this map plugin';
+}
+
+var Map = function () {
+	function Map(settings) {
+		_classCallCheck(this, Map);
+
+		$$1.extend(this, settings);
+		this.markers = this.markers || [];
+		this.placeMarkers = this.placeMarkers || [];
+		this.init();
+	}
+
+	Map.prototype.init = function init() {
+		this.listeners = [];
+		this.wrapper = this.domElement;
+		this.map = createMap(this.wrapper);
+		this.sBox = createSearchBox(this.map, this.domElement);
+		this.avatarURL = this.avatarURL || defineURL('https://github.com/identicons/', '.png');
+
+		panelClosedOnLoad(this.domElement);
+		bindEvents(this.domElement, this.map);
+		bindClickEvent(this.domElement, this.data, this.listeners);
+
+		// Other initiliasation
+		this.initFetchData();
+		this.initSearchBox();
+		this.initPromoAreas();
+		this.placeCharacters();
+		this.initMapFullDisplay();
+		this.initMapGenericBehaviour();
+	};
+
+	Map.prototype.initFetchData = function initFetchData() {
+		fetchData(this.map, this.data, this.markers, this.avatarURL, this.domElement, this.assetsPath);
+	};
+
+	Map.prototype.initSearchBox = function initSearchBox() {
+		searchBox(this.map, this.places, this.sBox, this.placeMarkers, this.getIcon, this.setIcon);
+	};
+
+	Map.prototype.initPromoAreas = function initPromoAreas() {
+		// Render promo area
+		if (this.isLoggedIn) {
+			promoArea(function () {
+				console.log('change your location clicked');
+			}, this.assetsPath);
+		} else {
+			promoArea$1(function () {
+				console.log('Add your marker clicked!');
+			}, this.markers.length, this.assetsPath);
+		}
+
+		// Display air balloon
+		airBalloon(this.domElement, this.isLoggedIn, this.assetsPath);
+	};
+
+	Map.prototype.placeCharacters = function placeCharacters$$1() {
+		var _this = this;
+
+		// Add characters
+		setTimeout(function () {
+			if (checkAssetsPath(_this.assetsPath)) {
+				placeCharacters(_this.map, _this.assetsPath);
+			}
+		}, 100);
+	};
+
+	Map.prototype.initMapFullDisplay = function initMapFullDisplay() {
+		// Show whole map on click
+		showMap(this.domElement, this.map);
+	};
+
+	Map.prototype.initMapGenericBehaviour = function initMapGenericBehaviour() {
+		// Open panel on zoom
+		google.maps.event.addListenerOnce(this.map, 'zoom_changed', function () {
+			var $panel = $$1(this.domElement).find('.shiftmap-map-clusterise-user-panel');
+			$panel.removeClass('default');
+		});
+	};
+
+	// Returns an object of public events
+	// Used for manipulating the map after load
+	// Or listening to events
+
+
+	Map.prototype.public = function _public() {
+		var _this2 = this;
+
+		var self = this;
+
+		return {
+			enablePlotLocationMode: function enablePlotLocationMode() {
+				_enablePlotLocationMode(_this2.domElement);
+			},
+			setWidthHeight: function setWidthHeight(width, height) {
+				_setWidthHeight(width, height, _this2.map);
+			},
+			setMapLocation: function setMapLocation(lat, lng) {
+				changeMapLocation(lat, lng, _this2.map);
+			},
+			onMapReady: function onMapReady(callback) {
+				_onMapReady(callback, _this2.map);
+			},
+			onAirBalloonClick: function onAirBalloonClick(callback) {
+				_onAirBalloonClick(_this2.domElement, callback);
+			},
+			onMapChangeLocation: function onMapChangeLocation(callback) {
+				_onMapChangeLocation(callback, _this2.map);
+			},
+			onPlotLocation: function onPlotLocation(callback) {
+				_onPlotLocation(_this2.map, callback);
+			},
+			onClickUser: function onClickUser(callback) {
+				_onClickUser(callback, null, _this2.listeners);
+			},
+			insertMarker: function insertMarker(lat, lng, imgURL, clickEvent) {
+				_insertMarker(lat, lng, imgURL, clickEvent, _this2.map);
+			}
+		};
+	};
+
+	return Map;
+}();
+
+var initialize = function initialize(settings) {
+	var map = new Map(settings);
+	return map.public();
+};
+
+// Plot location listener
+var _onPlotLocation = function _onPlotLocation(map, callback) {
+	google.maps.event.addListener(map, 'shiftms_plotted_location', callback);
+};
+
+// Air Balloon
+var airBalloon = function airBalloon(domElement, logged, assetsPath) {
+	var balloon = $$1(domElement).find('.shiftmap-airballoon-image');
+	var dismiss = $$1(domElement).find('.balloon-dismiss');
+	$$1(dismiss).click(function (e) {
+		$$1(balloon).remove();
+	});
+	if (logged) {
+		balloon.remove();
+		//balloon.attr('src', `${assetsPath}promo/map-hot-air-balloon.png`);
+	} else {
+		balloon.attr('src', assetsPath + 'promo/map-hot-air-balloon.png?v=1');
+	}
+};
+
+// Balloon click listener
+var _onAirBalloonClick = function _onAirBalloonClick(domElement, callback) {
+	var balloon = $$1(domElement).find('.shiftmap-airballoon-image');
+	balloon.click(callback);
+};
+
+// Insert markers after map is loaded
+var _insertMarker = function _insertMarker(lat, lng, imgURL, clickEvent, map) {
+	lat = lat || null;
+	lng = lng || null;
+	imgURL = imgURL.toString() || null;
+	clickEvent = clickEvent || function () {};
+
+	if (typeof clickEvent !== 'function') {
+		throw 'Click event must be a function!';
+	}
+
+	if (typeof lat !== 'number' || typeof lng !== 'number') {
+		throw 'Coordinates must be numbers!';
+	}
+
+	var img = new Image();
+	img.onload = function () {
+		var imgWidth = Math.abs(img.width / 2) || null;
+		var imgHeight = Math.abs(img.height / 2) || null;
+
+		google.maps.event.addListener(map, 'idle', function () {
+			var location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+			var icon = {
+				url: '' + imgURL,
+				size: new google.maps.Size(imgWidth, imgHeight),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(imgWidth / 2, imgHeight),
+				scaledSize: new google.maps.Size(imgWidth, imgHeight)
+			};
+			var marker = new google.maps.Marker({
+				position: location,
+				icon: icon,
+				map: map,
+				// optimized: false,
+				// zindex: 0,
+				url: ''
+			}).addListener('click', function () {
+				clickEvent(marker, imgURL);
+			});
+		});
+	};
+
+	img.src = imgURL;
+};
+
+// Panel closed on page load
+var panelClosedOnLoad = function panelClosedOnLoad(domElement) {
+	var $panel = $$1(domElement).find('.shiftmap-map-clusterise-user-panel');
+	$panel.toggleClass('default');
+};
+
+// Move map to specified coordinates , dk why i built this though
+var changeMapLocation = function changeMapLocation(lat, lng, map) {
+	var location = defineCenter(lat, lng);
+	map.panTo(location);
+};
+
+// Detects when map is loaded
+var _onMapReady = function _onMapReady(callback, map) {
+	if (typeof callback === 'function') {
+		google.maps.event.addListenerOnce(map, 'idle', callback);
+	} else {
+		console.error('provide a callback function');
+	}
+};
+
+// Fires event when map changes locations
+var _onMapChangeLocation = function _onMapChangeLocation(callback, map) {
+	if (typeof callback === 'function') {
+		google.maps.event.addListener(map, 'idle', callback);
+	} else {
+		console.error('provide a callback function');
+	}
+};
+
+// Builds assets URL in acceptable format
+var defineURL = function defineURL(url, imgFormat) {
+	return [url.toString(), imgFormat.toString()];
+};
+
+// Display zoomed out map 
+var showMap = function showMap(domElement, map) {
+	var showMapButton = $$1(domElement).find('.shiftmap-showmap');
+	var topLeft = new google.maps.LatLng(68.870136, -160.789405);
+	var bottomRight = new google.maps.LatLng(-44.879507, 178.880419);
+	var bounds = new google.maps.LatLngBounds(topLeft, bottomRight);
+
+	var onClick = function onClick() {
+		showMapButton.click(function () {
+			map.fitBounds(bounds);
+		});
+	};
+	google.maps.event.addListener(map, 'idle', onClick);
+};
+
+var bindEvents = function bindEvents(domElement, map) {
+	var $panel = $$1(domElement).find('.shiftmap-map-clusterise-user-panel');
+
+	$panel.find('.shiftmap-map-toggle-panel').click(function () {
+		$$1(this).removeClass('alert-user');
+		if ($panel.hasClass('default')) {
+			$panel.removeClass('default');
+		} else {
+			$panel.toggleClass('closed');
+		}
+	});
+
+	//	Change markers on zoom
+	google.maps.event.addListener(map, 'zoom_changed', function () {
+		var zoom = map.getZoom();
+		if (zoom > 7) {
+			map.setOptions({ styles: mapDetailStyles });
+		} else {
+			map.setOptions({ styles: mapStyles });
+		}
+	});
+
+	$$1(domElement).on('openpanel', function () {
+		$panel.removeClass('closed');
+	});
+
+	google.maps.event.addListenerOnce(map, 'idle', function () {
+		geolocationAPI(map);
+	});
+};
+
+// Define map dimensions
+var _setWidthHeight = function _setWidthHeight(width, height, map) {
+	$$1('.shiftmap-wrapper').width(width).height(height);
+	$$1('.shiftmap-map').width(width).height(height);
+	google.maps.event.trigger(map, 'resize');
+	google.maps.event.addListenerOnce(map, 'idle', function () {
+		google.maps.event.trigger(map, 'resize');
+	});
+};
+
+var _onClickUser = function _onClickUser(fn, args, listeners) {
+	if (fn) {
+		listeners.push(fn);
+	} else {
+		listeners.map(function (e) {
+			return e(args);
+		});
+	}
+};
+
+var bindClickEvent = function bindClickEvent(domElement, data, listeners) {
+	$$1(domElement).on('click', '[data-clickuser]', function () {
+		var id = $$1(this).data('clickuser');
+		var find = void 0;
+		data.map(function (e) {
+			if (e.user_id === id) {
+				find = e;
+			}
+		});
+		listeners.map(function (fn) {
+			return fn(find);
+		});
+	});
+};
+
+var geolocationAPI = function geolocationAPI(map) {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			var initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			map.setCenter(initialLocation);
+			map.setZoom(5);
+		});
+	}
+};
+
+var _enablePlotLocationMode = function _enablePlotLocationMode(wrapper) {
+	$$1(wrapper).find('.shiftmap-promo-area').addClass('in');
+	$$1(wrapper).find('.shiftmap-map-clusterise-user-panel').removeClass('default closed');
+};
+
+
+
+/*
+	insertMarker,
+	setWidthHeight,
+	onMapReady,
+	onMapChangeLocation,
+	defineURL,
+	changeMapLocation,
+	onClickUser,
+	onPlotLocation,
+	onAirBalloonClick,
+	enablePlotLocationMode
+*/
+
+exports.initialize = initialize;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
 //# sourceMappingURL=maps.bundle.js.map

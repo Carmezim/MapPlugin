@@ -105,8 +105,8 @@ export default {
 			exclude: './node_modules/**',
 			include: './node_modules/whatwg-fetch'
 		})),
-			uglify(),
-				serve({
+			// uglify(),
+		serve({
 			open: true,
 			contentBase: 'dist',
 			host: 'localhost',

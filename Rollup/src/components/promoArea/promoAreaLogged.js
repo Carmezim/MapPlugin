@@ -8,6 +8,7 @@ const promoArea = (insertMarker, assetsPath) => {
 	userPanel.prepend(html);
 	html.find('button').click(insertMarker).click(() => {
 		html.addClass('in');
+		$('html').addClass('map-plotting-active');
 		const input = userPanel.find("input.shiftmap-input").one('blur', () => {
 		});	
 		setTimeout(() => {
@@ -16,7 +17,8 @@ const promoArea = (insertMarker, assetsPath) => {
 	});
 
 	html.find('a').click(() => {
-		html.removeClass('in')
+		html.removeClass('in');
+		$('html').removeClass('map-plotting-active');
 	});
 };
 

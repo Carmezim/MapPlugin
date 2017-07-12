@@ -12,39 +12,12 @@ import placeCharacters from '../characters/placeCharacters';
 import checkAssetsPath from '../characters/checkAssetsPath';
 import mapStyles, {mapDetailStyles} from './mapStyles';
 
+
 import {
-	icon,
+	getIcon,
 	setIcon,
 	addCenterToOptions
 } from './options';
-
-// Places markers
-let placeMarkers = [];
-
-// Places holder
-let places;
-
-// Markers holder
-let markers = [];
-
-// Global listeners
-let listeners = [];
-
-// Map center
-const london = defineCenter(51.521723, -0.134581);
-addCenterToOptions(london);
-
-// Map
-let map;
-
-// Map bounds 
-let bounds;
-
-// Search Box
-let sBox;
-
-// Wrapper element
-let wrapper;
 
 const $ = window.jQuery;
 
@@ -52,60 +25,141 @@ if(!$){
 	throw 'jQuery is required for this map plugin';
 }
 
-const initialize = (domElement, data, avatarURL, assetsPath, logged) => {
-	domElement =  domElement || null;
-	data       =  data || null;
-	avatarURL  =  avatarURL || null;
-	assetsPath =  assetsPath || null;
-	logged = logged || null;
+class Map {
+	constructor( settings ){
+		$.extend(this, settings);
+		this.markers = this.markers || [];
+		this.placeMarkers = this.placeMarkers || [];
+		this.init();
+	}
 
-	wrapper = domElement;
+	init(){
+		this.listeners = [];
+		this.wrapper = this.domElement;
+		this.map = createMap(this.wrapper);
+		this.sBox = createSearchBox(this.map, this.domElement);
+		this.avatarURL = this.avatarURL || defineURL('https://github.com/identicons/', '.png');
 
-	map = createMap(domElement);
+		panelClosedOnLoad(this.domElement);
+		bindEvents( this.domElement, this.map );
+		bindClickEvent( this.domElement, this.data, this.listeners );
 
-	sBox = createSearchBox(map, domElement);
+		// Other initiliasation
+		this.initFetchData();
+		this.initSearchBox();
+		this.initPromoAreas();
+		this.placeCharacters();
+		this.initMapFullDisplay();
+		this.initMapGenericBehaviour();
+	}
 
-	// Fetch dataset
-	fetchData(map, data, markers, avatarURL, domElement);
+	initFetchData(){
+		fetchData(
+			this.map, 
+			this.data, 
+			this.markers, 
+			this.avatarURL, 
+			this.domElement,
+			this.assetsPath
+		);
+	}
 
-	// Create Search Box
-	searchBox(map, places, sBox, placeMarkers, icon, setIcon);
+	initSearchBox(){
+		searchBox(
+			this.map, 
+			this.places, 
+			this.sBox, 
+			this.placeMarkers, 
+			this.getIcon, 
+			this.setIcon
+		);
+	}
 
-	// Render promo area
-	logged ? 
-	promoAreaLogged(function(){console.log('change your location clicked')}, assetsPath) :
-	promoArea(function(){console.log('Add your marker clicked!')}, markers.length, assetsPath);
-	
-	// Panel closed by default
-	panelClosedOnLoad(domElement);
-
-	bindEvents( domElement, map );
-	
-	bindClickEvent( domElement, data );
-
-	// Add characters
-	setTimeout(() => {
-		if (checkAssetsPath(assetsPath)) {
-			placeCharacters(map, assetsPath);
+	initPromoAreas(){
+		// Render promo area
+		if(this.isLoggedIn){
+			promoAreaLogged(() => {
+				console.log('change your location clicked')
+			}, this.assetsPath)
+		} else {
+			promoArea(() => {
+				console.log('Add your marker clicked!')
+			}, this.markers.length, this.assetsPath)
 		}
-	}, 100 );
 
-	// Open panel on zoom
-	google.maps.event.addListenerOnce(map, 'zoom_changed', function () {
-		const $panel = $(domElement).find('.shiftmap-map-clusterise-user-panel');
+		// Display air balloon
+		airBalloon(this.domElement, this.isLoggedIn, this.assetsPath);
+	}
+
+	placeCharacters(){
+		// Add characters
+		setTimeout(() => {
+			if (checkAssetsPath(this.assetsPath)) {
+				placeCharacters(this.map, this.assetsPath);
+			}
+		}, 100 );
+	}
+
+	initMapFullDisplay(){
+		// Show whole map on click
+		showMap(this.domElement, this.map);
+	}
+
+	initMapGenericBehaviour(){
+		// Open panel on zoom
+		google.maps.event.addListenerOnce(this.map, 'zoom_changed', function () {
+			const $panel = $(this.domElement).find('.shiftmap-map-clusterise-user-panel');
 			$panel.removeClass('default')
-	});
+		});
+	}
 
-	// Display air balloon
-	airBalloon(domElement, logged, assetsPath);
+	// Returns an object of public events
+	// Used for manipulating the map after load
+	// Or listening to events
+	public(){
+		const self = this;
 
-	// Show whole map on click
-	showMap(domElement, map);
+		return {
+			enablePlotLocationMode: () => {
+				enablePlotLocationMode(this.domElement);
+			},
+			setWidthHeight: ( width, height ) => {
+				setWidthHeight( width, height, this.map );
+			},
+			setMapLocation: ( lat, lng ) => {
+				changeMapLocation( lat, lng, this.map );
+			},
+			onMapReady : ( callback ) => {
+				onMapReady( callback, this.map );
+			},
+			onAirBalloonClick: ( callback ) => {
+				onAirBalloonClick(this.domElement, callback);
+			},
+			onMapChangeLocation: ( callback ) => {
+				onMapChangeLocation( callback, this.map );
+			},
+			onPlotLocation: ( callback ) => {
+				onPlotLocation(this.map, callback );
+			},
+			onClickUser : ( callback ) => {
+				onClickUser( callback, null, this.listeners);
+			},
+			insertMarker: ( lat, lng, imgURL, clickEvent) => {
+				insertMarker(lat, lng, imgURL, clickEvent, this.map);
+			}
+		};
+	}
+
+}
+
+const initialize = (settings) => {
+	const map = new Map(settings);
+	return map.public();
 };
 
 
 // Plot location listener
-const onPlotLocation = (callback) => {
+const onPlotLocation = (map, callback) => {
 	google.maps.event.addListener(map, 'shiftms_plotted_location', callback);
 };
 
@@ -121,7 +175,7 @@ const airBalloon = (domElement, logged, assetsPath) => {
 		balloon.remove();
 		//balloon.attr('src', `${assetsPath}promo/map-hot-air-balloon.png`);
 	}
-	else { balloon.attr('src', `${assetsPath}promo/plot-yourself.png`); }
+	else { balloon.attr('src', `${assetsPath}promo/map-hot-air-balloon.png?v=1`); }
 };
 
 
@@ -132,44 +186,49 @@ const onAirBalloonClick = (domElement, callback) => {
 }
 
 // Insert markers after map is loaded
-const insertMarker = (lat, lng, imgURL, imgWidth, imgHeight, clickEvent) => {
+const insertMarker = (lat, lng, imgURL, clickEvent, map) => {
 	lat = lat || null;
 	lng = lng || null;
 	imgURL = imgURL.toString() || null;
-	imgWidth = Math.abs(imgWidth) || null;
-	imgHeight = Math.abs(imgHeight) || null;
-	clickEvent = clickEvent || null;
+	clickEvent = clickEvent || function(){};
 
 	if (typeof clickEvent !== 'function') {
 		throw 'Click event must be a function!';
-	}
-
-	if (!Number.isInteger(imgHeight) || !Number.isInteger(imgWidth)) {
-		throw 'Icon dimensions must be integers!';
 	}
 
 	if (typeof lat !== 'number' || typeof lng !== 'number') {
 		throw 'Coordinates must be numbers!';
 	}
 
-	google.maps.event.addListener(map, 'idle', function() {
-		const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
-		const icon = {
-			url: `${imgURL}`,
-			size: new google.maps.Size(imgWidth, imgHeight),
-			origin: new google.maps.Point(0, 0),
-			anchor: new google.maps.Point(17, 34),
-			scaledSize: new google.maps.Size(imgWidth, imgHeight),
-		};
-		const marker = new google.maps.Marker({
-			position: location,
-			icon: icon,
-			map: map,
-			optimized: false,
-			zindex: 0,
-			url: '',
-		}).addListener('click', clickEvent);
-	});
+	var img = new Image();
+	img.onload = () => {
+		const imgWidth = Math.abs(img.width/2) || null;
+		const imgHeight = Math.abs(img.height/2) || null;
+
+		google.maps.event.addListener(map, 'idle', function() {
+			const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
+			const icon = {
+				url: `${imgURL}`,
+				size: new google.maps.Size(imgWidth, imgHeight),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(imgWidth/2, imgHeight),
+				scaledSize: new google.maps.Size(imgWidth, imgHeight),
+			};
+			const marker = new google.maps.Marker({
+				position: location,
+				icon: icon,
+				map: map,
+				// optimized: false,
+				// zindex: 0,
+				url: '',
+			}).addListener('click', function(){
+				clickEvent( marker, imgURL );
+			});
+		});
+
+	}
+
+	img.src = imgURL;
 };
 
 
@@ -181,14 +240,14 @@ const panelClosedOnLoad = (domElement) => {
 
 
 // Move map to specified coordinates , dk why i built this though
-const changeMapLocation = (lat, lng) => {
+const changeMapLocation = (lat, lng, map) => {
 	let location = defineCenter(lat, lng);
 	map.panTo(location);
 };
 
 
 // Detects when map is loaded
-const onMapReady = (callback) => {
+const onMapReady = (callback, map) => {
 	if (typeof callback === 'function') {
 		google.maps.event.addListenerOnce(map, 'idle', callback);
 	}
@@ -199,7 +258,7 @@ const onMapReady = (callback) => {
 
 
 // Fires event when map changes locations
-const onMapChangeLocation = (callback) => {
+const onMapChangeLocation = (callback, map) => {
 	if (typeof callback === 'function') {
 		google.maps.event.addListener(map, 'idle', callback);
 	}
@@ -266,10 +325,9 @@ const bindEvents = ( domElement, map ) => {
 
 
 // Define map dimensions
-const setWidthHeight = (width, height) => {
+const setWidthHeight = (width, height, map) => {
 	$('.shiftmap-wrapper').width(width).height(height);
 	$('.shiftmap-map').width(width).height(height);
-	const map = $('.shiftmap-map').get(0);
 	google.maps.event.trigger(map, 'resize');	
 	google.maps.event.addListenerOnce(map, 'idle', function() {
 		google.maps.event.trigger(map, 'resize'); 
@@ -277,7 +335,7 @@ const setWidthHeight = (width, height) => {
 };
 
 
-const onClickUser = (fn, args) => {
+const onClickUser = (fn, args, listeners ) => {
 	if( fn ){
 		listeners.push(fn);
 	} else {
@@ -286,7 +344,7 @@ const onClickUser = (fn, args) => {
 }
 
 
-const bindClickEvent = ( domElement, data ) => {
+const bindClickEvent = ( domElement, data, listeners ) => {
 	$(domElement).on('click', '[data-clickuser]', function(){
 		const id = $(this).data('clickuser');
 		let find;
@@ -295,7 +353,7 @@ const bindClickEvent = ( domElement, data ) => {
 				find = e;
 			}
 		});
-		onClickUser(false, find);
+		listeners.map((fn) => fn(find));
 	});
 }
 
@@ -310,14 +368,17 @@ const geolocationAPI = ( map ) => {
 	}
 };
 
-const enablePlotLocationMode = () => {
+const enablePlotLocationMode = (wrapper) => {
 	$(wrapper).find('.shiftmap-promo-area').addClass('in');
 	$(wrapper).find('.shiftmap-map-clusterise-user-panel').removeClass('default closed');
 }
 
 
 export {
-	initialize,
+	initialize
+};
+
+/*
 	insertMarker,
 	setWidthHeight,
 	onMapReady,
@@ -328,4 +389,4 @@ export {
 	onPlotLocation,
 	onAirBalloonClick,
 	enablePlotLocationMode
-};
+*/
