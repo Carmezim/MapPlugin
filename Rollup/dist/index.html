@@ -86,20 +86,20 @@
 
 			function insertCustomMarkers( shiftMap ){
 				var obj = {
-					'/img/special/special-cow.png': 		[-15.68, -58.36],
-					'/img/special/special-mountains.png': 	[48.30, 104.77],
-					'/img/special/special-nessie.png': 		[55.94, -23.72],
-					'/img/special/special-sailboat.png': 	[35.24, 18.63],
-					'/img/special/special-tower.png': 		[48.63, 2.37],
-					'/img/special/special-tree1.png': 		[55.39,-95.42],
-					'/img/special/special-tree2.png': 		[62.96, 68.56],
-					'/img/special/special-turbine.png': 	[64.78, -153.43],
-					'/img/special/special-viking.png': 		[67.91, -1.04],
-					'/img/special/special-whale.png': 		[-39.74, 0.19],
+					'special/special-cow.png': 		[-15.68, -58.36],
+					'special/special-mountains.png': 	[48.30, 104.77],
+					'special/special-nessie.png': 		[55.94, -23.72],
+					'special/special-sailboat.png': 	[35.24, 18.63],
+					'special/special-tower.png': 		[48.63, 2.37],
+					'special/special-tree1.png': 		[55.39,-95.42],
+					'special/special-tree2.png': 		[62.96, 68.56],
+					'special/special-turbine.png': 	[64.78, -153.43],
+					'special/special-viking.png': 		[67.91, -1.04],
+					'special/special-whale.png': 		[-39.74, 0.19],
 				}
 				for(var imgPath in obj){
 					var each = obj[imgPath];
-					shiftMap.insertMarker(each[0], each[1], imgPath, function( marker, imgUrl ){
+					shiftMap.insertMarker(each[0], each[1], assetsPath + imgPath, function( marker, imgUrl ){
 						console.log('Marker clicked!', imgUrl, marker);
 					});
 				}
