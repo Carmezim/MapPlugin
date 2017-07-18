@@ -191,7 +191,8 @@ const insertMarker = (lat, lng, imgURL, clickEvent, map) => {
 	lng = lng || null;
 	imgURL = imgURL.toString() || null;
 	clickEvent = clickEvent || function(){};
-
+	const markers = [];
+	
 	if (typeof clickEvent !== 'function') {
 		throw 'Click event must be a function!';
 	}
@@ -204,7 +205,6 @@ const insertMarker = (lat, lng, imgURL, clickEvent, map) => {
 	img.onload = () => {
 		const imgWidth = Math.abs(img.width/2) || null;
 		const imgHeight = Math.abs(img.height/2) || null;
-
 		const location = new google.maps.LatLng(parseFloat(lat).toFixed(6), parseFloat(lng).toFixed(6));
 		const icon = {
 			url: `${imgURL}`,
@@ -220,12 +220,14 @@ const insertMarker = (lat, lng, imgURL, clickEvent, map) => {
 			// optimized: false,
 			// zindex: 0,
 			url: '',
+			visible: false
 		}).addListener('click', function(){
 			clickEvent( marker, imgURL );
 		});
-
+		google.maps.event.addListener(map, 'zoom_changed', function() {
+			marker.f.setVisible(true)
+		});		
 	}
-
 	img.src = imgURL;
 };
 
