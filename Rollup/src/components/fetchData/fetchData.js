@@ -27,7 +27,7 @@ const fetchData = (map, data, markers, url, domElement, assetsPath) => {
 	// Create list
 	let clusterize = new Clusterize({
 		rows: null,
-		rows_in_block: 2,
+		rows_in_block: 20,
 		scrollElem: scrollElement,
 		contentElem: contentElement,
 		no_data_text: 'No users within range'
