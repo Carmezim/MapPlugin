@@ -1,13 +1,5 @@
-Developing locally:
+### Google maps plugin in JS. 
 
-1. `git clone git@bitbucket.org:lab19digital/shiftms-map.git && cd shiftms-map && git checkout module`
-
-2. `cd Rollup && yarn install`
-
-2. `yarn install`
-
-3. `yarn dev` and it should open in your browser listening to http://localhost:3000
-
-
-This branch contains a JS linter configuration that can be removed by deleting `.eslintrc.json` or edit it
-according to your linting preferences.
+The app to which this plugin was requested to be built for already faced serious performance issues
+therefore it had to be optimized at its maximum. However the requested features for this plugin were per se at the same time anti-patterns for decent performance such as quickly rendering thousands (or even tens of thousands) of data points in real time on a list dynamically updated according to user input on the map. 
+I managed however to obtain incredible results optimizing the plugin with efficient and elegant solutions code-wise and well designed architecture. The result was a success yielding a really fast performing app with all features and requests implemented despite the pre-existing challenges with performance. 
